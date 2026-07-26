@@ -1,8 +1,8 @@
-# EarthPayment (EPAY)
+# EarthPayment (EPT)
 
 ## Connecting the Future of Digital Payments
 
-EarthPayment (EPAY) is a blockchain-based digital payment ecosystem designed to create fast, transparent and accessible digital transactions.
+EarthPayment (EPT) is a blockchain-based digital payment ecosystem designed to create fast, transparent and accessible digital transactions.
 
 ## Vision
 
@@ -11,7 +11,7 @@ Our vision is to build a practical bridge between blockchain technology and ever
 ## Token Information
 
 **Name:** EarthPayment  
-**Symbol:** EPAY  
+**Symbol:** EPT 
 **Blockchain:** Solana  
 **Maximum Supply:** 100,000,000 EPAY  
 
@@ -19,10 +19,10 @@ Our vision is to build a practical bridge between blockchain technology and ever
 
 | Allocation | Amount |
 |---|---:|
-| Reserve | 20,000,000 EPAY |
-| User Rewards & Ecosystem | 30,000,000 EPAY |
-| Development Team | 20,000,000 EPAY |
-| Liquidity | 30,000,000 EPAY |
+| Reserve | 20,000,000 EPT |
+| User Rewards & Ecosystem | 30,000,000 EPT |
+| Development Team | 20,000,000 EPT |
+| Liquidity | 30,000,000 EPT |
 
 ## Development Status
 
