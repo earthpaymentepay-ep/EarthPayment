@@ -13,7 +13,7 @@ Our vision is to build a practical bridge between blockchain technology and ever
 **Name:** EarthPayment  
 **Symbol:** EPT 
 **Blockchain:** Solana  
-**Maximum Supply:** 100,000,000 EPAY  
+**Maximum Supply:** 100,000,000 EPT  
 
 ## Token Distribution
 
