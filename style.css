@@ -12,7 +12,7 @@ header {
 
 text-align:center;
 padding:80px 20px;
-background:linear-gradient(180deg,#101820,#050505);
+background:linear-gradient(180deg,#101810,#050505);
 
 }
 
@@ -22,6 +22,7 @@ header h1 {
 font-size:80px;
 color:#39ff14;
 margin:0;
+text-shadow:0 0 20px #39ff14;
 
 }
 
@@ -30,6 +31,7 @@ header p {
 
 font-size:22px;
 color:#ddd;
+
 }
 
 
@@ -38,10 +40,12 @@ header a {
 display:inline-block;
 margin-top:25px;
 padding:12px 30px;
-background:#00aaff;
+background:#39ff14;
 color:#000;
+font-weight:bold;
 text-decoration:none;
 border-radius:30px;
+box-shadow:0 0 15px #39ff14;
 
 }
 
@@ -59,6 +63,7 @@ h2 {
 
 color:#39ff14;
 font-size:32px;
+text-shadow:0 0 10px #39ff14;
 
 }
 
@@ -70,6 +75,14 @@ border:1px solid #222;
 border-radius:15px;
 padding:25px;
 line-height:1.8;
+box-shadow:0 0 15px rgba(57,255,20,0.15);
+
+}
+
+
+.card p {
+
+color:#eee;
 
 }
 
@@ -79,5 +92,6 @@ footer {
 text-align:center;
 padding:40px;
 background:#111;
+color:#aaa;
 
 }
