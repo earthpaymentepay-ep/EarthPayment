@@ -95,3 +95,16 @@ background:#111;
 color:#aaa;
 
 }
+.button {
+
+display:inline-block;
+margin-top:20px;
+padding:12px 30px;
+background:#39ff14;
+color:#000;
+font-weight:bold;
+text-decoration:none;
+border-radius:30px;
+box-shadow:0 0 15px #39ff14;
+
+}
