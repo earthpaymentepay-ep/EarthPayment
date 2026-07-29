@@ -115,8 +115,9 @@ margin-bottom:10px;
 filter: drop-shadow:(0 0 8px #39ff14);
 }
 .logo {
-    width: 100px !important;
+    width: 70px !important;
     height: auto !important;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
+    filter: drop-shadow:(0 0 10px #39ff14);
 }
 
