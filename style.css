@@ -109,7 +109,8 @@ box-shadow:0 0 15px #39ff14;
 
 }
 .logo {
-width:150px;
+width:45px;
 height:auto;
-margin-bottom:20px;
+margin-bottom:10px;
+filter: drop-shadow:(0 0 8px #39ff14);
 }
