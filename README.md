@@ -30,7 +30,7 @@ Early Development Phase
 
 ## Documentation
 
-Whitepaper: Coming soon
+Whitepaper: Published
 
 ## Community
 
