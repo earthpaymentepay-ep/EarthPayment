@@ -113,6 +113,13 @@ digital transactions for everyday use.
 <h3>Contract Address (Mint)</h3>
 <p>Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL</p>
 </div>
+<div class="card">
+  <h3>Contract Address (Mint)</h3>
+  <p id="contractAddress">Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL</p>
+  <button onclick="copyContract()">📋 Copy Contract</button>
+</div>
+
+  
   
 </div>
 
@@ -245,6 +252,13 @@ EarthPayment © 2026
 
 </footer>
 
+<script>
+function copyContract() {
+  const address = document.getElementById("contractAddress").innerText;
+  navigator.clipboard.writeText(address);
+  alert("Contract copied!");
+}
+</script>
 
 </body>
 
