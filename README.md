@@ -14,7 +14,8 @@ Our vision is to build a practical bridge between blockchain technology and ever
 **Symbol:** EPT 
 **Blockchain:** Solana  
 **Token Standard:** Token-2022
-**Maximum Supply:** 100,000,000 EPT  
+**Maximum Supply:** 
+100,000,000 EPT  
 **Contract Address (Mint):** Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL
 
 ## Token Distribution
