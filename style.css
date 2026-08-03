@@ -115,6 +115,39 @@ font-weight: bold;
 margin: 10px;
 }
 
+.news-banner {
+margin: 40px auto;
+padding: 25px;
+max-width: 700px;
+border-radius: 20px;
+text-align: center;
+background: rgba(28, 255, 92, 0.08);
+border: 2px solid #1cff5c;
+}
+
+.news-banner h2 {
+font-size: 32px;
+margin-bottom: 15px;
+}
+
+.news-banner h3 {
+font-size: 24px;
+}
+
+.news-banner p {
+font-size: 18px;
+}
+
+.news-button {
+display: inline-block;
+margin-top: 20px;
+background: #1cff5c;
+color: black;
+padding: 12px 30px;
+border-radius: 30px;
+text-decoration: none;
+font-weight: bold;
+}
 
 .secondary {
 background: transparent;
