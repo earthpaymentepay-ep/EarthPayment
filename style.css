@@ -230,3 +230,6 @@ width: 130px;
 }
 
 }
+.card p {
+  word-break: break-all;
+}
