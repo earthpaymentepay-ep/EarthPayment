@@ -71,7 +71,6 @@ border-radius: 25px;
 header {
 text-align: center;
 padding: 80px 20px;
-position: relative;
 }
 
 
@@ -268,18 +267,14 @@ width: 130px;
   word-break: break-all;
 }
 .live-market-mini {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-
-    background: rgba(20, 20, 20, 0.8);
+    display: inline-flex;
+    gap: 15px;
+    background: rgba(20,20,20,0.7);
     border: 1px solid #00ff88;
-    border-radius: 12px;
-
-    padding: 10px 14px;
-
-    font-size: 14px;
-    line-height: 1.8;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 13px;
+    margin-bottom: 15px;
 }
 
 .live-market-mini span {
