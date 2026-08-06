@@ -305,5 +305,27 @@ function copyContract() {
 </script>
 
 </body>
+ 
+<script>
+async function loadMarketData() {
+    try {
+        const response = await fetch(
+            "https://api-v3.raydium.io/pools/info/ids?ids=7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx"
+        );
 
+        const json = await response.json();
+        const pool = json.data[0];
+
+        document.getElementById("liquidity").textContent =
+            "$" + Number(pool.tvl).toFixed(2);
+
+    } catch (error) {
+        console.log("Market data error:", error);
+    }
+}
+
+loadMarketData();
+setInterval(loadMarketData, 60000);
+</script>
+ 
 </html>
