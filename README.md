@@ -39,7 +39,7 @@ Whitepaper: Published
 
 Website: Coming soon  
 Telegram: Coming soon  
-X: Coming soon  
+X: https://x.com/EarthPaymentEPT
 
 ---
 
