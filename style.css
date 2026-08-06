@@ -71,6 +71,7 @@ border-radius: 25px;
 header {
 text-align: center;
 padding: 80px 20px;
+position: relative;
 }
 
 
@@ -265,4 +266,23 @@ width: 130px;
 }
 .card p {
   word-break: break-all;
+}
+.live-market-mini {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    background: rgba(20, 20, 20, 0.8);
+    border: 1px solid #00ff88;
+    border-radius: 12px;
+
+    padding: 10px 14px;
+
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.live-market-mini span {
+    color: #00ff88;
+    font-weight: bold;
 }
