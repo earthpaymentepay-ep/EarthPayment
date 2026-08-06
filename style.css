@@ -278,4 +278,7 @@ width: 130px;
 
     font-size: 13px;
 }
+.live-market-mini div {
+    white-space: nowrap;
+}
     
