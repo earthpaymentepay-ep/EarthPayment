@@ -305,27 +305,37 @@ function copyContract() {
 </script>
 
 </body>
- 
-<script>
-<script>
+ <script>
 async function loadMarketData() {
     try {
-        const response = await fetch(
+
+        // Liquidity from Raydium Pool
+        const poolResponse = await fetch(
             "https://api-v3.raydium.io/pools/info/ids?ids=7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx"
         );
 
-        const json = await response.json();
-        const pool = json.data[0];
+        const poolData = await poolResponse.json();
+        const pool = poolData.data[0];
 
-        // Liquidity
         document.getElementById("liquidity").textContent =
             "$" + Number(pool.tvl).toLocaleString();
 
-        // Price
-        const price = Number(pool.price);
+
+        // Price from Raydium Mint Price API
+        const priceResponse = await fetch(
+            "https://api-v3.raydium.io/mint/price?mints=Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL"
+        );
+
+        const priceData = await priceResponse.json();
+
+        const price = Number(
+            priceData.data["Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL"]
+        );
+
 
         document.getElementById("price").textContent =
             "$" + price.toFixed(8);
+
 
         // Market Cap
         const totalSupply = 100000000;
@@ -334,6 +344,7 @@ async function loadMarketData() {
         document.getElementById("marketcap").textContent =
             "$" + marketCap.toLocaleString();
 
+
     } catch (error) {
         console.log("Market data error:", error);
     }
@@ -341,7 +352,6 @@ async function loadMarketData() {
 
 loadMarketData();
 
-// Refresh every 60 seconds
 setInterval(loadMarketData, 60000);
 </script>
  
