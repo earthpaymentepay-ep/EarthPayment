@@ -161,13 +161,55 @@ Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL
 
 </section>
 
-
-
 <script>
+async function loadMarketData() {
+    try {
 
-// market data will be connected here
+        // Raydium - Liquidity
+        const raydiumResponse = await fetch(
+            "https://api-v3.raydium.io/pools/info/ids?ids=7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx"
+        );
+
+        const raydiumData = await raydiumResponse.json();
+        const pool = raydiumData.data[0];
+
+        document.getElementById("liquidity").textContent =
+            "$" + Number(pool.tvl).toLocaleString();
+
+
+        // DexScreener - Price & Market Cap
+        const dexResponse = await fetch(
+            "https://api.dexscreener.com/latest/dex/tokens/Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL"
+        );
+
+        const dexData = await dexResponse.json();
+        const pair = dexData.pairs[0];
+
+
+        if (pair) {
+
+            document.getElementById("price").textContent =
+                "$" + Number(pair.priceUsd).toFixed(8);
+
+
+            document.getElementById("marketcap").textContent =
+                "$" + Number(pair.marketCap).toLocaleString();
+
+        }
+
+    } catch (error) {
+        console.log("Market data error:", error);
+    }
+}
+
+
+loadMarketData();
+
+// Update every 60 seconds
+setInterval(loadMarketData, 60000);
 
 </script>
+ 
 
 
 </body>
