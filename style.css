@@ -309,5 +309,24 @@ width: 130px;
     margin: 20px auto;
     max-width: 900px;
 }
+.market-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    max-width: 900px;
+    margin: 20px auto;
+}
+
+.market-info div {
+    text-align: left;
+    width: 100%;
+    font-size: 18px;
+}
+
+.market-info span {
+    color: #1cff5c;
+    margin-left: 8px;
+}
 
     
