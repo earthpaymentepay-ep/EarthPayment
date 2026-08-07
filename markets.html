@@ -170,7 +170,8 @@ async function loadMarketData() {
 
         const dexData = await dexResponse.json();
         const pair = dexData.pairs[0];
-document.getElementById("volume").textContent =
+
+        document.getElementById("volume").textContent =
     "$" + Number(pair.volume.h24).toLocaleString();
 
         if (pair) {
@@ -183,6 +184,8 @@ document.getElementById("volume").textContent =
                 "$" + Number(pair.marketCap).toLocaleString();
 
         }
+            document.getElementById("volume").textContent =
+    "$" + Number(pair.volume.h24).toLocaleString();
 
     } catch (error) {
         console.log("Market data error:", error);
