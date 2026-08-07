@@ -170,7 +170,8 @@ async function loadMarketData() {
 
         const dexData = await dexResponse.json();
         const pair = dexData.pairs[0];
-
+document.getElementById("volume").textContent =
+    "$" + Number(pair.volume.h24).toLocaleString();
 
         if (pair) {
 
