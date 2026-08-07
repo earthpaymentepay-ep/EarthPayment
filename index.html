@@ -327,7 +327,7 @@ async function loadMarketData() {
         );
 
         const priceData = await priceResponse.json();
-
+console.log(priceData);
         const price = Number(
             priceData.data["Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL"]
         );
