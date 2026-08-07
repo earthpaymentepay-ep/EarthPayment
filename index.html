@@ -307,6 +307,7 @@ function copyContract() {
 </body>
  
 <script>
+<script>
 async function loadMarketData() {
     try {
         const response = await fetch(
@@ -316,8 +317,22 @@ async function loadMarketData() {
         const json = await response.json();
         const pool = json.data[0];
 
+        // Liquidity
         document.getElementById("liquidity").textContent =
-            "$" + Number(pool.tvl).toFixed(2);
+            "$" + Number(pool.tvl).toLocaleString();
+
+        // Price
+        const price = Number(pool.price);
+
+        document.getElementById("price").textContent =
+            "$" + price.toFixed(8);
+
+        // Market Cap
+        const totalSupply = 100000000;
+        const marketCap = price * totalSupply;
+
+        document.getElementById("marketcap").textContent =
+            "$" + marketCap.toLocaleString();
 
     } catch (error) {
         console.log("Market data error:", error);
@@ -325,6 +340,8 @@ async function loadMarketData() {
 }
 
 loadMarketData();
+
+// Refresh every 60 seconds
 setInterval(loadMarketData, 60000);
 </script>
  
