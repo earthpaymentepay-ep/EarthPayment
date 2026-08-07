@@ -279,6 +279,35 @@ width: 130px;
     font-size: 13px;
 }
 .live-market-mini div {
-    white-space: nowrap;
+    white-space: nowrap;l
 }
+.live-market {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin: 30px auto;
+}
+
+.live-market div,
+.card,
+.chart-box {
+    background: #111;
+    border: 1px solid #1cff5c;
+    border-radius: 15px;
+    padding: 20px;
+    text-align: center;
+}
+
+.live-market span {
+    color: #1cff5c;
+    font-size: 20px;
+}
+
+.chart-box {
+    min-height: 350px;
+    margin: 20px auto;
+    max-width: 900px;
+}
+
     
