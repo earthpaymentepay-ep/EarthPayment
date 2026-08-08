@@ -141,10 +141,15 @@ Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL
 </section>
 
 <script>
+let priceChart = null;
+
 async function loadMarketData() {
     try {
 
-        // Raydium - Liquidity
+        // =========================
+        // RAYDIUM - LIQUIDITY
+        // =========================
+
         const raydiumResponse = await fetch(
             "https://api-v3.raydium.io/pools/info/ids?ids=7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx"
         );
@@ -158,7 +163,11 @@ async function loadMarketData() {
         }
 
 
-        // DexScreener - Price, Market Cap & Volume
+        // =========================
+        // DEXSCREENER
+        // PRICE / MARKET CAP / VOLUME
+        // =========================
+
         const dexResponse = await fetch(
             "https://api.dexscreener.com/latest/dex/tokens/Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL"
         );
@@ -168,45 +177,78 @@ async function loadMarketData() {
 
         if (pair) {
 
-            // Price
             document.getElementById("price").textContent =
                 "$" + Number(pair.priceUsd).toFixed(8);
 
-            // Market Cap
             document.getElementById("marketcap").textContent =
-                "$" + Number(pair.marketCap).toLocaleString();
+                "$" + Number(pair.marketCap || 0).toLocaleString();
 
-            // 24h Volume
             document.getElementById("volume").textContent =
                 "$" + Number(pair.volume?.h24 || 0).toLocaleString();
         }
 
 
-        // Price Chart
-        if (pair && pair.priceUsd) {
+        // =========================
+        // HISTORICAL PRICE DATA
+        // GECKOTERMINAL
+        // =========================
 
-            const chartCanvas = document.getElementById("priceChart");
+        const ohlcvResponse = await fetch(
+            "https://api.geckoterminal.com/api/v2/networks/solana/pools/7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx/ohlcv/minute?aggregate=60&limit=100"
+        );
 
-            if (chartCanvas) {
+        const ohlcvData = await ohlcvResponse.json();
 
-                const ctx = chartCanvas.getContext("2d");
+        const candles =
+            ohlcvData.data.attributes.ohlcv_list.reverse();
 
-                new Chart(ctx, {
+
+        if (candles.length > 0) {
+
+            const labels = candles.map(candle => {
+                return new Date(candle[0] * 1000)
+                    .toLocaleTimeString([], {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    });
+            });
+
+            const prices = candles.map(candle => {
+                return Number(candle[4]);
+            });
+
+
+            const canvas =
+                document.getElementById("priceChart");
+
+            if (canvas) {
+
+                if (priceChart) {
+                    priceChart.destroy();
+                }
+
+                const ctx = canvas.getContext("2d");
+
+                priceChart = new Chart(ctx, {
+
                     type: "line",
 
                     data: {
-                        labels: ["Current"],
+                        labels: labels,
 
                         datasets: [{
                             label: "EPT Price",
-                            data: [Number(pair.priceUsd)],
-                            tension: 0.3,
-                            fill: false
+                            data: prices,
+                            tension: 0.25,
+                            pointRadius: 0,
+                            borderWidth: 2
                         }]
                     },
 
                     options: {
+
                         responsive: true,
+
                         maintainAspectRatio: false,
 
                         plugins: {
@@ -216,18 +258,29 @@ async function loadMarketData() {
                         },
 
                         scales: {
+
+                            x: {
+                                ticks: {
+                                    maxTicksLimit: 8
+                                }
+                            },
+
                             y: {
                                 beginAtZero: false
                             }
                         }
                     }
                 });
-
             }
         }
 
     } catch (error) {
-        console.log("Market data error:", error);
+
+        console.log(
+            "Market data error:",
+            error
+        );
+
     }
 }
 
@@ -235,8 +288,12 @@ async function loadMarketData() {
 loadMarketData();
 
 
-// Update market data every 60 seconds
-setInterval(loadMarketData, 60000);
+// Update data every 60 seconds
+
+setInterval(
+    loadMarketData,
+    60000
+);
 
 </script>
  
