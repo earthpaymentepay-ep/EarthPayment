@@ -150,13 +150,17 @@ const TOKEN_ADDRESS =
     "Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL";
 
 
+// =====================================================
+// LOAD ALL MARKET DATA
+// =====================================================
+
 async function loadMarketData() {
 
-    try {
+    // -------------------------------------------------
+    // RAYDIUM - LIQUIDITY
+    // -------------------------------------------------
 
-        // =========================
-        // RAYDIUM - LIQUIDITY
-        // =========================
+    try {
 
         const raydiumResponse = await fetch(
             "https://api-v3.raydium.io/pools/info/ids?ids=" +
@@ -183,11 +187,21 @@ async function loadMarketData() {
             }
         }
 
+    } catch (error) {
 
-        // =========================
-        // DEXSCREENER
-        // PRICE / MARKET CAP / VOLUME
-        // =========================
+        console.error(
+            "Raydium error:",
+            error
+        );
+    }
+
+
+
+    // -------------------------------------------------
+    // DEXSCREENER - PRICE / MARKET CAP / VOLUME
+    // -------------------------------------------------
+
+    try {
 
         const dexResponse = await fetch(
             "https://api.dexscreener.com/latest/dex/tokens/" +
@@ -244,20 +258,100 @@ async function loadMarketData() {
             }
         }
 
+    } catch (error) {
 
-        // =========================
-        // GECKOTERMINAL - POOL DATA
-        // =========================
+        console.error(
+            "DexScreener error:",
+            error
+        );
+    }
+
+
+
+    // -------------------------------------------------
+    // SOLANAFM - HOLDERS
+    // -------------------------------------------------
+
+    try {
+
+        const holdersResponse = await fetch(
+            "https://api.solana.fm/v1/tokens/" +
+            TOKEN_ADDRESS +
+            "/holders?page=0&pageSize=1"
+        );
+
+
+        if (!holdersResponse.ok) {
+
+            throw new Error(
+                "SolanaFM holders HTTP " +
+                holdersResponse.status
+            );
+        }
+
+
+        const holdersData =
+            await holdersResponse.json();
+
+
+        const holdersElement =
+            document.getElementById("holders");
+
+
+        if (holdersElement) {
+
+            const total =
+                holdersData.totalItemCount;
+
+
+            if (
+                typeof total === "number" &&
+                total >= 0
+            ) {
+
+                holdersElement.textContent =
+                    total.toLocaleString();
+
+            } else {
+
+                holdersElement.textContent =
+                    "--";
+            }
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Holders error:",
+            error
+        );
+
+        const holdersElement =
+            document.getElementById("holders");
+
+        if (holdersElement) {
+            holdersElement.textContent = "--";
+        }
+    }
+
+
+
+    // -------------------------------------------------
+    // GECKOTERMINAL - POOL DATA
+    // -------------------------------------------------
+
+    try {
 
         const poolResponse = await fetch(
             "https://api.geckoterminal.com/api/v2/networks/solana/pools/" +
             POOL_ADDRESS
         );
 
+
         if (!poolResponse.ok) {
 
             throw new Error(
-                "GeckoTerminal pool error: " +
+                "GeckoTerminal pool HTTP " +
                 poolResponse.status
             );
         }
@@ -272,70 +366,53 @@ async function loadMarketData() {
 
         if (attributes) {
 
-            // =========================
-            // HOLDERS
-            // =========================
-
-            const holdersElement =
-                document.getElementById("holders");
-
-
-            if (holdersElement) {
-
-                const holders =
-                    attributes.holders;
-
-                if (
-                    holders !== undefined &&
-                    holders !== null
-                ) {
-
-                    holdersElement.textContent =
-                        Number(holders)
-                            .toLocaleString();
-
-                } else {
-
-                    holdersElement.textContent =
-                        "--";
-                }
-            }
-
-
-            // =========================
-            // TRANSACTIONS 24H
-            // =========================
-
             const transactionsElement =
-                document.getElementById(
-                    "transactions"
-                );
+                document.getElementById("transactions");
 
 
             if (transactionsElement) {
 
-                const transactions =
-    attributes.transactions?.h24;
+                /*
+                 * GeckoTerminal does not expose a simple
+                 * lifetime transaction counter in every
+                 * pool response.
+                 *
+                 * Try the available transaction fields.
+                 */
 
-if (transactions) {
-    const totalTransactions =
-        Number(transactions.buys || 0) +
-        Number(transactions.sells || 0);
+                let totalTransactions = null;
 
-    transactionsElement.textContent =
-        totalTransactions.toLocaleString();
-} else {
-    transactionsElement.textContent = "--";
-} 
 
                 if (
-                    transactions !== undefined &&
-                    transactions !== null
+                    typeof attributes.transactions ===
+                    "number"
+                ) {
+
+                    totalTransactions =
+                        attributes.transactions;
+
+                }
+
+
+                if (
+                    attributes.transactions?.total !==
+                    undefined
+                ) {
+
+                    totalTransactions =
+                        Number(
+                            attributes.transactions.total
+                        );
+                }
+
+
+                if (
+                    totalTransactions !== null &&
+                    Number.isFinite(totalTransactions)
                 ) {
 
                     transactionsElement.textContent =
-                        Number(transactions)
-                            .toLocaleString();
+                        totalTransactions.toLocaleString();
 
                 } else {
 
@@ -345,10 +422,28 @@ if (transactions) {
             }
         }
 
+    } catch (error) {
 
-        // =========================
-        // 30 DAY PRICE HISTORY
-        // =========================
+        console.error(
+            "GeckoTerminal pool error:",
+            error
+        );
+
+        const transactionsElement =
+            document.getElementById("transactions");
+
+        if (transactionsElement) {
+            transactionsElement.textContent = "--";
+        }
+    }
+
+
+
+    // -------------------------------------------------
+    // GECKOTERMINAL - 30 DAY PRICE CHART
+    // -------------------------------------------------
+
+    try {
 
         const ohlcvResponse = await fetch(
             "https://api.geckoterminal.com/api/v2/networks/solana/pools/" +
@@ -360,7 +455,7 @@ if (transactions) {
         if (!ohlcvResponse.ok) {
 
             throw new Error(
-                "GeckoTerminal chart error: " +
+                "GeckoTerminal chart HTTP " +
                 ohlcvResponse.status
             );
         }
@@ -373,10 +468,6 @@ if (transactions) {
         const candles =
             ohlcvData.data?.attributes?.ohlcv_list || [];
 
-
-        // =========================
-        // DRAW 30 DAY CHART
-        // =========================
 
         if (candles.length > 0) {
 
@@ -418,7 +509,6 @@ if (transactions) {
             if (canvas) {
 
                 if (priceChart) {
-
                     priceChart.destroy();
                 }
 
@@ -459,7 +549,6 @@ if (transactions) {
                                         false
 
                                 }]
-
                             },
 
 
@@ -478,9 +567,7 @@ if (transactions) {
 
                                         display:
                                             false
-
                                     }
-
                                 },
 
 
@@ -492,9 +579,7 @@ if (transactions) {
 
                                             maxTicksLimit:
                                                 8
-
                                         }
-
                                     },
 
 
@@ -502,43 +587,44 @@ if (transactions) {
 
                                         beginAtZero:
                                             false
-
                                     }
-
                                 }
-
                             }
-
                         }
                     );
             }
         }
 
-
     } catch (error) {
 
         console.error(
-            "Market data error:",
+            "Chart error:",
             error
         );
     }
 }
 
 
-// Initial load
+
+// =====================================================
+// INITIAL LOAD
+// =====================================================
+
 loadMarketData();
 
 
-// Refresh every 60 seconds
+// =====================================================
+// UPDATE EVERY 60 SECONDS
+// =====================================================
+
 setInterval(
     loadMarketData,
     60000
 );
 
-</script>
-         
- 
+</script>  
 
-
-</body>
-</html>
+  
+</body>   
+  
+</html>   
