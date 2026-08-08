@@ -8,6 +8,8 @@
 <title>EarthPayment Markets</title>
 
 <link rel="stylesheet" href="style.css">
+   
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
@@ -68,11 +70,7 @@ Buy EPT
 <h2>Price Chart</h2>
 
 <div class="chart-box">
-
-<iframe
-src="https://dexscreener.com/solana/7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx?embed=1&theme=dark"
-style="width:100%; height:500px; border:0;">
-</iframe>
+   <canvas id="priceChart"></canvas> 
 
 </div>
 
@@ -154,33 +152,79 @@ async function loadMarketData() {
         const raydiumData = await raydiumResponse.json();
         const pool = raydiumData.data[0];
 
-        document.getElementById("liquidity").textContent =
-            "$" + Number(pool.tvl).toLocaleString();
+        if (pool) {
+            document.getElementById("liquidity").textContent =
+                "$" + Number(pool.tvl).toLocaleString();
+        }
 
 
-        // DexScreener - Price & Market Cap
+        // DexScreener - Price, Market Cap & Volume
         const dexResponse = await fetch(
             "https://api.dexscreener.com/latest/dex/tokens/Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL"
         );
 
         const dexData = await dexResponse.json();
-        const pair = dexData.pairs[0];
-
-        document.getElementById("volume").textContent =
-    "$" + Number(pair.volume.h24).toLocaleString();
+        const pair = dexData.pairs && dexData.pairs[0];
 
         if (pair) {
 
+            // Price
             document.getElementById("price").textContent =
                 "$" + Number(pair.priceUsd).toFixed(8);
 
-
+            // Market Cap
             document.getElementById("marketcap").textContent =
                 "$" + Number(pair.marketCap).toLocaleString();
 
-        }
+            // 24h Volume
             document.getElementById("volume").textContent =
-    "$" + Number(pair.volume.h24).toLocaleString();
+                "$" + Number(pair.volume?.h24 || 0).toLocaleString();
+        }
+
+
+        // Price Chart
+        if (pair && pair.priceUsd) {
+
+            const chartCanvas = document.getElementById("priceChart");
+
+            if (chartCanvas) {
+
+                const ctx = chartCanvas.getContext("2d");
+
+                new Chart(ctx, {
+                    type: "line",
+
+                    data: {
+                        labels: ["Current"],
+
+                        datasets: [{
+                            label: "EPT Price",
+                            data: [Number(pair.priceUsd)],
+                            tension: 0.3,
+                            fill: false
+                        }]
+                    },
+
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+
+                        scales: {
+                            y: {
+                                beginAtZero: false
+                            }
+                        }
+                    }
+                });
+
+            }
+        }
 
     } catch (error) {
         console.log("Market data error:", error);
@@ -190,7 +234,8 @@ async function loadMarketData() {
 
 loadMarketData();
 
-// Update every 60 seconds
+
+// Update market data every 60 seconds
 setInterval(loadMarketData, 60000);
 
 </script>
