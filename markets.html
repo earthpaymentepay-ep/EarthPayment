@@ -315,7 +315,18 @@ async function loadMarketData() {
             if (transactionsElement) {
 
                 const transactions =
-                    attributes.transactions?.h24;
+    attributes.transactions?.h24;
+
+if (transactions) {
+    const totalTransactions =
+        Number(transactions.buys || 0) +
+        Number(transactions.sells || 0);
+
+    transactionsElement.textContent =
+        totalTransactions.toLocaleString();
+} else {
+    transactionsElement.textContent = "--";
+} 
 
                 if (
                     transactions !== undefined &&
