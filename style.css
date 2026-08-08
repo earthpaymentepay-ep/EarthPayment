@@ -349,6 +349,7 @@ width: 130px;
     display: flex;
     align-items: center;
     justify-content: center;
+  color: #1cff5c;
     opacity: 0.75;
     transition: 0.2s ease;
 }
@@ -368,3 +369,6 @@ width: 130px;
 .news-history {
     margin-top: 80px;
 }
+.news-history-item a {
+    color: #1cff5c;
+  }
