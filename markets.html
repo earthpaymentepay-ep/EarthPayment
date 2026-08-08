@@ -67,7 +67,7 @@ Buy EPT
 
 <section>
 
-<h2>Price Chart</h2>
+<h2>Price Chart - 30 Days</h2>
 
 <div class="chart-box">
    <canvas id="priceChart"></canvas> 
@@ -192,7 +192,7 @@ async function loadMarketData() {
         // =========================
 
         const ohlcvResponse = await fetch(
-            "https://api.geckoterminal.com/api/v2/networks/solana/pools/7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx/ohlcv/hour?aggregate=1&limit=100&currency=usd"
+            "https://api.geckoterminal.com/api/v2/networks/solana/pools/7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx/ohlcv/hour?aggregate=1&limit=30&currency=usd"
         );
 
         if (!ohlcvResponse.ok) {
