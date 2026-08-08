@@ -139,10 +139,19 @@ Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL
 </div>
 
 </section>
+        
 <script>
 let priceChart = null;
 
+const POOL_ADDRESS =
+    "7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx";
+
+const TOKEN_ADDRESS =
+    "Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL";
+
+
 async function loadMarketData() {
+
     try {
 
         // =========================
@@ -150,15 +159,28 @@ async function loadMarketData() {
         // =========================
 
         const raydiumResponse = await fetch(
-            "https://api-v3.raydium.io/pools/info/ids?ids=7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx"
+            "https://api-v3.raydium.io/pools/info/ids?ids=" +
+            POOL_ADDRESS
         );
 
-        const raydiumData = await raydiumResponse.json();
-        const pool = raydiumData.data?.[0];
+        const raydiumData =
+            await raydiumResponse.json();
+
+        const pool =
+            raydiumData.data?.[0];
 
         if (pool) {
-            document.getElementById("liquidity").textContent =
-                "$" + Number(pool.tvl).toLocaleString();
+
+            const liquidityElement =
+                document.getElementById("liquidity");
+
+            if (liquidityElement) {
+
+                liquidityElement.textContent =
+                    "$" +
+                    Number(pool.tvl || 0)
+                        .toLocaleString();
+            }
         }
 
 
@@ -168,81 +190,224 @@ async function loadMarketData() {
         // =========================
 
         const dexResponse = await fetch(
-            "https://api.dexscreener.com/latest/dex/tokens/Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL"
+            "https://api.dexscreener.com/latest/dex/tokens/" +
+            TOKEN_ADDRESS
         );
 
-        const dexData = await dexResponse.json();
-        const pair = dexData.pairs?.[0];
+        const dexData =
+            await dexResponse.json();
+
+        const pair =
+            dexData.pairs?.find(
+                p =>
+                    p.baseToken?.address === TOKEN_ADDRESS &&
+                    p.quoteToken?.symbol === "SOL"
+            ) || dexData.pairs?.[0];
+
 
         if (pair) {
 
-            document.getElementById("price").textContent =
-                "$" + Number(pair.priceUsd || 0).toFixed(8);
+            const priceElement =
+                document.getElementById("price");
 
-            document.getElementById("marketcap").textContent =
-                "$" + Number(pair.marketCap || 0).toLocaleString();
+            const marketcapElement =
+                document.getElementById("marketcap");
 
-            document.getElementById("volume").textContent =
-                "$" + Number(pair.volume?.h24 || 0).toLocaleString();
+            const volumeElement =
+                document.getElementById("volume");
+
+
+            if (priceElement) {
+
+                priceElement.textContent =
+                    "$" +
+                    Number(pair.priceUsd || 0)
+                        .toFixed(8);
+            }
+
+
+            if (marketcapElement) {
+
+                marketcapElement.textContent =
+                    "$" +
+                    Number(pair.marketCap || 0)
+                        .toLocaleString();
+            }
+
+
+            if (volumeElement) {
+
+                volumeElement.textContent =
+                    "$" +
+                    Number(pair.volume?.h24 || 0)
+                        .toLocaleString();
+            }
         }
 
 
         // =========================
-        // GECKOTERMINAL - PRICE HISTORY
+        // GECKOTERMINAL - POOL DATA
+        // =========================
+
+        const poolResponse = await fetch(
+            "https://api.geckoterminal.com/api/v2/networks/solana/pools/" +
+            POOL_ADDRESS
+        );
+
+        if (!poolResponse.ok) {
+
+            throw new Error(
+                "GeckoTerminal pool error: " +
+                poolResponse.status
+            );
+        }
+
+
+        const poolData =
+            await poolResponse.json();
+
+        const attributes =
+            poolData.data?.attributes;
+
+
+        if (attributes) {
+
+            // =========================
+            // HOLDERS
+            // =========================
+
+            const holdersElement =
+                document.getElementById("holders");
+
+
+            if (holdersElement) {
+
+                const holders =
+                    attributes.holders;
+
+                if (
+                    holders !== undefined &&
+                    holders !== null
+                ) {
+
+                    holdersElement.textContent =
+                        Number(holders)
+                            .toLocaleString();
+
+                } else {
+
+                    holdersElement.textContent =
+                        "--";
+                }
+            }
+
+
+            // =========================
+            // TRANSACTIONS 24H
+            // =========================
+
+            const transactionsElement =
+                document.getElementById(
+                    "transactions"
+                );
+
+
+            if (transactionsElement) {
+
+                const transactions =
+                    attributes.transactions?.h24;
+
+                if (
+                    transactions !== undefined &&
+                    transactions !== null
+                ) {
+
+                    transactionsElement.textContent =
+                        Number(transactions)
+                            .toLocaleString();
+
+                } else {
+
+                    transactionsElement.textContent =
+                        "--";
+                }
+            }
+        }
+
+
+        // =========================
+        // 30 DAY PRICE HISTORY
         // =========================
 
         const ohlcvResponse = await fetch(
-            "https://api.geckoterminal.com/api/v2/networks/solana/pools/7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx/ohlcv/hour?aggregate=1&limit=30&currency=usd"
+            "https://api.geckoterminal.com/api/v2/networks/solana/pools/" +
+            POOL_ADDRESS +
+            "/ohlcv/day?aggregate=1&limit=30&currency=usd"
         );
 
+
         if (!ohlcvResponse.ok) {
+
             throw new Error(
-                "GeckoTerminal HTTP error: " +
+                "GeckoTerminal chart error: " +
                 ohlcvResponse.status
             );
         }
 
-        const ohlcvData = await ohlcvResponse.json();
+
+        const ohlcvData =
+            await ohlcvResponse.json();
+
 
         const candles =
             ohlcvData.data?.attributes?.ohlcv_list || [];
 
 
         // =========================
-        // DRAW CHART
+        // DRAW 30 DAY CHART
         // =========================
 
         if (candles.length > 0) {
 
-            // GeckoTerminal returns newest first,
-            // so reverse it for the chart.
-            const orderedCandles = [...candles].reverse();
-
-            const labels = orderedCandles.map(candle => {
-
-                return new Date(candle[0] * 1000)
-                    .toLocaleString([], {
-                        month: "short",
-                        day: "numeric",
-                        hour: "2-digit",
-                        minute: "2-digit"
-                    });
-
-            });
+            const orderedCandles =
+                [...candles].reverse();
 
 
-            const prices = orderedCandles.map(candle => {
-                return Number(candle[4]);
-            });
+            const labels =
+                orderedCandles.map(
+                    candle => {
+
+                        return new Date(
+                            candle[0] * 1000
+                        ).toLocaleDateString(
+                            [],
+                            {
+                                month: "short",
+                                day: "numeric"
+                            }
+                        );
+
+                    }
+                );
+
+
+            const prices =
+                orderedCandles.map(
+                    candle =>
+                        Number(candle[4])
+                );
 
 
             const canvas =
-                document.getElementById("priceChart");
+                document.getElementById(
+                    "priceChart"
+                );
 
 
             if (canvas) {
 
                 if (priceChart) {
+
                     priceChart.destroy();
                 }
 
@@ -251,74 +416,91 @@ async function loadMarketData() {
                     canvas.getContext("2d");
 
 
-                priceChart = new Chart(ctx, {
+                priceChart =
+                    new Chart(
+                        ctx,
+                        {
 
-                    type: "line",
+                            type: "line",
 
-                    data: {
+                            data: {
 
-                        labels: labels,
+                                labels: labels,
 
-                        datasets: [{
-                            label: "EPT Price",
+                                datasets: [{
 
-                            data: prices,
+                                    label:
+                                        "EPT Price",
 
-                            tension: 0.25,
+                                    data:
+                                        prices,
 
-                            pointRadius: 0,
+                                    tension:
+                                        0.25,
 
-                            borderWidth: 2,
+                                    pointRadius:
+                                        0,
 
-                            fill: false
-                        }]
+                                    borderWidth:
+                                        2,
 
-                    },
+                                    fill:
+                                        false
 
-                    options: {
-
-                        responsive: true,
-
-                        maintainAspectRatio: false,
-
-                        plugins: {
-
-                            legend: {
-                                display: false
-                            }
-
-                        },
-
-                        scales: {
-
-                            x: {
-
-                                ticks: {
-                                    maxTicksLimit: 8
-                                }
+                                }]
 
                             },
 
-                            y: {
 
-                                beginAtZero: false
+                            options: {
+
+                                responsive:
+                                    true,
+
+                                maintainAspectRatio:
+                                    false,
+
+
+                                plugins: {
+
+                                    legend: {
+
+                                        display:
+                                            false
+
+                                    }
+
+                                },
+
+
+                                scales: {
+
+                                    x: {
+
+                                        ticks: {
+
+                                            maxTicksLimit:
+                                                8
+
+                                        }
+
+                                    },
+
+
+                                    y: {
+
+                                        beginAtZero:
+                                            false
+
+                                    }
+
+                                }
 
                             }
 
                         }
-
-                    }
-
-                });
-
+                    );
             }
-
-        } else {
-
-            console.log(
-                "No historical price data returned by GeckoTerminal."
-            );
-
         }
 
 
@@ -328,22 +510,21 @@ async function loadMarketData() {
             "Market data error:",
             error
         );
-
     }
 }
 
 
+// Initial load
 loadMarketData();
 
 
-// Update market data every 60 seconds
+// Refresh every 60 seconds
 setInterval(
     loadMarketData,
     60000
 );
 
 </script>
-
          
  
 
