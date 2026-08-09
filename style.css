@@ -371,4 +371,17 @@ width: 130px;
 }
 .news-history-item a {
     color: #1cff5c;
-  }
+}
+.support {
+font-size: 12px;
+padding: 5px 10px;
+background: #2e7d5b;
+color: white;
+border-radius: 5px;
+text-decoration: none;
+opacity: 0.85;
+}
+
+.support:hover {
+opacity: 1;
+}
