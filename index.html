@@ -368,15 +368,33 @@ setInterval(loadMarketData, 60000);
 
 </script>
 
-   
-   <script>
+<script>
+const navLinks = document.querySelectorAll('.nav-links a');
+
+function setActiveLink(link) {
+    navLinks.forEach(item => item.classList.remove('active'));
+    link.classList.add('active');
+}
+
+navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+        const href = this.getAttribute('href');
+
+        if (href && href.includes('#')) {
+            setActiveLink(this);
+        }
+    });
+});
+
 const currentHash = window.location.hash;
 
 if (currentHash) {
-    const activeLink = document.querySelector('.nav-links a[href$="' + currentHash + '"]');
+    const activeLink = document.querySelector(
+        '.nav-links a[href$="' + currentHash + '"]'
+    );
 
     if (activeLink) {
-        activeLink.classList.add('active');
+        setActiveLink(activeLink);
     }
 }
 </script>
