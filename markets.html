@@ -624,7 +624,17 @@ setInterval(
 
 </script>  
 
-  
+  <script>
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+    const href = link.getAttribute('href');
+
+    if (href === currentPage) {
+        link.classList.add('active');
+    }
+});
+  </script>
 </body>   
   
 </html>   
