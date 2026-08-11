@@ -55,7 +55,9 @@ font-weight: bold;
 .nav-links a:hover {
 color: #1cff5c;
 }
-
+.nav-links a.active {
+    color: #1cff5c;
+}
 
 .buy {
 background: #1cff5c;
