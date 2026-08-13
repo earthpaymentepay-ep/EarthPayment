@@ -138,6 +138,24 @@ Further project updates and announcements will be published in this section.
     </a>
 </div>
   <footer>
+   <script>
+
+const currentPath = window.location.pathname;
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+
+    const href = link.getAttribute('href');
+
+    if (
+        href === "../news.html" &&
+        currentPath.includes("/announcements/")
+    ) {
+        link.classList.add('active');
+    }
+
+});
+
+</script>
 </body>
 </html>
 
