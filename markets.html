@@ -451,64 +451,123 @@ async function loadMarketData() {
 
 
 
-    // -------------------------------------------------
-    // GECKOTERMINAL - 30 DAY PRICE CHART
-    // -------------------------------------------------
+    // -
 
-    try {
 
-        const ohlcvResponse = await fetch(
-            "https://api.geckoterminal.com/api/v2/networks/solana/pools/" +
-            POOL_ADDRESS +
-            "/ohlcv/day?aggregate=1&limit=30&currency=usd"
+// -------------------------------------------------
+// LIVE EPT/USD PRICE + CHART
+// -------------------------------------------------
+
+try {
+
+    const solResponse = await fetch(
+        "https://api.binance.com/api/v3/ticker/price?symbol=SOLUSDT"
+    );
+
+    if (!solResponse.ok) {
+        throw new Error(
+            "SOL price HTTP " + solResponse.status
         );
+    }
+
+    const solData =
+        await solResponse.json();
+
+    const solUsd =
+        Number(solData.price);
 
 
-        if (!ohlcvResponse.ok) {
+    // Get current Raydium pool data
+    const raydiumResponse = await fetch(
+        "https://api-v3.raydium.io/pools/info/ids?ids=" +
+        POOL_ADDRESS
+    );
 
-            throw new Error(
-                "GeckoTerminal chart HTTP " +
-                ohlcvResponse.status
-            );
-        }
+    if (!raydiumResponse.ok) {
+        throw new Error(
+            "Raydium HTTP " + raydiumResponse.status
+        );
+    }
 
+    const raydiumData =
+        await raydiumResponse.json();
 
-        const ohlcvData =
-            await ohlcvResponse.json();
-
-
-        const candles =
-            ohlcvData.data?.attributes?.ohlcv_list || [];
-
-
-        if (candles.length > 0) {
-
-            const orderedCandles =
-                [...candles].reverse();
+    const pool =
+        raydiumData.data?.[0];
 
 
-            const labels =
-                orderedCandles.map(
-                    candle => {
+    if (pool) {
 
-                        return new Date(
-                            candle[0] * 1000
-                        ).toLocaleDateString(
-                            [],
-                            {
-                                month: "short",
-                                day: "numeric"
-                            }
-                        );
+        // SOL and EPT amounts in pool
+        const solAmount =
+            Number(pool.mintAmountA);
 
+        const eptAmount =
+            Number(pool.mintAmountB);
+
+
+        if (
+            solAmount > 0 &&
+            eptAmount > 0 &&
+            solUsd > 0
+        ) {
+
+            // EPT price in SOL
+            const eptSol =
+                solAmount / eptAmount;
+
+
+            // EPT price in USD
+            const eptUsd =
+                eptSol * solUsd;
+
+
+            // Update price
+            const priceElement =
+                document.getElementById("price");
+
+            if (priceElement) {
+
+                priceElement.textContent =
+                    "$" +
+                    eptUsd.toFixed(8);
+            }
+
+
+            // Update market cap
+            const marketcapElement =
+                document.getElementById("marketcap");
+
+            if (marketcapElement) {
+
+                const totalSupply =
+                    100000000;
+
+                const marketCap =
+                    eptUsd * totalSupply;
+
+                marketcapElement.textContent =
+                    "$" +
+                    marketCap.toLocaleString(
+                        undefined,
+                        {
+                            maximumFractionDigits: 2
+                        }
+                    );
+            }
+
+
+            // Add current point to chart
+            const now =
+                new Date();
+
+            const label =
+                now.toLocaleTimeString(
+                    [],
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
                     }
-                );
-
-
-            const prices =
-                orderedCandles.map(
-                    candle =>
-                        Number(candle[4])
                 );
 
 
@@ -520,101 +579,124 @@ async function loadMarketData() {
 
             if (canvas) {
 
-                if (priceChart) {
-                    priceChart.destroy();
-                }
+                if (!priceChart) {
 
+                    const ctx =
+                        canvas.getContext("2d");
 
-                const ctx =
-                    canvas.getContext("2d");
+                    priceChart =
+                        new Chart(
+                            ctx,
+                            {
 
+                                type: "line",
 
-                priceChart =
-                    new Chart(
-                        ctx,
-                        {
+                                data: {
 
-                            type: "line",
+                                    labels: [label],
 
-                            data: {
+                                    datasets: [{
 
-                                labels: labels,
+                                        label:
+                                            "EPT Price",
 
-                                datasets: [{
+                                        data:
+                                            [eptUsd],
 
-                                    label:
-                                        "EPT Price",
+                                        tension:
+                                            0.25,
 
-                                    data:
-                                        prices,
+                                        pointRadius:
+                                            0,
 
-                                    tension:
-                                        0.25,
+                                        borderWidth:
+                                            2,
 
-                                    pointRadius:
-                                        0,
-
-                                    borderWidth:
-                                        2,
-
-                                    fill:
-                                        false
-
-                                }]
-                            },
-
-
-                            options: {
-
-                                responsive:
-                                    true,
-
-                                maintainAspectRatio:
-                                    false,
-
-
-                                plugins: {
-
-                                    legend: {
-
-                                        display:
+                                        fill:
                                             false
-                                    }
+                                    }]
                                 },
 
+                                options: {
 
-                                scales: {
+                                    responsive:
+                                        true,
 
-                                    x: {
+                                    maintainAspectRatio:
+                                        false,
 
-                                        ticks: {
+                                    animation:
+                                        false,
 
-                                            maxTicksLimit:
-                                                8
+                                    plugins: {
+
+                                        legend: {
+
+                                            display:
+                                                false
                                         }
                                     },
 
+                                    scales: {
 
-                                    y: {
+                                        x: {
 
-                                        beginAtZero:
-                                            false
+                                            ticks: {
+
+                                                maxTicksLimit:
+                                                    8
+                                            }
+                                        },
+
+                                        y: {
+
+                                            beginAtZero:
+                                                false
+                                        }
                                     }
                                 }
                             }
-                        }
+                        );
+
+                } else {
+
+                    priceChart.data.labels.push(
+                        label
                     );
+
+                    priceChart.data.datasets[0].data.push(
+                        eptUsd
+                    );
+
+
+                    // Keep last 300 points
+                    if (
+                        priceChart.data.labels.length >
+                        300
+                    ) {
+
+                        priceChart.data.labels.shift();
+
+                        priceChart.data.datasets[0].data.shift();
+                    }
+
+
+                    priceChart.update(
+                        "none"
+                    );
+                }
             }
         }
-
-    } catch (error) {
-
-        console.error(
-            "Chart error:",
-            error
-        );
     }
-}
+
+} catch (error) {
+
+    console.error(
+        "Live price/chart error:",
+        error
+    );
+}                            
+
 
 
 
@@ -631,7 +713,7 @@ loadMarketData();
 
 setInterval(
     loadMarketData,
-    60000
+    15000
 );
 
 </script>  
