@@ -85,13 +85,21 @@ margin-bottom: 20px;
 header h1 {
 font-size: 48px;
 color: #1cff5c;
+text-shadow:
+    0 0 5px rgba(28,255,92,0.8),
+    0 0 12px rgba(28,255,92,0.6),
+    0 0 25px rgba(28,255,92,0.35);
 }
-
 
 header h2 {
 font-size: 30px;
+color: #1cff5c;
+text-shadow:
+    0 0 5px #1cff5c,
+    0 0 12px #1cff5c,
+    0 0 25px rgba(28,255,92,0.8),
+    0 0 45px rgba(28,255,92,0.45);
 }
-
 
 header p {
 font-size: 20px;
@@ -105,8 +113,7 @@ margin-top: 15px;
 }
 
 
-
-.button {
+.buttons .button {
 display: inline-block;
 background: #1cff5c;
 color: black;
@@ -115,6 +122,20 @@ border-radius: 30px;
 text-decoration: none;
 font-weight: bold;
 margin: 10px;
+box-shadow:
+    0 0 8px rgba(28,255,92,0.8),
+    0 0 18px rgba(28,255,92,0.6),
+    0 0 35px rgba(28,255,92,0.35);
+transition: all 0.25s ease;
+}
+
+
+.buttons .button:hover {
+transform: translateY(-2px);
+box-shadow:
+    0 0 10px #1cff5c,
+    0 0 25px #1cff5c,
+    0 0 50px rgba(28,255,92,0.7);
 }
 
 .news-banner {
@@ -281,7 +302,7 @@ width: 130px;
     font-size: 13px;
 }
 .live-market-mini div {
-    white-space: nowrap;l
+    white-space: nowrap;
 }
 .live-market {
     display: flex;
