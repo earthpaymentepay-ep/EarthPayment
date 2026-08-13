@@ -253,98 +253,233 @@ function updateChart(price) {
 
     if (!canvas) return;
 
+
+    // =============================================
+    // LOAD SAVED HISTORY
+    // =============================================
+
+    let history = [];
+
+    try {
+
+        history =
+            JSON.parse(
+                localStorage.getItem("eptPriceHistory")
+            ) || [];
+
+    } catch (error) {
+
+        history = [];
+
+    }
+
+
+    // =============================================
+    // ADD CURRENT PRICE
+    // =============================================
+
     const now =
         new Date();
 
-    const label =
-        now.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-            second: "2-digit"
-        });
+    history.push({
 
+        time:
+            now.getTime(),
+
+        price:
+            price
+
+    });
+
+
+    // =============================================
+    // KEEP LAST 30 DAYS
+    // =============================================
+
+    const thirtyDays =
+        30 * 24 * 60 * 60 * 1000;
+
+    const cutoff =
+        now.getTime() - thirtyDays;
+
+
+    history =
+        history.filter(
+            point =>
+                point.time >= cutoff
+        );
+
+
+    // =============================================
+    // SAVE HISTORY
+    // =============================================
+
+    localStorage.setItem(
+        "eptPriceHistory",
+        JSON.stringify(history)
+    );
+
+
+    // =============================================
+    // PREPARE CHART DATA
+    // =============================================
+
+    const labels =
+        history.map(
+            point =>
+                new Date(
+                    point.time
+                ).toLocaleTimeString(
+                    [],
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit"
+                    }
+                )
+        );
+
+
+    const prices =
+        history.map(
+            point =>
+                point.price
+        );
+
+
+    // =============================================
+    // CREATE CHART
+    // =============================================
 
     if (!priceChart) {
 
         const ctx =
             canvas.getContext("2d");
 
+
         priceChart =
-            new Chart(ctx, {
+            new Chart(
+                ctx,
+                {
 
-                type: "line",
+                    type: "line",
 
-                data: {
+                    data: {
 
-                    labels: [label],
+                        labels:
+                            labels,
 
-                    datasets: [{
+                        datasets: [{
 
-                        label: "EPT Price",
+                            label:
+                                "EPT Price",
 
-                        data: [price],
+                            data:
+                                prices,
 
-                        tension: 0.25,
+                            tension:
+                                0.25,
 
-                        pointRadius: 2,
+                            pointRadius:
+                                0,
 
-                        borderWidth: 2,
+                            borderWidth:
+                                2,
 
-                        fill: false
+                            fill:
+                                false
 
-                    }]
-                },
-
-                options: {
-
-                    responsive: true,
-
-                    maintainAspectRatio: false,
-
-                    animation: false,
-
-                    plugins: {
-
-                        legend: {
-                            display: false
-                        }
-
+                        }]
                     },
 
-                    scales: {
 
-                        x: {
+                    options: {
 
-                            title: {
-                                display: true,
-                                text: "Time"
-                            },
+                        responsive:
+                            true,
 
-                            ticks: {
-                                maxTicksLimit: 8
+                        maintainAspectRatio:
+                            false,
+
+                        animation:
+                            false,
+
+
+                        plugins: {
+
+                            legend: {
+
+                                display:
+                                    false
                             }
 
                         },
 
-                        y: {
 
-                            title: {
-                                display: true,
-                                text: "EPT Price (USD)"
+                        scales: {
+
+                            x: {
+
+                                title: {
+
+                                    display:
+                                        true,
+
+                                    text:
+                                        "Time"
+                                },
+
+                                ticks: {
+
+                                    maxTicksLimit:
+                                        8
+                                }
+
                             },
 
-                            beginAtZero: false
+
+                            y: {
+
+                                title: {
+
+                                    display:
+                                        true,
+
+                                    text:
+                                        "EPT Price (USD)"
+                                },
+
+                                beginAtZero:
+                                    false
+
+                            }
 
                         }
 
                     }
 
                 }
-
-            });
+            );
 
         return;
     }
+
+
+    // =============================================
+    // UPDATE EXISTING CHART
+    // =============================================
+
+    priceChart.data.labels =
+        labels;
+
+    priceChart.data.datasets[0].data =
+        prices;
+
+
+    priceChart.update("none");
+
+}
+                    
 
 
     priceChart.data.labels.push(label);
