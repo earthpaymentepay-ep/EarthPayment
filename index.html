@@ -430,6 +430,233 @@ window.addEventListener("scroll", function () {
 });
 
 </script>
+   <script>
+
+const POOL_ADDRESS =
+"7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx";
+
+const TOTAL_SUPPLY = 100000000;
+
+
+// =====================================================
+// RAYDIUM
+// =====================================================
+
+async function getRaydiumPool() {
+
+    const response = await fetch(
+        "https://api-v3.raydium.io/pools/info/ids?ids=" +
+        POOL_ADDRESS
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            "Raydium HTTP " + response.status
+        );
+    }
+
+    const data = await response.json();
+
+    const pool = data.data?.[0];
+
+    if (!pool) {
+        throw new Error("Raydium pool not found");
+    }
+
+    return pool;
+}
+
+
+// =====================================================
+// SOL USD
+// =====================================================
+
+async function getSolUsd() {
+
+    const response = await fetch(
+        "https://api.jup.ag/price/v3?ids=So11111111111111111111111111111111111111112"
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            "SOL price HTTP " + response.status
+        );
+    }
+
+    const data = await response.json();
+
+    const solData =
+        data[
+            "So11111111111111111111111111111111111111112"
+        ];
+
+    if (!solData) {
+        throw new Error("SOL price not found");
+    }
+
+    const solUsd = Number(solData.usdPrice);
+
+    if (!Number.isFinite(solUsd) || solUsd <= 0) {
+        throw new Error("Invalid SOL/USD price");
+    }
+
+    return solUsd;
+}
+
+
+// =====================================================
+// LOAD MARKET DATA
+// =====================================================
+
+async function loadHomeMarketData() {
+
+    try {
+
+        const pool =
+            await getRaydiumPool();
+
+        const solAmount =
+            Number(pool.mintAmountA);
+
+        const eptAmount =
+            Number(pool.mintAmountB);
+
+        if (
+            !Number.isFinite(solAmount) ||
+            !Number.isFinite(eptAmount) ||
+            solAmount <= 0 ||
+            eptAmount <= 0
+        ) {
+            throw new Error(
+                "Invalid Raydium pool amounts"
+            );
+        }
+
+
+        // EPT / SOL
+
+        const eptSol =
+            solAmount / eptAmount;
+
+
+        // SOL / USD
+
+        const solUsd =
+            await getSolUsd();
+
+
+        // EPT / USD
+
+        const eptUsd =
+            eptSol * solUsd;
+
+
+        // MARKET CAP
+
+        const marketCap =
+            eptUsd * TOTAL_SUPPLY;
+
+
+        // LIQUIDITY
+
+        const liquidity =
+            Number(pool.tvl || 0);
+
+
+        // =================================================
+        // PRICE
+        // =================================================
+
+        const priceElement =
+            document.getElementById("price");
+
+        if (priceElement) {
+
+            priceElement.textContent =
+                "$" + eptUsd.toFixed(8);
+
+        }
+
+
+        // =================================================
+        // MARKET CAP
+        // =================================================
+
+        const marketcapElement =
+            document.getElementById("marketcap");
+
+        if (marketcapElement) {
+
+            marketcapElement.textContent =
+                "$" +
+                marketCap.toLocaleString(
+                    undefined,
+                    {
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+
+        // =================================================
+        // LIQUIDITY
+        // =================================================
+
+        const liquidityElement =
+            document.getElementById("liquidity");
+
+        if (liquidityElement) {
+
+            liquidityElement.textContent =
+                "$" +
+                liquidity.toLocaleString(
+                    undefined,
+                    {
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+
+        console.log(
+            "EPT HOME MARKET DATA:",
+            {
+                price: eptUsd,
+                marketCap: marketCap,
+                liquidity: liquidity
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "HOME MARKET DATA ERROR:",
+            error
+        );
+
+    }
+
+}
+
+
+// =====================================================
+// START
+// =====================================================
+
+loadHomeMarketData();
+
+
+// Update every 60 seconds
+
+setInterval(
+    loadHomeMarketData,
+    60000
+);
+
+</script>
    
  </body>
  
