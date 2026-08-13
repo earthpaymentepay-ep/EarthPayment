@@ -162,6 +162,14 @@ const POOL_ADDRESS =
     "7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx";
 
 const TOTAL_SUPPLY = 100000000;
+   const SUPABASE_URL = "https://pnjxoinimtewqjdmfaza.supabase.co";
+const SUPABASE_KEY = "sb_publishable_IFMFe9qwEhWJnFchuRB2tA_tmfDQGNa";
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
 
 
 // ================================
@@ -1103,14 +1111,31 @@ async function loadMarketData() {
                 );
         }
 
+// ---------------------------------------------
+// SAVE PRICE TO SUPABASE
+// ---------------------------------------------
 
-        // ---------------------------------------------
-        // LIVE CHART
-        // ---------------------------------------------
+const { error: insertError } =
+    await supabaseClient
+        .from("ept_price_history")
+        .insert({
+            price_usd: eptUsd
+        });
 
-        updateChart(
-            eptUsd
-        );
+if (insertError) {
+    console.error(
+        "Supabase save error:",
+        insertError
+    );
+}
+
+
+// ---------------------------------------------
+// UPDATE LIVE CHART
+// ---------------------------------------------
+
+updateChart(eptUsd);
+        
 
 
         // ---------------------------------------------
@@ -1153,12 +1178,145 @@ async function loadMarketData() {
     }
 }
 
+// =====================================================
+// LOAD PRICE HISTORY
+// =====================================================
 
+async function loadPriceHistory() {
+
+    const { data, error } =
+        await supabaseClient
+            .from("ept_price_history")
+            .select("created_at, price_usd")
+            .order("created_at", {
+                ascending: true
+            })
+            .limit(300);
+
+    if (error) {
+
+        console.error(
+            "Supabase history error:",
+            error
+        );
+
+        return;
+    }
+
+    if (!data || data.length === 0) {
+        return;
+    }
+
+    const canvas =
+        document.getElementById(
+            "priceChart"
+        );
+
+    if (!canvas) {
+        return;
+    }
+
+    const labels =
+        data.map(row =>
+            new Date(
+                row.created_at
+            ).toLocaleTimeString(
+                [],
+                {
+                    hour: "2-digit",
+                    minute: "2-digit"
+                }
+            )
+        );
+
+    const prices =
+        data.map(row =>
+            Number(row.price_usd)
+        );
+
+    const ctx =
+        canvas.getContext("2d");
+
+    priceChart =
+        new Chart(
+            ctx,
+            {
+
+                type: "line",
+
+                data: {
+
+                    labels: labels,
+
+                    datasets: [{
+
+                        label:
+                            "EPT Price",
+
+                        data: prices,
+
+                        tension:
+                            0.25,
+
+                        pointRadius:
+                            0,
+
+                        borderWidth:
+                            2,
+
+                        fill:
+                            false
+                    }]
+                },
+
+                options: {
+
+                    responsive:
+                        true,
+
+                    maintainAspectRatio:
+                        false,
+
+                    animation:
+                        false,
+
+                    plugins: {
+
+                        legend: {
+                            display: false
+                        }
+                    },
+
+                    scales: {
+
+                        x: {
+
+                            ticks: {
+                                maxTicksLimit: 8
+                            }
+                        },
+
+                        y: {
+
+                            beginAtZero: false
+                        }
+                    }
+                }
+            }
+        );
+}
 // =====================================================
 // FIRST LOAD
 // =====================================================
+loadPriceHistory();
 
 loadMarketData();
+
+setInterval(
+    loadMarketData,
+    60000
+);
+
 
 
 // =====================================================
@@ -1167,7 +1325,7 @@ loadMarketData();
 
 setInterval(
     loadMarketData,
-    500
+    60000
 );
 
 </script>
@@ -1175,9 +1333,7 @@ setInterval(
             
 
             
-
-                                    :
-                                                                      
+                                                                                                    
 
   <script>
 const currentPage = window.location.pathname.split('/').pop() || 'index.html';
