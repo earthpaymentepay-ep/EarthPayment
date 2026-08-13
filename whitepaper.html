@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EarthPayment | Whitepaper</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<nav>
+
+<div class="nav-logo">
+<img src="assets/logo.png" alt="EarthPayment Logo">
+</div>
+
+<div class="nav-links">
+<a href="index.html">Home</a>
+<a href="index.html#about">About</a>
+<a href="index.html#tokenomics">Tokenomics</a>
+<a href="index.html#roadmap">Roadmap</a>
+<a href="index.html#vision">Vision</a>
+<a href="whitepaper.html" class="active">Whitepaper</a>
+<a href="markets.html">Markets</a>
+<a href="news.html">News</a>
+
+<a href="mailto:earthpaymentsupport@gmail.com" class="support">
+Support
+</a>
+
+<a href="https://raydium.io/swap/?inputMint=Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL&outputMint=sol" target="_blank" class="buy">
+Buy EPT
+</a>
+</div>
+
+</nav>
+
+<header>
+
+<section class="news-page">
+
+<h1>📄 Whitepaper</h1>
+
+<article class="news-item">
+
+<h2>EarthPayment Whitepaper v1.1</h2>
+
+<h3>Current Version — August 2026</h3>
+
+<p>
+This is the current official version of the EarthPayment Whitepaper.
+It presents the project's current concept, ecosystem, token structure,
+development roadmap and future direction.
+</p>
+
+<p>
+<a href="documents/whitepaper-v1.1.pdf" target="_blank" class="button">
+Read Whitepaper v1.1
+</a>
+</p>
+
+</article>
+
+
+<div class="news-history">
+
+<h2>Previous Versions</h2>
+
+<article class="news-history-item">
+
+<span>Whitepaper v1.0</span>
+
+<strong>Original Version</strong>
+
+<a href="documents/whitepaper-v1.0.pdf" target="_blank">
+View v1.0
+</a>
+
+</article>
+
+</div>
+
+</section>
+
+
+<script>
+const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+
+document.querySelectorAll('.nav-links a').forEach(link => {
+    const href = link.getAttribute('href');
+
+    if (href === currentPage) {
+        link.classList.add('active');
+    }
+});
+</script>
+
+</body>
+</html>
