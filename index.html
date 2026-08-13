@@ -405,6 +405,32 @@ if (currentHash) {
 }
 </script>
 
+<script>
+
+let lastScrollTop = 0;
+const nav = document.querySelector("nav");
+
+window.addEventListener("scroll", function () {
+
+    let currentScroll =
+        window.pageYOffset || document.documentElement.scrollTop;
+
+    if (currentScroll > lastScrollTop && currentScroll > 80) {
+
+        nav.classList.add("hide-menu");
+
+    } else {
+
+        nav.classList.remove("hide-menu");
+
+    }
+
+    lastScrollTop = currentScroll <= 0 ? 0 : currentScroll;
+
+});
+
+</script>
+   
  </body>
  
 </html>
