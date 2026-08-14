@@ -520,7 +520,7 @@ function addPriceToChart(price) {
 
 
     if (
-        priceChart.data.labels.length > 300
+        priceChart.data.labels.length > 3360
     ) {
 
         priceChart.data.labels.shift();
@@ -553,7 +553,7 @@ async function loadPriceHistory() {
                     ascending: true
                 }
             )
-            .limit(300);
+            .limit(3360);
 
 
     if (error) {
