@@ -1,1 +1,385 @@
+/* =========================================
+   EARTHPAYMENT HUB
+   Main Styles
+========================================= */
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #050805;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+header {
+    width: 100%;
+    padding: 18px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    border-bottom: 1px solid rgba(28, 255, 92, 0.25);
+
+    background: rgba(5, 8, 5, 0.95);
+
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 21px;
+    font-weight: bold;
+    color: #1cff5c;
+}
+
+.wallet {
+    border: 1px solid #1cff5c;
+    padding: 9px 16px;
+    border-radius: 8px;
+
+    color: #1cff5c;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.wallet:hover {
+    background: #1cff5c;
+    color: #050805;
+}
+
+
+/* =========================================
+   MAIN
+========================================= */
+
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/* =========================================
+   HERO
+========================================= */
+
+.hero {
+    text-align: center;
+    padding: 70px 20px 50px;
+}
+
+.hero h1 {
+    font-size: 48px;
+    color: #1cff5c;
+
+    margin-bottom: 8px;
+}
+
+.hero p {
+    font-size: 20px;
+    color: #b7b7b7;
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.search {
+    max-width: 650px;
+
+    margin: 30px auto 0;
+
+    padding: 16px 20px;
+
+    border: 1px solid rgba(28, 255, 92, 0.35);
+
+    border-radius: 10px;
+
+    text-align: left;
+
+    color: #8c8c8c;
+
+    background: rgba(28, 255, 92, 0.03);
+}
+
+
+/* =========================================
+   SECTIONS
+========================================= */
+
+.section {
+    margin-bottom: 70px;
+}
+
+.section-title {
+    display: flex;
+
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    border-bottom: 1px solid rgba(28, 255, 92, 0.15);
+
+    padding-bottom: 10px;
+}
+
+.section-title h2 {
+    color: #1cff5c;
+    font-size: 26px;
+}
+
+.section-title span {
+    color: #777;
+    font-size: 14px;
+}
+
+
+/* =========================================
+   GLOBAL PULSE
+========================================= */
+
+.pulse-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+.card {
+    background: #0a100a;
+
+    border: 1px solid rgba(28, 255, 92, 0.18);
+
+    border-radius: 12px;
+
+    padding: 25px;
+
+    transition: 0.25s;
+}
+
+.card:hover {
+    border-color: #1cff5c;
+
+    transform: translateY(-3px);
+}
+
+.card h3 {
+    color: #ffffff;
+
+    margin-bottom: 15px;
+}
+
+.card p {
+    color: #999;
+
+    margin-bottom: 5px;
+}
+
+
+/* =========================================
+   MODULE GRID
+========================================= */
+
+.module-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+}
+
+.module-card {
+    padding: 20px;
+
+    background: #0a100a;
+
+    border: 1px solid rgba(28, 255, 92, 0.15);
+
+    border-radius: 10px;
+
+    text-align: center;
+
+    color: #ddd;
+
+    cursor: pointer;
+
+    transition: 0.25s;
+}
+
+.module-card:hover {
+    border-color: #1cff5c;
+
+    color: #1cff5c;
+
+    transform: translateY(-3px);
+}
+
+
+/* =========================================
+   ASK THE WORLD
+========================================= */
+
+.poll-card {
+    background: #0a100a;
+
+    border: 1px solid rgba(28, 255, 92, 0.2);
+
+    border-radius: 12px;
+
+    padding: 30px;
+
+    text-align: center;
+}
+
+.poll-card h3 {
+    margin-bottom: 10px;
+}
+
+.poll-card p {
+    color: #999;
+
+    margin-bottom: 20px;
+}
+
+button {
+    background: #1cff5c;
+
+    border: none;
+
+    padding: 11px 20px;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.85;
+}
+
+
+/* =========================================
+   PAYMENTS
+========================================= */
+
+.payments {
+    border-top: 1px solid rgba(28, 255, 92, 0.15);
+
+    padding-top: 40px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer {
+    margin-top: 80px;
+
+    padding: 40px 20px;
+
+    text-align: center;
+
+    border-top: 1px solid rgba(28, 255, 92, 0.2);
+
+    color: #777;
+}
+
+footer h2 {
+    color: #1cff5c;
+
+    margin-bottom: 10px;
+}
+
+footer p {
+    margin-bottom: 5px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 900px) {
+
+    .pulse-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .module-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    header {
+        padding: 15px 4%;
+    }
+
+    .logo {
+        font-size: 17px;
+    }
+
+    .wallet {
+        padding: 7px 10px;
+        font-size: 13px;
+    }
+
+    main {
+        width: 92%;
+    }
+
+    .hero {
+        padding-top: 50px;
+    }
+
+    .hero h1 {
+        font-size: 32px;
+    }
+
+    .hero p {
+        font-size: 17px;
+    }
+
+    .module-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title {
+        display: block;
+    }
+
+    .section-title span {
+        display: block;
+        margin-top: 4px;
+    }
+
+  }
