@@ -426,8 +426,7 @@ function createChart(labels, prices) {
 
                         tension: 0.25,
 
-                        pointRadius: 3,
-                        pointHoverRadius: 6,
+                        pointRadius: 0,
 
                         borderWidth: 2,
 
@@ -647,6 +646,15 @@ async function loadPriceHistory() {
 
 }
 
+    
+// =====================================================
+// SUPABASE SAVE TIMER
+// =====================================================
+
+let lastSupabaseSave = 0;
+
+const SUPABASE_SAVE_INTERVAL =
+    5 * 60 * 1000;
 
 // =====================================================
 // LOAD CURRENT MARKET DATA
@@ -791,36 +799,44 @@ async function loadMarketData() {
 
         }
 
+// =================================================
+// SAVE PRICE TO SUPABASE EVERY 5 MINUTES
+// =================================================
 
-        // =================================================
-        // SAVE PRICE
-        // =================================================
+const now = Date.now();
 
-        const { data, error } =
-            await supabaseClient
-                .from("ept_price_history")
-                .insert({
-                    price_usd: eptUsd
-                })
-                .select();
+if (
+    now - lastSupabaseSave >=
+    SUPABASE_SAVE_INTERVAL
+) {
+
+    const { data, error } =
+        await supabaseClient
+            .from("ept_price_history")
+            .insert({
+                price_usd: eptUsd
+            })
+            .select();
 
 
-        if (error) {
+    if (error) {
 
-            console.error(
-                "SUPABASE INSERT ERROR:",
-                error
-            );
+        console.error(
+            "SUPABASE INSERT ERROR:",
+            error
+        );
 
-        } else {
+    } else {
 
-            console.log(
-                "PRICE SAVED TO SUPABASE:",
-                data
-            );
+        console.log(
+            "PRICE SAVED TO SUPABASE:",
+            data
+        );
 
-        }
-
+        lastSupabaseSave = now;
+    }
+}
+        
 
         // =================================================
         // UPDATE CHART
@@ -854,8 +870,7 @@ async function loadMarketData() {
 
     }
 
-}
-
+}        
 
 // =====================================================
 // START
@@ -876,10 +891,10 @@ async function startMarkets() {
 startMarkets();
 
 
-// Update every 60 seconds
+// Update every 15 seconds
 setInterval(
     loadMarketData,
-    60000
+    15000
 );
 
 </script>
