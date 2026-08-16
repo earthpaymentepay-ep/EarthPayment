@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -11,270 +12,701 @@
 
 </head>
 
+
 <body>
+
+
+<!-- HEADER -->
 
 <header>
 
-    <div class="logo">
-        🌍 EarthPayment Hub
+    <div class="hub-logo">
+        🌍 <span>EarthPayment</span> Hub
     </div>
 
-    <div class="wallet">
+
+    <nav>
+
+        <a href="#global">Global Pulse</a>
+        <a href="#tools">Tools</a>
+        <a href="#connect">Connect</a>
+        <a href="#world">World</a>
+        <a href="#ask">Ask the World</a>
+        <a href="#community">Community</a>
+        <a href="#games">Games</a>
+        <a href="#payments">Payments</a>
+
+    </nav>
+
+
+    <button class="wallet-button">
         🔐 Connect Wallet
-    </div>
+    </button>
 
 </header>
 
 
+
+<!-- MAIN -->
+
 <main>
 
-    <!-- HERO -->
 
-    <section class="hero">
+<!-- HERO -->
 
-        <h1>EarthPayment Hub</h1>
+<section class="hero">
 
-        <p>The world, connected.</p>
+    <div class="hero-badge">
+        🌍 EARTHPAYMENT HUB
+    </div>
 
-        <div class="search">
-            🔎 Search the Hub...
-        </div>
+    <h1>
+        One place.<br>
+        <span>One world. Connected.</span>
+    </h1>
 
-    </section>
+    <p>
+        Tools, global information, community,
+        games and digital payments — all in one place.
+    </p>
 
 
-    <!-- GLOBAL PULSE -->
+    <div class="hub-search">
 
-    <section class="section">
+        <span>🔎</span>
 
-        <div class="section-title">
+        <input
+            type="text"
+            placeholder="Search EarthPayment Hub..."
+        >
+
+    </div>
+
+</section>
+
+
+
+<!-- GLOBAL PULSE -->
+
+<section id="global" class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                LIVE HUB
+            </span>
+
             <h2>🌐 Global Pulse</h2>
 
-            <span>Live Hub Activity</span>
         </div>
 
+        <span class="section-description">
+            What's happening around the world?
+        </span>
 
-        <div class="pulse-grid">
+    </div>
 
-            <div class="card">
 
-                <h3>🔥 Trending</h3>
+    <div class="pulse-grid">
 
-                <p>AI & Technology</p>
-                <p>Global Economy</p>
-                <p>Environment</p>
 
+        <div class="pulse-card">
+
+            <div class="pulse-icon">
+                🔥
             </div>
 
-
-            <div class="card">
-
-                <h3>📊 Community Pulse</h3>
-
-                <p>Active Polls</p>
-                <p>Community Activity</p>
-                <p>Global Votes</p>
-
-            </div>
-
-
-            <div class="card">
-
-                <h3>🌎 World Activity</h3>
-
-                <p>Global Events</p>
-                <p>Discussions</p>
-                <p>Trending Topics</p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- CONNECT -->
-
-    <section class="section">
-
-        <div class="section-title">
-            <h2>🌐 Connect</h2>
-            <span>Stay connected with the world</span>
-        </div>
-
-
-        <div class="module-grid">
-
-            <div class="module-card">📰 World News</div>
-            <div class="module-card">🌤️ Weather</div>
-            <div class="module-card">🕐 World Time</div>
-            <div class="module-card">💱 Currencies</div>
-            <div class="module-card">🗺️ Maps</div>
-            <div class="module-card">🌐 Translator</div>
-            <div class="module-card">📅 World Events</div>
-
-        </div>
-
-    </section>
-
-
-    <!-- WORLD -->
-
-    <section class="section">
-
-        <div class="section-title">
-            <h2>🌎 World</h2>
-            <span>Explore the world</span>
-        </div>
-
-
-        <div class="module-grid">
-
-            <div class="module-card">🌍 Countries</div>
-            <div class="module-card">🏙️ Cities</div>
-            <div class="module-card">✈️ Travel</div>
-            <div class="module-card">🚆 Transport</div>
-            <div class="module-card">🏪 Local Services</div>
-            <div class="module-card">🏢 Businesses</div>
-            <div class="module-card">🤝 Offers & Services</div>
-
-        </div>
-
-    </section>
-
-
-    <!-- TOOLS -->
-
-    <section class="section">
-
-        <div class="section-title">
-            <h2>🛠 Tools</h2>
-            <span>Useful tools for everyday life</span>
-        </div>
-
-
-        <div class="module-grid">
-
-            <div class="module-card">🧮 Calculator</div>
-            <div class="module-card">🔄 Unit Converter</div>
-            <div class="module-card">🔲 QR Generator</div>
-            <div class="module-card">🧾 Invoice Generator</div>
-            <div class="module-card">💱 Currency Converter</div>
-            <div class="module-card">🤖 AI Tools</div>
-            <div class="module-card">📁 File Tools</div>
-
-        </div>
-
-    </section>
-
-
-    <!-- ASK THE WORLD -->
-
-    <section class="section">
-
-        <div class="section-title">
-            <h2>📊 Ask the World</h2>
-            <span>Discover what people think</span>
-        </div>
-
-
-        <div class="poll-card">
-
-            <h3>No global polls yet</h3>
+            <h3>Trending</h3>
 
             <p>
-                Be one of the first people to create a question
-                for the EarthPayment community.
+                Discover the topics people are
+                talking about around the world.
             </p>
 
-            <button>Create a Poll</button>
+            <a href="#world">
+                Explore trends →
+            </a>
 
         </div>
 
-    </section>
 
 
-    <!-- COMMUNITY -->
+        <div class="pulse-card">
 
-    <section class="section">
+            <div class="pulse-icon">
+                📊
+            </div>
 
-        <div class="section-title">
+            <h3>Community Pulse</h3>
+
+            <p>
+                See current community activity,
+                polls and global participation.
+            </p>
+
+            <a href="#ask">
+                View activity →
+            </a>
+
+        </div>
+
+
+
+        <div class="pulse-card">
+
+            <div class="pulse-icon">
+                🌎
+            </div>
+
+            <h3>World Activity</h3>
+
+            <p>
+                Explore events, discussions and
+                what's changing around the world.
+            </p>
+
+            <a href="#connect">
+                Explore world →
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- TOOLS -->
+
+<section id="tools" class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                EVERYDAY UTILITY
+            </span>
+
+            <h2>🛠 Tools</h2>
+
+        </div>
+
+        <span class="section-description">
+            Useful tools for everyday life
+        </span>
+
+    </div>
+
+
+    <div class="module-grid">
+
+
+        <div class="module-card">
+            <span>🧮</span>
+            <h3>Calculator</h3>
+            <p>Fast everyday calculations.</p>
+        </div>
+
+
+        <div class="module-card">
+            <span>🔄</span>
+            <h3>Unit Converter</h3>
+            <p>Convert units quickly.</p>
+        </div>
+
+
+        <div class="module-card">
+            <span>💱</span>
+            <h3>Currency</h3>
+            <p>Convert currencies and rates.</p>
+        </div>
+
+
+        <div class="module-card">
+            <span>🔲</span>
+            <h3>QR Generator</h3>
+            <p>Create QR codes instantly.</p>
+        </div>
+
+
+        <div class="module-card">
+            <span>🧾</span>
+            <h3>Invoice Generator</h3>
+            <p>Create simple invoices.</p>
+        </div>
+
+
+        <div class="module-card">
+            <span>🤖</span>
+            <h3>AI Tools</h3>
+            <p>Useful AI-powered utilities.</p>
+        </div>
+
+
+        <div class="module-card">
+            <span>📁</span>
+            <h3>File Tools</h3>
+            <p>Work with files and documents.</p>
+        </div>
+
+
+        <div class="module-card more-card">
+            <span>＋</span>
+            <h3>More Tools</h3>
+            <p>More utilities coming soon.</p>
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- CONNECT -->
+
+<section id="connect" class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                STAY CONNECTED
+            </span>
+
+            <h2>🌐 Connect</h2>
+
+        </div>
+
+        <span class="section-description">
+            Connect with the world
+        </span>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+
+        <div class="feature-card">
+            <span>📰</span>
+            <h3>World News</h3>
+            <p>Follow important stories from around the world.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>🌤️</span>
+            <h3>Weather</h3>
+            <p>Current weather and forecasts.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>🕐</span>
+            <h3>World Time</h3>
+            <p>Check time zones around the world.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>💱</span>
+            <h3>Exchange Rates</h3>
+            <p>Follow currencies and global rates.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>🗺️</span>
+            <h3>Maps</h3>
+            <p>Explore places around the world.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>🌐</span>
+            <h3>Translator</h3>
+            <p>Break language barriers.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>📅</span>
+            <h3>World Events</h3>
+            <p>Discover events happening around the world.</p>
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- WORLD -->
+
+<section id="world" class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                EXPLORE
+            </span>
+
+            <h2>🌎 World</h2>
+
+        </div>
+
+        <span class="section-description">
+            Discover places, people and opportunities
+        </span>
+
+    </div>
+
+
+    <div class="feature-grid">
+
+
+        <div class="feature-card">
+            <span>🌍</span>
+            <h3>Countries</h3>
+            <p>Explore countries around the world.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>🏙️</span>
+            <h3>Cities</h3>
+            <p>Discover cities and local information.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>✈️</span>
+            <h3>Travel</h3>
+            <p>Explore travel information and destinations.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>🚆</span>
+            <h3>Transport</h3>
+            <p>Explore transportation options.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>🏪</span>
+            <h3>Local Services</h3>
+            <p>Find useful services around you.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>🏢</span>
+            <h3>Businesses</h3>
+            <p>Discover businesses and organizations.</p>
+        </div>
+
+
+        <div class="feature-card">
+            <span>🤝</span>
+            <h3>Offers & Services</h3>
+            <p>Services and opportunities from people.</p>
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- ASK THE WORLD -->
+
+<section id="ask" class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                GLOBAL OPINION
+            </span>
+
+            <h2>📊 Ask the World</h2>
+
+        </div>
+
+        <span class="section-description">
+            Discover what people around the world think
+        </span>
+
+    </div>
+
+
+    <div class="ask-card">
+
+        <div>
+
+            <span class="ask-icon">
+                🌍
+            </span>
+
+            <h3>
+                Ask a question.
+                <br>
+                Hear from the world.
+            </h3>
+
+            <p>
+                Create and participate in global polls.
+                Community votes and verified wallet votes
+                can be displayed separately.
+            </p>
+
+        </div>
+
+
+        <div class="ask-actions">
+
+            <button>
+                Explore Polls
+            </button>
+
+            <button class="secondary-button">
+                Create a Poll
+            </button>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- COMMUNITY -->
+
+<section id="community" class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                PEOPLE
+            </span>
+
             <h2>👥 Community</h2>
-            <span>People • Projects • Discussions</span>
-        </div>
-
-
-        <div class="module-grid">
-
-            <div class="module-card">👤 Profiles</div>
-            <div class="module-card">📁 Projects</div>
-            <div class="module-card">🤝 Offers</div>
-            <div class="module-card">🏪 Marketplace</div>
-            <div class="module-card">💬 Communication</div>
 
         </div>
 
-    </section>
+        <span class="section-description">
+            People, projects and communication
+        </span>
+
+    </div>
 
 
-    <!-- GAMES -->
+    <div class="module-grid">
 
-    <section class="section">
 
-        <div class="section-title">
+        <div class="module-card">
+            <span>👤</span>
+            <h3>Profiles</h3>
+            <p>Discover people and creators.</p>
+        </div>
+
+
+        <div class="module-card">
+            <span>📁</span>
+            <h3>Projects</h3>
+            <p>Discover interesting projects.</p>
+        </div>
+
+
+        <div class="module-card">
+            <span>🤝</span>
+            <h3>Offers</h3>
+            <p>Share and discover opportunities.</p>
+        </div>
+
+
+        <div class="module-card">
+            <span>🏪</span>
+            <h3>Marketplace</h3>
+            <p>A future community marketplace.</p>
+        </div>
+
+
+        <div class="module-card">
+            <span>💬</span>
+            <h3>Communication</h3>
+            <p>Connect and communicate.</p>
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- GAMES -->
+
+<section id="games" class="section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                PLAY
+            </span>
+
             <h2>🎮 Games</h2>
-            <span>Play • Challenge • Compete</span>
-        </div>
-
-
-        <div class="module-grid">
-
-            <div class="module-card">🧠 Quizzes</div>
-            <div class="module-card">🌍 World Quiz</div>
-            <div class="module-card">⚡ Quick Games</div>
-            <div class="module-card">🏆 Challenges</div>
-            <div class="module-card">🔥 Daily Challenge</div>
 
         </div>
 
-    </section>
+        <span class="section-description">
+            Play, challenge and compete
+        </span>
+
+    </div>
 
 
-    <!-- PAYMENTS -->
+    <div class="games-banner">
 
-    <section class="section payments">
 
-        <div class="section-title">
+        <div>
+
+            <span class="game-icon">
+                🎮
+            </span>
+
+            <h3>
+                Play with the world.
+            </h3>
+
+            <p>
+                Quizzes, challenges and games
+                will become part of the Hub.
+            </p>
+
+        </div>
+
+
+        <div class="game-list">
+
+            <span>🧠 Quizzes</span>
+            <span>🌍 World Quiz</span>
+            <span>⚡ Quick Games</span>
+            <span>🏆 Challenges</span>
+            <span>🔥 Daily Challenge</span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- PAYMENTS -->
+
+<section id="payments" class="section payments-section">
+
+    <div class="section-heading">
+
+        <div>
+
+            <span class="section-label">
+                ECONOMIC LAYER
+            </span>
+
             <h2>💳 Payments</h2>
-            <span>The economic layer of EarthPayment</span>
-        </div>
-
-
-        <div class="module-grid">
-
-            <div class="module-card">🪙 EPT</div>
-            <div class="module-card">₿ Cryptocurrencies</div>
-            <div class="module-card">💳 Payment Tools</div>
-            <div class="module-card">🔲 QR Payments</div>
-            <div class="module-card">👛 Wallet</div>
 
         </div>
 
-    </section>
+        <span class="section-description">
+            Digital payments and EarthPayment
+        </span>
+
+    </div>
+
+
+    <div class="payment-card">
+
+
+        <div class="payment-main">
+
+            <span class="payment-icon">
+                💳
+            </span>
+
+            <h3>
+                EarthPayment
+            </h3>
+
+            <p>
+                EPT, cryptocurrency and payment tools
+                will become part of the Hub.
+            </p>
+
+        </div>
+
+
+        <div class="payment-items">
+
+            <span>🪙 EPT</span>
+            <span>₿ Cryptocurrencies</span>
+            <span>🔲 QR Payments</span>
+            <span>👛 Wallet</span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
 
 </main>
 
 
+
+<!-- FOOTER -->
+
 <footer>
 
-    <h2>EARTHPAYMENT HUB</h2>
+    <div class="footer-logo">
+        🌍 EARTHPAYMENT HUB
+    </div>
 
-    <p>One place. One world. Connected.</p>
+    <p>
+        One place. One world. Connected.
+    </p>
 
-    <p>© 2026 EarthPayment</p>
+    <div class="footer-line"></div>
+
+    <span>
+        © 2026 EarthPayment
+    </span>
 
 </footer>
 
+
+
 </body>
 
-  </html>
+</html>
