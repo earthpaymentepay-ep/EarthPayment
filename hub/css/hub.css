@@ -821,4 +821,21 @@ footer {
         padding: 25px;
     }
 
-}    
+}   
+
+.hub-module-link {
+    display: inline-block;
+
+    margin-top: 20px;
+
+    color: #1cff5c;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.25s;
+}
+
+.hub-module-link:hover {
+    transform: translateX(4px);
+}
