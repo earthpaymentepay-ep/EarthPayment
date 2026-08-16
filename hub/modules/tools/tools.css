@@ -1,0 +1,231 @@
+/* =========================================
+   EARTHPAYMENT HUB
+   TOOLS MODULE
+========================================= */
+
+.tools-hero {
+    text-align: center;
+    padding: 70px 20px 55px;
+}
+
+.tools-hero h1 {
+    font-size: clamp(42px, 6vw, 64px);
+    margin: 10px 0 12px;
+}
+
+.tools-hero p {
+    color: #888;
+    font-size: 17px;
+}
+
+
+/* =========================================
+   TOOLS SECTION
+========================================= */
+
+.tools-section {
+    margin-bottom: 70px;
+}
+
+.tools-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+
+    border-bottom: 1px solid rgba(28, 255, 92, 0.14);
+}
+
+.tools-heading h2 {
+    font-size: 27px;
+}
+
+#toolCount {
+    color: #666;
+    font-size: 13px;
+}
+
+
+/* =========================================
+   TOOLS GRID
+========================================= */
+
+.tools-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+}
+
+
+/* =========================================
+   TOOL CARD
+========================================= */
+
+.tool-card {
+    display: block;
+
+    min-height: 190px;
+
+    padding: 28px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #0b120b,
+            #070b07
+        );
+
+    border: 1px solid rgba(28, 255, 92, 0.15);
+
+    border-radius: 14px;
+
+    transition:
+        transform 0.25s,
+        border-color 0.25s,
+        box-shadow 0.25s;
+
+    cursor: pointer;
+}
+
+.tool-card:hover {
+    transform: translateY(-5px);
+
+    border-color: rgba(28, 255, 92, 0.55);
+
+    box-shadow:
+        0 12px 35px rgba(0, 0, 0, 0.35);
+}
+
+.tool-icon {
+    display: block;
+
+    font-size: 32px;
+
+    margin-bottom: 17px;
+}
+
+.tool-card h3 {
+    font-size: 19px;
+
+    margin-bottom: 7px;
+}
+
+.tool-card p {
+    color: #777;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   COMING SOON
+========================================= */
+
+.coming-soon {
+    margin: 20px 0 80px;
+
+    padding: 45px 25px;
+
+    text-align: center;
+
+    background: #080d08;
+
+    border: 1px dashed rgba(28, 255, 92, 0.25);
+
+    border-radius: 14px;
+}
+
+.coming-soon > span {
+    display: block;
+
+    color: #1cff5c;
+
+    font-size: 32px;
+
+    margin-bottom: 8px;
+}
+
+.coming-soon h2 {
+    margin-bottom: 8px;
+
+    font-size: 22px;
+}
+
+.coming-soon p {
+    color: #777;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   SEARCH RESULTS
+========================================= */
+
+.tool-card.hidden {
+    display: none;
+}
+
+.no-tools {
+    padding: 40px;
+
+    text-align: center;
+
+    color: #777;
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 900px) {
+
+    .tools-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 600px) {
+
+    .tools-hero {
+        padding: 55px 10px 45px;
+    }
+
+    .tools-hero h1 {
+        font-size: 40px;
+    }
+
+    .tools-hero p {
+        font-size: 15px;
+    }
+
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tools-heading {
+        align-items: flex-start;
+    }
+
+    .tool-card {
+        min-height: auto;
+
+        padding: 23px;
+    }
+
+  }
