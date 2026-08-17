@@ -783,7 +783,58 @@ footer {
 
         max-width: none;
     }
+/* GLOBAL PULSE - MOBILE */
 
+.pulse-grid {
+    gap: 10px;
+}
+
+.pulse-card {
+    padding: 16px;
+    border-radius: 12px;
+}
+
+.pulse-card h3 {
+    margin: 6px 0;
+    font-size: 18px;
+}
+
+.pulse-card p {
+    margin: 6px 0 10px;
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.pulse-icon {
+    font-size: 22px;
+    margin-bottom: 4px;
+}
+
+.pulse-data {
+    gap: 5px;
+    margin: 8px 0;
+}
+
+.pulse-data span {
+    font-size: 12px;
+    padding: 4px 7px;
+}
+
+.hub-stats {
+    gap: 6px;
+}
+
+.hub-stats div {
+    padding: 7px;
+}
+
+.hub-stats strong {
+    font-size: 16px;
+}
+
+.hub-stats span {
+    font-size: 10px;
+}
 }
 
 
