@@ -745,11 +745,17 @@ footer {
         font-size: 15px;
     }
 
-    .pulse-grid,
-    .module-grid,
-    .feature-grid {
-        grid-template-columns: 1fr 1fr;
-    }
+    .pulse-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.module-grid,
+.feature-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
 
     .section-heading {
         display: block;
@@ -790,8 +796,8 @@ footer {
 }
 
 .pulse-card {
-    padding: 16px;
-    border-radius: 12px;
+    padding: 12px;
+    border-radius: 10px;
 }
 
 .pulse-card h3 {
@@ -800,8 +806,8 @@ footer {
 }
 
 .pulse-card p {
-    margin: 6px 0 10px;
-    font-size: 13px;
+    margin: 4px 0 10px;
+    font-size: 16px;
     line-height: 1.45;
 }
 
@@ -856,14 +862,17 @@ footer {
         font-size: 9px;
     }
 
-    .pulse-grid,
-    .module-grid,
-    .feature-grid {
-        grid-template-columns: 1fr;
-    }
+    .pulse-grid {
+    grid-template-columns: 1fr 1fr;
+}
+
+.module-grid,
+.feature-grid {
+    grid-template-columns: 1fr 1fr;
+}
 
     .section {
-        margin-bottom: 60px;
+        margin-bottom: 32px;
     }
 
     .ask-card,
