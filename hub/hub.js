@@ -78,3 +78,76 @@ async function loadGlobalWeather() {
 
 // Load weather
 loadGlobalWeather();
+
+// =================================
+// CURRENCY - EUR / USD
+// =================================
+
+async function loadCurrency() {
+
+    const currencyElement =
+        document.getElementById("global-currency");
+
+    if (!currencyElement) return;
+
+    try {
+
+        const response = await fetch(
+            "https://api.frankfurter.app/latest?from=EUR&to=USD"
+        );
+
+        const data = await response.json();
+
+        const rate = data.rates.USD;
+
+        currencyElement.textContent =
+            rate.toFixed(4);
+
+    } catch (error) {
+
+        console.error("Currency error:", error);
+
+        currencyElement.textContent =
+            "Unavailable";
+    }
+}
+
+
+// Load currency
+loadCurrency();
+
+// =================================
+// WORLD TIME
+// =================================
+
+function updateWorldTime() {
+
+    const timeElement =
+        document.getElementById("global-time");
+
+    if (!timeElement) return;
+
+    const now = new Date();
+
+    const time = now.toLocaleTimeString(
+        "en-GB",
+        {
+            timeZone: "UTC",
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        }
+    );
+
+    timeElement.textContent =
+        `UTC ${time}`;
+}
+
+
+// Update every second
+updateWorldTime();
+
+setInterval(
+    updateWorldTime,
+    1000
+);
