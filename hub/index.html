@@ -101,115 +101,275 @@
 
     </div>
 
-<div class="pulse-grid">
-
-
-    <!-- GLOBAL ACTIVITY -->
-
-    <div class="pulse-card global-activity">
-
-        <div class="pulse-icon">
-            🌍
-        </div>
-
-        <h3>Global Activity</h3>
-
-        <p>
-            Live information from around
-            the world.
-        </p>
-
-        <div class="pulse-data">
-
-            <span>🌤 Weather</span>
-            <span>💱 Currencies</span>
-            <span>🕐 World Time</span>
-            <span>📊 Global Data</span>
-
-        </div>
-
-        <a href="#connect">
-            Explore global data →
-        </a>
-
-    </div>
-
-
-
-    <!-- HUB ACTIVITY -->
-
-    <div class="pulse-card hub-activity">
-
-        <div class="pulse-icon">
-            👥
-        </div>
-
-        <h3>Hub Activity</h3>
-
-        <div class="hub-stats">
-
-            <div>
-                <strong>—</strong>
-                <span>Online</span>
-            </div>
-
-            <div>
-                <strong>—</strong>
-                <span>Visitors</span>
-            </div>
-
-            <div>
-                <strong>—</strong>
-                <span>Users</span>
-            </div>
-
-            <div>
-                <strong>—</strong>
-                <span>Voters</span>
-            </div>
-
-        </div>
-
-        <span class="activity-status">
-            ● Live activity
-        </span>
-
-    </div>
-
-
-
-    <!-- TRENDING -->
-
-    <div class="pulse-card trending">
-
-        <div class="pulse-icon">
-            🔥
-        </div>
-
-        <h3>Trending</h3>
-
-        <p>
-            Discover what is getting attention
-            around the world.
-        </p>
-
-        <div class="pulse-data">
-
-            <span>01 Technology</span>
-            <span>02 AI</span>
-            <span>03 Economy</span>
-
-        </div>
-
-        <a href="#world">
-            Explore trends →
-        </a>
-
-    </div>
-
-
+                
 </div>
-    
+<div class="pulse-dashboard">
+
+
+    <!-- GLOBAL OVERVIEW -->
+
+    <div class="global-overview">
+
+        <div class="overview-header">
+
+            <div>
+                <span class="pulse-status">
+                    ● LIVE
+                </span>
+
+                <h3>🌍 Global Activity</h3>
+            </div>
+
+            <span class="overview-updated">
+                Updating live
+            </span>
+
+        </div>
+
+
+        <div class="overview-grid">
+
+
+            <!-- WEATHER -->
+
+            <div class="data-item">
+
+                <span class="data-icon">🌤️</span>
+
+                <div>
+                    <span class="data-label">
+                        Weather
+                    </span>
+
+                    <strong id="global-weather">
+                        —
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <!-- CURRENCY -->
+
+            <div class="data-item">
+
+                <span class="data-icon">💱</span>
+
+                <div>
+                    <span class="data-label">
+                        EUR / USD
+                    </span>
+
+                    <strong id="global-currency">
+                        —
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <!-- WORLD TIME -->
+
+            <div class="data-item">
+
+                <span class="data-icon">🕐</span>
+
+                <div>
+                    <span class="data-label">
+                        World Time
+                    </span>
+
+                    <strong id="global-time">
+                        —
+                    </strong>
+                </div>
+
+            </div>
+
+
+            <!-- GLOBAL DATA -->
+
+            <div class="data-item">
+
+                <span class="data-icon">📊</span>
+
+                <div>
+                    <span class="data-label">
+                        Global Data
+                    </span>
+
+                    <strong id="global-data">
+                        —
+                    </strong>
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- LOWER DASHBOARD -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- MARKETS -->
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-card-header">
+
+                <div>
+                    <span class="dashboard-icon">
+                        📈
+                    </span>
+
+                    <h3>Markets</h3>
+                </div>
+
+                <span class="live-dot">
+                    LIVE
+                </span>
+
+            </div>
+
+
+            <div class="market-list">
+
+                <div class="market-row">
+
+                    <span>BTC</span>
+
+                    <strong id="market-btc">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="market-row">
+
+                    <span>SOL</span>
+
+                    <strong id="market-sol">
+                        —
+                    </strong>
+
+                </div>
+
+
+                <div class="market-row">
+
+                    <span>EPT</span>
+
+                    <strong id="market-ept">
+                        —
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- TRENDING -->
+
+        <div class="dashboard-card">
+
+            <div class="dashboard-card-header">
+
+                <div>
+                    <span class="dashboard-icon">
+                        🔥
+                    </span>
+
+                    <h3>Trending</h3>
+                </div>
+
+            </div>
+
+
+            <div class="trend-list">
+
+                <div>
+                    <span>01</span>
+                    <strong>Technology</strong>
+                </div>
+
+                <div>
+                    <span>02</span>
+                    <strong>AI</strong>
+                </div>
+
+                <div>
+                    <span>03</span>
+                    <strong>Economy</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- HUB ACTIVITY -->
+
+        <div class="dashboard-card hub-dashboard">
+
+            <div class="dashboard-card-header">
+
+                <div>
+                    <span class="dashboard-icon">
+                        👥
+                    </span>
+
+                    <h3>Hub Activity</h3>
+                </div>
+
+                <span class="live-dot">
+                    LIVE
+                </span>
+
+            </div>
+
+
+            <div class="hub-mini-stats">
+
+                <div>
+                    <strong id="hub-online">—</strong>
+                    <span>Online</span>
+                </div>
+
+                <div>
+                    <strong id="hub-visitors">—</strong>
+                    <span>Visitors</span>
+                </div>
+
+                <div>
+                    <strong id="hub-users">—</strong>
+                    <span>Users</span>
+                </div>
+
+                <div>
+                    <strong id="hub-voters">—</strong>
+                    <span>Voters</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</div>    
             
 
 </section>
