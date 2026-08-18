@@ -331,11 +331,11 @@ main {
 
     grid-template-columns: repeat(4, 1fr);
 
-    gap: 15px;
+    gap: 10px;
 }
 
 .module-card {
-    padding: 23px 18px;
+    padding: 16px 12px;
 
     background: #090e09;
 
@@ -358,15 +358,14 @@ main {
 .module-card > span {
     display: block;
 
-    font-size: 25px;
+    font-size: 22px;
 
-    margin-bottom: 12px;
+    margin-bottom: 6px;
 }
 
 .module-card h3 {
-    font-size: 16px;
+    font-size: 14px;
 
-    margin-bottom: 5px;
 }
 
 .module-card p {
