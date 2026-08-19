@@ -78,7 +78,6 @@ async function loadGlobalWeather() {
 
 // Load weather
 loadGlobalWeather();
-
 // =================================
 // CURRENCY - EUR / USD
 // =================================
@@ -93,8 +92,12 @@ async function loadCurrency() {
     try {
 
         const response = await fetch(
-            "https://api.frankfurter.app/latest?from=EUR&to=USD"
+            "https://api.exchangerate-api.com/v4/latest/EUR"
         );
+
+        if (!response.ok) {
+            throw new Error("Currency API error");
+        }
 
         const data = await response.json();
 
