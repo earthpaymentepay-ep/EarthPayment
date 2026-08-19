@@ -78,6 +78,9 @@ async function loadGlobalWeather() {
 
 // Load weather
 loadGlobalWeather();
+
+
+// =================================
 // =================================
 // CURRENCY - EUR / USD
 // =================================
@@ -87,7 +90,12 @@ async function loadCurrency() {
     const currencyElement =
         document.getElementById("global-currency");
 
-    if (!currencyElement) return;
+    if (!currencyElement) {
+        console.log("EUR/USD element not found");
+        return;
+    }
+
+    currencyElement.textContent = "Loading...";
 
     try {
 
@@ -95,28 +103,32 @@ async function loadCurrency() {
             "https://api.exchangerate-api.com/v4/latest/EUR"
         );
 
-        if (!response.ok) {
-            throw new Error("Currency API error");
-        }
+        console.log("Currency response:", response.status);
 
         const data = await response.json();
 
-        const rate = data.rates.USD;
+        console.log("Currency data:", data);
 
-        currencyElement.textContent =
-            rate.toFixed(4);
+        if (data && data.rates && data.rates.USD) {
+
+            currencyElement.textContent =
+                Number(data.rates.USD).toFixed(4);
+
+        } else {
+
+            currencyElement.textContent = "No data";
+
+        }
 
     } catch (error) {
 
         console.error("Currency error:", error);
 
-        currencyElement.textContent =
-            "Unavailable";
+        currencyElement.textContent = "API error";
+
     }
 }
 
-
-// Load currency
 loadCurrency();
 
 // =================================
