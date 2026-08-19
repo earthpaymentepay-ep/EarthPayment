@@ -1242,3 +1242,7 @@ footer {
     }
 
 }
+  .hub-dashboard {
+    grid-column: 1 / -1;
+    width: 100%;
+}  
