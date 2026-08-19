@@ -128,8 +128,15 @@ async function loadCurrency() {
 
     }
 }
-
+// Load currency
 loadCurrency();
+
+// Update every minute
+setInterval(
+    loadCurrency,
+    60000
+);
+
 
 // =================================
 // WORLD TIME
