@@ -1437,3 +1437,26 @@ footer {
     }
 
 }
+/* ================================
+   GLOBAL DATA - VALUE FIX
+================================ */
+
+.global-stat strong {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    text-decoration-line: none !important;
+    text-decoration-style: none !important;
+
+    opacity: 1 !important;
+    filter: none !important;
+
+    font-weight: 600;
+}
+.global-stat div > span {
+    color: #666 !important;
+    text-decoration: none !important;
+}
+
+.global-stat {
+    text-decoration: none !important;
+}
