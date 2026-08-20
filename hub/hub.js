@@ -256,7 +256,7 @@ async function loadGlobalData() {
     try {
 
         const response = await fetch(
-            "https://ourworldindata.org/grapher/number-of-births.csv"
+       https://ourworldindata.org/grapher/number-of-births-per-year.csv     
         );
 
         const csv = await response.text();
@@ -314,7 +314,7 @@ async function loadGlobalData() {
     try {
 
         const response = await fetch(
-            "https://ourworldindata.org/grapher/energy-use-per-person.csv"
+        https://ourworldindata.org/grapher/per-capita-energy-use.csv    
         );
 
         const csv = await response.text();
