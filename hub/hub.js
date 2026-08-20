@@ -173,3 +173,198 @@ setInterval(
     updateWorldTime,
     1000
 );
+// =================================
+// GLOBAL DATA
+// =================================
+
+async function loadGlobalData() {
+
+    const populationElement =
+        document.getElementById("global-population");
+
+    const birthsElement =
+        document.getElementById("global-births");
+
+    const energyElement =
+        document.getElementById("global-energy");
+
+    const co2Element =
+        document.getElementById("global-co2");
+
+
+    try {
+
+        // -----------------------------
+        // WORLD POPULATION
+        // -----------------------------
+
+        const populationResponse = await fetch(
+            "https://ourworldindata.org/grapher/population.json"
+        );
+
+        const populationData =
+            await populationResponse.json();
+
+        const populationSeries =
+            populationData.data;
+
+        const latestPopulation =
+            populationSeries[populationSeries.length - 1];
+
+        if (latestPopulation && populationElement) {
+
+            populationElement.textContent =
+                formatGlobalNumber(latestPopulation.population);
+
+        }
+
+
+        // -----------------------------
+        // BIRTHS
+        // -----------------------------
+
+        const birthsResponse = await fetch(
+            "https://ourworldindata.org/grapher/number-of-births.json"
+        );
+
+        const birthsData =
+            await birthsResponse.json();
+
+        const birthsSeries =
+            birthsData.data;
+
+        const latestBirths =
+            birthsSeries[birthsSeries.length - 1];
+
+        if (latestBirths && birthsElement) {
+
+            const birthsPerYear =
+                latestBirths.births;
+
+            const birthsToday =
+                Math.round(
+                    birthsPerYear / 365
+                );
+
+            birthsElement.textContent =
+                formatGlobalNumber(birthsToday);
+
+        }
+
+
+        // -----------------------------
+        // ENERGY
+        // -----------------------------
+
+        const energyResponse = await fetch(
+            "https://ourworldindata.org/grapher/energy-use-per-person.json"
+        );
+
+        const energyData =
+            await energyResponse.json();
+
+        const energySeries =
+            energyData.data;
+
+        const latestEnergy =
+            energySeries[energySeries.length - 1];
+
+        if (latestEnergy && energyElement) {
+
+            energyElement.textContent =
+                `${Math.round(latestEnergy.energy_consumption)} kWh`;
+
+        }
+
+
+        // -----------------------------
+        // CO2
+        // -----------------------------
+
+        const co2Response = await fetch(
+            "https://ourworldindata.org/grapher/annual-co2-emissions-per-country.json"
+        );
+
+        const co2Data =
+            await co2Response.json();
+
+        const co2Series =
+            co2Data.data;
+
+        const latestCO2 =
+            co2Series[co2Series.length - 1];
+
+        if (latestCO2 && co2Element) {
+
+            co2Element.textContent =
+                `${formatGlobalNumber(
+                    Math.round(latestCO2.co2)
+                )} t`;
+
+        }
+
+
+    } catch (error) {
+
+        console.error(
+            "Global Data error:",
+            error
+        );
+
+    }
+
+}
+
+
+// =================================
+// FORMAT GLOBAL NUMBERS
+// =================================
+
+function formatGlobalNumber(number) {
+
+    if (!number) return "—";
+
+
+    if (number >= 1000000000) {
+
+        return (
+            (number / 1000000000)
+            .toFixed(2) +
+            " B"
+        );
+
+    }
+
+
+    if (number >= 1000000) {
+
+        return (
+            (number / 1000000)
+            .toFixed(2) +
+            " M"
+        );
+
+    }
+
+
+    if (number >= 1000) {
+
+        return (
+            (number / 1000)
+            .toFixed(1) +
+            " K"
+        );
+
+    }
+
+
+    return number.toLocaleString("en-US");
+
+}
+
+
+// =================================
+// LOAD GLOBAL DATA
+// =================================
+
+loadGlobalData();
