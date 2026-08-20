@@ -173,6 +173,8 @@ setInterval(
     updateWorldTime,
     1000
 );
+
+            
 // =================================
 // GLOBAL DATA
 // =================================
@@ -192,124 +194,240 @@ async function loadGlobalData() {
         document.getElementById("global-co2");
 
 
+    // ---------------------------------
+    // WORLD POPULATION
+    // ---------------------------------
+
     try {
 
-        // -----------------------------
-        // WORLD POPULATION
-        // -----------------------------
-
-        const populationResponse = await fetch(
-            "https://ourworldindata.org/grapher/population.json"
+        const response = await fetch(
+            "https://ourworldindata.org/grapher/population.csv"
         );
 
-        const populationData =
-            await populationResponse.json();
+        const csv = await response.text();
 
-        const populationSeries =
-            populationData.data;
+        const rows = csv.trim().split("\n");
 
-        const latestPopulation =
-            populationSeries[populationSeries.length - 1];
+        const headers = rows[0].split(",");
 
-        if (latestPopulation && populationElement) {
+        const entityIndex = headers.indexOf("Entity");
+        const populationIndex = headers.indexOf("Population");
+
+        let worldPopulation = null;
+
+        for (let i = rows.length - 1; i > 0; i--) {
+
+            const columns = rows[i].split(",");
+
+            if (
+                columns[entityIndex] === "World" &&
+                columns[populationIndex]
+            ) {
+
+                worldPopulation =
+                    Number(columns[populationIndex]);
+
+                break;
+            }
+        }
+
+        if (worldPopulation && populationElement) {
 
             populationElement.textContent =
-                formatGlobalNumber(latestPopulation.population);
+                formatGlobalNumber(worldPopulation);
 
         }
 
+    } catch (error) {
 
-        // -----------------------------
-        // BIRTHS
-        // -----------------------------
+        console.error("Population error:", error);
 
-        const birthsResponse = await fetch(
-            "https://ourworldindata.org/grapher/number-of-births.json"
+        if (populationElement) {
+            populationElement.textContent = "Unavailable";
+        }
+
+    }
+
+
+    // ---------------------------------
+    // BIRTHS
+    // ---------------------------------
+
+    try {
+
+        const response = await fetch(
+            "https://ourworldindata.org/grapher/number-of-births.csv"
         );
 
-        const birthsData =
-            await birthsResponse.json();
+        const csv = await response.text();
 
-        const birthsSeries =
-            birthsData.data;
+        const rows = csv.trim().split("\n");
 
-        const latestBirths =
-            birthsSeries[birthsSeries.length - 1];
+        const headers = rows[0].split(",");
 
-        if (latestBirths && birthsElement) {
+        const entityIndex = headers.indexOf("Entity");
+        const birthsIndex = headers.indexOf("Births");
 
-            const birthsPerYear =
-                latestBirths.births;
+        let worldBirths = null;
+
+        for (let i = rows.length - 1; i > 0; i--) {
+
+            const columns = rows[i].split(",");
+
+            if (
+                columns[entityIndex] === "World" &&
+                columns[birthsIndex]
+            ) {
+
+                worldBirths =
+                    Number(columns[birthsIndex]);
+
+                break;
+            }
+        }
+
+        if (worldBirths && birthsElement) {
 
             const birthsToday =
-                Math.round(
-                    birthsPerYear / 365
-                );
+                Math.round(worldBirths / 365);
 
             birthsElement.textContent =
                 formatGlobalNumber(birthsToday);
 
         }
 
+    } catch (error) {
 
-        // -----------------------------
-        // ENERGY
-        // -----------------------------
+        console.error("Births error:", error);
 
-        const energyResponse = await fetch(
-            "https://ourworldindata.org/grapher/energy-use-per-person.json"
+        if (birthsElement) {
+            birthsElement.textContent = "Unavailable";
+        }
+
+    }
+
+
+    // ---------------------------------
+    // ENERGY
+    // ---------------------------------
+
+    try {
+
+        const response = await fetch(
+            "https://ourworldindata.org/grapher/energy-use-per-person.csv"
         );
 
-        const energyData =
-            await energyResponse.json();
+        const csv = await response.text();
 
-        const energySeries =
-            energyData.data;
+        const rows = csv.trim().split("\n");
 
-        const latestEnergy =
-            energySeries[energySeries.length - 1];
+        const headers = rows[0].split(",");
 
-        if (latestEnergy && energyElement) {
+        const entityIndex = headers.indexOf("Entity");
+
+        const valueIndex =
+            headers.findIndex(header =>
+                header !== "Entity" &&
+                header !== "Code" &&
+                header !== "Year"
+            );
+
+        let worldEnergy = null;
+
+        for (let i = rows.length - 1; i > 0; i--) {
+
+            const columns = rows[i].split(",");
+
+            if (
+                columns[entityIndex] === "World" &&
+                columns[valueIndex]
+            ) {
+
+                worldEnergy =
+                    Number(columns[valueIndex]);
+
+                break;
+            }
+        }
+
+        if (worldEnergy && energyElement) {
 
             energyElement.textContent =
-                `${Math.round(latestEnergy.energy_consumption)} kWh`;
+                `${Math.round(worldEnergy).toLocaleString("en-US")} kWh/person`;
 
         }
-
-
-        // -----------------------------
-        // CO2
-        // -----------------------------
-
-        const co2Response = await fetch(
-            "https://ourworldindata.org/grapher/annual-co2-emissions-per-country.json"
-        );
-
-        const co2Data =
-            await co2Response.json();
-
-        const co2Series =
-            co2Data.data;
-
-        const latestCO2 =
-            co2Series[co2Series.length - 1];
-
-        if (latestCO2 && co2Element) {
-
-            co2Element.textContent =
-                `${formatGlobalNumber(
-                    Math.round(latestCO2.co2)
-                )} t`;
-
-        }
-
 
     } catch (error) {
 
-        console.error(
-            "Global Data error:",
-            error
+        console.error("Energy error:", error);
+
+        if (energyElement) {
+            energyElement.textContent = "Unavailable";
+        }
+
+    }
+
+
+    // ---------------------------------
+    // CO2
+    // ---------------------------------
+
+    try {
+
+        const response = await fetch(
+            "https://ourworldindata.org/grapher/annual-co2-emissions-per-country.csv"
         );
+
+        const csv = await response.text();
+
+        const rows = csv.trim().split("\n");
+
+        const headers = rows[0].split(",");
+
+        const entityIndex = headers.indexOf("Entity");
+
+        const valueIndex =
+            headers.findIndex(header =>
+                header !== "Entity" &&
+                header !== "Code" &&
+                header !== "Year"
+            );
+
+        let worldCO2 = null;
+
+        for (let i = rows.length - 1; i > 0; i--) {
+
+            const columns = rows[i].split(",");
+
+            if (
+                columns[entityIndex] === "World" &&
+                columns[valueIndex]
+            ) {
+
+                worldCO2 =
+                    Number(columns[valueIndex]);
+
+                break;
+            }
+        }
+
+        if (worldCO2 && co2Element) {
+
+            worldCO2 =
+                worldCO2 / 1000000000;
+
+            co2Element.textContent =
+                `${worldCO2.toFixed(2)} Gt`;
+
+        }
+
+    } catch (error) {
+
+        console.error("CO2 error:", error);
+
+        if (co2Element) {
+            co2Element.textContent = "Unavailable";
+        }
 
     }
 
@@ -322,43 +440,38 @@ async function loadGlobalData() {
 
 function formatGlobalNumber(number) {
 
-    if (!number) return "—";
-
+    if (number === null || number === undefined) {
+        return "—";
+    }
 
     if (number >= 1000000000) {
 
         return (
-            (number / 1000000000)
-            .toFixed(2) +
+            (number / 1000000000).toFixed(2) +
             " B"
         );
 
     }
 
-
     if (number >= 1000000) {
 
         return (
-            (number / 1000000)
-            .toFixed(2) +
+            (number / 1000000).toFixed(2) +
             " M"
         );
 
     }
 
-
     if (number >= 1000) {
 
         return (
-            (number / 1000)
-            .toFixed(1) +
+            (number / 1000).toFixed(1) +
             " K"
         );
 
     }
 
-
-    return number.toLocaleString("en-US");
+    return Number(number).toLocaleString("en-US");
 
 }
 
@@ -368,3 +481,10 @@ function formatGlobalNumber(number) {
 // =================================
 
 loadGlobalData();
+        
+            
+
+
+    
+
+
