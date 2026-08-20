@@ -181,60 +181,38 @@ setInterval(
 
 async function loadGlobalData() {
 
-    const populationElement =
-        document.getElementById("global-population");
+    const populationElement = document.getElementById("global-population");
+    const birthsElement = document.getElementById("global-births");
+    const energyElement = document.getElementById("global-energy");
+    const co2Element = document.getElementById("global-co2");
 
-    const birthsElement =
-        document.getElementById("global-births");
+    // Default values
+    if (populationElement) populationElement.textContent = "—";
+    if (birthsElement) birthsElement.textContent = "—";
+    if (energyElement) energyElement.textContent = "—";
+    if (co2Element) co2Element.textContent = "—";
 
-    const energyElement =
-        document.getElementById("global-energy");
-
-    const co2Element =
-        document.getElementById("global-co2");
-
-
-    // ---------------------------------
-    // WORLD POPULATION
-    // ---------------------------------
 
     try {
 
         const response = await fetch(
-            "https://ourworldindata.org/grapher/population.csv"
+            "https://api.worldbank.org/v2/country/WLD/indicator/SP.POP.TOTL?format=json"
         );
 
-        const csv = await response.text();
+        const data = await response.json();
 
-        const rows = csv.trim().split("\n");
+        if (data && data[1]) {
 
-        const headers = rows[0].split(",");
+            const latest = data[1].find(
+                item => item.value !== null
+            );
 
-        const entityIndex = headers.indexOf("Entity");
-        const populationIndex = headers.indexOf("Population");
+            if (latest && populationElement) {
 
-        let worldPopulation = null;
+                populationElement.textContent =
+                    Number(latest.value).toLocaleString("en-US");
 
-        for (let i = rows.length - 1; i > 0; i--) {
-
-            const columns = rows[i].split(",");
-
-            if (
-                columns[entityIndex] === "World" &&
-                columns[populationIndex]
-            ) {
-
-                worldPopulation =
-                    Number(columns[populationIndex]);
-
-                break;
             }
-        }
-
-        if (worldPopulation && populationElement) {
-
-            populationElement.textContent =
-                formatGlobalNumber(worldPopulation);
 
         }
 
@@ -242,57 +220,55 @@ async function loadGlobalData() {
 
         console.error("Population error:", error);
 
-        if (populationElement) {
-            populationElement.textContent = "Unavailable";
-        }
-
     }
 
 
-    // ---------------------------------
+    // -----------------------------
     // BIRTHS
-    // ---------------------------------
+    // -----------------------------
 
     try {
 
         const response = await fetch(
-       https://ourworldindata.org/grapher/number-of-births-per-year.csv     
+            "https://api.worldbank.org/v2/country/WLD/indicator/SP.DYN.CBRT.IN?format=json"
         );
 
-        const csv = await response.text();
+        const data = await response.json();
 
-        const rows = csv.trim().split("\n");
+        if (data && data[1]) {
 
-        const headers = rows[0].split(",");
+            const latest = data[1].find(
+                item => item.value !== null
+            );
 
-        const entityIndex = headers.indexOf("Entity");
-        const birthsIndex = headers.indexOf("Births");
+            if (latest && birthsElement) {
 
-        let worldBirths = null;
+                const birthRate = latest.value;
 
-        for (let i = rows.length - 1; i > 0; i--) {
+                const population =
+                    populationElement
+                    ? Number(
+                        populationElement.textContent
+                            .replace(/,/g, "")
+                    )
+                    : 0;
 
-            const columns = rows[i].split(",");
+                if (population) {
 
-            if (
-                columns[entityIndex] === "World" &&
-                columns[birthsIndex]
-            ) {
+                    const birthsToday =
+                        Math.round(
+                            population *
+                            birthRate /
+                            1000 /
+                            365
+                        );
 
-                worldBirths =
-                    Number(columns[birthsIndex]);
+                    birthsElement.textContent =
+                        birthsToday.toLocaleString("en-US");
 
-                break;
+                }
+
             }
-        }
-
-        if (worldBirths && birthsElement) {
-
-            const birthsToday =
-                Math.round(worldBirths / 365);
-
-            birthsElement.textContent =
-                formatGlobalNumber(birthsToday);
 
         }
 
@@ -300,60 +276,33 @@ async function loadGlobalData() {
 
         console.error("Births error:", error);
 
-        if (birthsElement) {
-            birthsElement.textContent = "Unavailable";
-        }
-
     }
 
 
-    // ---------------------------------
+    // -----------------------------
     // ENERGY
-    // ---------------------------------
+    // -----------------------------
 
     try {
 
         const response = await fetch(
-        https://ourworldindata.org/grapher/per-capita-energy-use.csv    
+            "https://api.worldbank.org/v2/country/WLD/indicator/EG.USE.ELEC.KH.PC?format=json"
         );
 
-        const csv = await response.text();
+        const data = await response.json();
 
-        const rows = csv.trim().split("\n");
+        if (data && data[1]) {
 
-        const headers = rows[0].split(",");
-
-        const entityIndex = headers.indexOf("Entity");
-
-        const valueIndex =
-            headers.findIndex(header =>
-                header !== "Entity" &&
-                header !== "Code" &&
-                header !== "Year"
+            const latest = data[1].find(
+                item => item.value !== null
             );
 
-        let worldEnergy = null;
+            if (latest && energyElement) {
 
-        for (let i = rows.length - 1; i > 0; i--) {
+                energyElement.textContent =
+                    Math.round(latest.value) + " kWh/person";
 
-            const columns = rows[i].split(",");
-
-            if (
-                columns[entityIndex] === "World" &&
-                columns[valueIndex]
-            ) {
-
-                worldEnergy =
-                    Number(columns[valueIndex]);
-
-                break;
             }
-        }
-
-        if (worldEnergy && energyElement) {
-
-            energyElement.textContent =
-                `${Math.round(worldEnergy).toLocaleString("en-US")} kWh/person`;
 
         }
 
@@ -361,130 +310,238 @@ async function loadGlobalData() {
 
         console.error("Energy error:", error);
 
-        if (energyElement) {
-            energyElement.textContent = "Unavailable";
-        }
-
     }
 
 
-    // ---------------------------------
+    // -----------------------------
     // CO2
-    // ---------------------------------
+    // -----------------------------
 
     try {
 
         const response = await fetch(
-            "https://ourworldindata.org/grapher/annual-co2-emissions-per-country.csv"
+            "https://api.worldbank.org/v2/country/WLD/indicator/EN.ATM.CO2E.KT?format=json"
         );
 
-        const csv = await response.text();
+        const data = await response.json();
 
-        const rows = csv.trim().split("\n");
+        if (data && data[1]) {
 
-        const headers = rows[0].split(",");
-
-        const entityIndex = headers.indexOf("Entity");
-
-        const valueIndex =
-            headers.findIndex(header =>
-                header !== "Entity" &&
-                header !== "Code" &&
-                header !== "Year"
+            const latest = data[1].find(
+                item => item.value !== null
             );
 
-        let worldCO2 = null;
+            if (latest && co2Element) {
 
-        for (let i = rows.length - 1; i > 0; i--) {
+                co2Element.textContent =
+                    Number(latest.value).toLocaleString("en-US")
+                    + " kt";
 
-            const columns = rows[i].split(",");
-
-            if (
-                columns[entityIndex] === "World" &&
-                columns[valueIndex]
-            ) {
-
-                worldCO2 =
-                    Number(columns[valueIndex]);
-
-                break;
             }
-        }
-
-        if (worldCO2 && co2Element) {
-
-            worldCO2 =
-                worldCO2 / 1000000000;
-
-            co2Element.textContent =
-                `${worldCO2.toFixed(2)} Gt`;
 
         }
 
     } catch (error) {
 
-        console.error("CO2 error:", error);
+        console.error("CO₂ error:", error);
 
-        if (co2Element) {
-            co2Element.textContent = "Unavailable";
+    }
+
+}
+
+
+// Load Global Data
+loadGlobalData();
+
+
+// Refresh every 10 minutes
+setInterval(
+    loadGlobalData,
+    600000
+);
+
+// =================================
+// GLOBAL DATA
+// =================================
+
+async function loadGlobalData() {
+
+    const populationElement = document.getElementById("global-population");
+    const birthsElement = document.getElementById("global-births");
+    const energyElement = document.getElementById("global-energy");
+    const co2Element = document.getElementById("global-co2");
+
+    // Default values
+    if (populationElement) populationElement.textContent = "—";
+    if (birthsElement) birthsElement.textContent = "—";
+    if (energyElement) energyElement.textContent = "—";
+    if (co2Element) co2Element.textContent = "—";
+
+
+    try {
+
+        const response = await fetch(
+            "https://api.worldbank.org/v2/country/WLD/indicator/SP.POP.TOTL?format=json"
+        );
+
+        const data = await response.json();
+
+        if (data && data[1]) {
+
+            const latest = data[1].find(
+                item => item.value !== null
+            );
+
+            if (latest && populationElement) {
+
+                populationElement.textContent =
+                    Number(latest.value).toLocaleString("en-US");
+
+            }
+
         }
 
+    } catch (error) {
+
+        console.error("Population error:", error);
+
+    }
+
+
+    // -----------------------------
+    // BIRTHS
+    // -----------------------------
+
+    try {
+
+        const response = await fetch(
+            "https://api.worldbank.org/v2/country/WLD/indicator/SP.DYN.CBRT.IN?format=json"
+        );
+
+        const data = await response.json();
+
+        if (data && data[1]) {
+
+            const latest = data[1].find(
+                item => item.value !== null
+            );
+
+            if (latest && birthsElement) {
+
+                const birthRate = latest.value;
+
+                const population =
+                    populationElement
+                    ? Number(
+                        populationElement.textContent
+                            .replace(/,/g, "")
+                    )
+                    : 0;
+
+                if (population) {
+
+                    const birthsToday =
+                        Math.round(
+                            population *
+                            birthRate /
+                            1000 /
+                            365
+                        );
+
+                    birthsElement.textContent =
+                        birthsToday.toLocaleString("en-US");
+
+                }
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error("Births error:", error);
+
+    }
+
+
+    // -----------------------------
+    // ENERGY
+    // -----------------------------
+
+    try {
+
+        const response = await fetch(
+            "https://api.worldbank.org/v2/country/WLD/indicator/EG.USE.ELEC.KH.PC?format=json"
+        );
+
+        const data = await response.json();
+
+        if (data && data[1]) {
+
+            const latest = data[1].find(
+                item => item.value !== null
+            );
+
+            if (latest && energyElement) {
+
+                energyElement.textContent =
+                    Math.round(latest.value) + " kWh/person";
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error("Energy error:", error);
+
+    }
+
+
+    // -----------------------------
+    // CO2
+    // -----------------------------
+
+    try {
+
+        const response = await fetch(
+            "https://api.worldbank.org/v2/country/WLD/indicator/EN.ATM.CO2E.KT?format=json"
+        );
+
+        const data = await response.json();
+
+        if (data && data[1]) {
+
+            const latest = data[1].find(
+                item => item.value !== null
+            );
+
+            if (latest && co2Element) {
+
+                co2Element.textContent =
+                    Number(latest.value).toLocaleString("en-US")
+                    + " kt";
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error("CO₂ error:", error);
+
     }
 
 }
 
 
-// =================================
-// FORMAT GLOBAL NUMBERS
-// =================================
-
-function formatGlobalNumber(number) {
-
-    if (number === null || number === undefined) {
-        return "—";
-    }
-
-    if (number >= 1000000000) {
-
-        return (
-            (number / 1000000000).toFixed(2) +
-            " B"
-        );
-
-    }
-
-    if (number >= 1000000) {
-
-        return (
-            (number / 1000000).toFixed(2) +
-            " M"
-        );
-
-    }
-
-    if (number >= 1000) {
-
-        return (
-            (number / 1000).toFixed(1) +
-            " K"
-        );
-
-    }
-
-    return Number(number).toLocaleString("en-US");
-
-}
-
-
-// =================================
-// LOAD GLOBAL DATA
-// =================================
-
+// Load Global Data
 loadGlobalData();
-        
-            
 
 
-    
-
-
+// Refresh every 10 minutes
+setInterval(
+    loadGlobalData,
+    600000
+);        
+  
