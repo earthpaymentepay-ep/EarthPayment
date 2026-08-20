@@ -1460,3 +1460,32 @@ footer {
 .global-stat {
     text-decoration: none !important;
 }
+
+/* =================================
+   GLOBAL PULSE - EXPANDABLE DATA
+   ================================= */
+
+.global-more-data {
+    display: none;
+}
+
+.expandable-panel.expanded .global-more-data {
+    display: block;
+}
+
+.global-expand-button {
+    display: block;
+    width: 100%;
+    margin-top: 15px;
+    padding: 10px 14px;
+    background: transparent;
+    border: 1px solid rgba(28, 255, 92, 0.35);
+    border-radius: 10px;
+    color: #1cff5c;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.global-expand-button:hover {
+    background: rgba(28, 255, 92, 0.08);
+}
