@@ -482,7 +482,29 @@ async function loadGlobalData() {
         : null;
 }
 
+// LITERACY RATE
 
+try {
+
+    const literacy =
+        await worldBank(
+            "SE.ADT.LITR.ZS"
+        );
+
+    setValue(
+        "global-literacy",
+        literacy,
+        "%"
+    );
+
+} catch (error) {
+
+    console.error(
+        "Literacy rate error:",
+        error
+    );
+
+}
 
 ------------------
 // SEA LEVEL
