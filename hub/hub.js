@@ -465,216 +465,10 @@ async function loadGlobalData() {
     }
 
 
-    // =================================
-    // PLANET
-    // =================================
-
-
-    // GLOBAL TEMPERATURE
-
-    try {
-
-        const response =
-            await fetch(
-                "https://global-warming.org/api/temperature-api"
-            );
-
-        const data =
-            await response.json();
-
-        if (
-            data &&
-            data.result &&
-            data.result.length
-        ) {
-
-            const latest =
-                data.result[
-                    data.result.length - 1
-                ];
-
-            const temperature =
-                Number(
-                    latest.station
-                    || latest.land
-                    || latest.temperature
-                );
-
-            if (!Number.isNaN(temperature)) {
-
-                setValue(
-                    "global-temperature",
-                    temperature.toFixed(2),
-                    " °C"
-                );
-
-            }
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Temperature error:",
-            error
-        );
-
-    }
-
-
-    // ENERGY
-
-    try {
-
-        const energy =
-            await worldBank(
-                "EG.USE.ELEC.KH.PC"
-            );
-
-        setValue(
-            "global-energy",
-            energy !== null
-                ? Math.round(energy)
-                : null,
-            " kWh/person"
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Energy error:",
-            error
-        );
-
-    }
-
-
-    // CO2
-
-    try {
-
-        const co2 =
-            await worldBank(
-                "EN.ATM.CO2E.KT"
-            );
-
-        setValue(
-            "global-co2",
-            co2 !== null
-                ? Math.round(co2)
-                : null,
-            " kt"
-        );
-
-    } catch (error) {
-
-        console.error(
-            "CO2 error:",
-            error
-        );
-
-    }
-
-
- // ---------------------------------
-// FOREST LOSS
-// ---------------------------------
-
-try {
-
-    // Estimated global forest loss per year
-    const forestLossPerYear = 10000000;
-
-    const now = new Date();
-
-    const startOfYear =
-        new Date(now.getFullYear(), 0, 1);
-
-    const secondsPassed =
-        (now - startOfYear) / 1000;
-
-    const secondsInYear =
-        (
-            new Date(now.getFullYear() + 1, 0, 1)
-            - startOfYear
-        ) / 1000;
-
-    const estimatedForestLoss =
-        Math.round(
-            forestLossPerYear *
-            (secondsPassed / secondsInYear)
-        );
-
-    setValue(
-        "global-forest",
-        estimatedForestLoss,
-        " ha"
-    );
-
-} catch (error) {
-
-    console.error(
-        "Forest loss error:",
-        error
-    );
-
-}   
-
-// =================================
-// PLANET - MORE DATA
-// =================================
-
-
-// ---------------------------------
-// WATER CONSUMPTION
-// ---------------------------------
-
-try {
-const water =
-    await worldBank("ER.H2O.FWTL.K3");
-
-setValue(
-    "global-water",
-    water,
-    " billion m³"
-);
     
 
-} catch (error) {
+        
 
-    console.error(
-        "Water consumption error:",
-        error
-    );
-
-}
-
-
-// ---------------------------------
-// RENEWABLE ENERGY
-// ---------------------------------
-async function worldBank(indicator) {
-
-    const url =
-        `https://api.worldbank.org/v2/country/WLD/indicator/${indicator}?format=json&mrnev=10`;
-
-    const response =
-        await fetch(url);
-
-    if (!response.ok) {
-
-        throw new Error(
-            `World Bank HTTP ${response.status}`
-        );
-
-    }
-
-    const data =
-        await response.json();
-
-    if (!data || !data[1]) {
-        return null;
-    }
 
     const latest =
         data[1].find(
@@ -690,85 +484,7 @@ async function worldBank(indicator) {
 
 
 
-// ---------------------------------
-// ARCTIC ICE
-// ---------------------------------
-
-try {
-
-    const response =
-        await fetch(
-            "https://global-warming.org/api/arctic-ice"
-        );
-
-    if (!response.ok) {
-        throw new Error(
-            `Arctic ice HTTP ${response.status}`
-        );
-    }
-
-    const data =
-        await response.json();
-
-    if (
-        data &&
-        data.result &&
-        data.result.length
-    ) {
-
-        const latest =
-            data.result[
-                data.result.length - 1
-            ];
-
-        const ice =
-            Number(
-                latest.extent ||
-                latest.value
-            );
-
-        if (Number.isFinite(ice)) {
-
-            setValue(
-                "global-ice",
-                ice.toFixed(2),
-                " million km²"
-            );
-
-        } else {
-
-            setValue(
-                "global-ice",
-                null
-            );
-
-        }
-
-    } else {
-
-        setValue(
-            "global-ice",
-            null
-        );
-
-    }
-
-} catch (error) {
-
-    console.error(
-        "Arctic ice error:",
-        error
-    );
-
-    setValue(
-        "global-ice",
-        null
-    );
-
-}
-
-
-// ---------------------------------
+------------------
 // SEA LEVEL
 // ---------------------------------
 
@@ -845,6 +561,149 @@ try {
 
 }
 
+// =================================
+// PLANET
+// =================================
+
+
+// ---------------------------------
+// GLOBAL TEMPERATURE
+// ---------------------------------
+
+try {
+
+    const response =
+        await fetch(
+            "https://global-warming.org/api/temperature-api"
+        );
+
+    const data =
+        await response.json();
+
+    if (
+        data &&
+        data.result &&
+        data.result.length
+    ) {
+
+        const latest =
+            data.result[data.result.length - 1];
+
+        const temperature =
+            Number(
+                latest.station ||
+                latest.land ||
+                latest.temperature
+            );
+
+        if (!Number.isNaN(temperature)) {
+
+            setValue(
+                "global-temperature",
+                temperature.toFixed(2),
+                " °C"
+            );
+
+        }
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "Temperature error:",
+        error
+    );
+
+}
+
+
+// ---------------------------------
+// ENERGY CONSUMPTION
+// ---------------------------------
+
+try {
+
+    const energy =
+        await worldBank(
+            "EG.USE.ELEC.KH.PC"
+        );
+
+    setValue(
+        "global-energy",
+        energy !== null
+            ? Math.round(energy)
+            : null,
+        " kWh/person"
+    );
+
+} catch (error) {
+
+    console.error(
+        "Energy error:",
+        error
+    );
+
+}
+
+
+// ---------------------------------
+// CO₂ EMISSIONS
+// ---------------------------------
+
+try {
+
+    const co2 =
+        await worldBank(
+            "EN.ATM.CO2E.KT"
+        );
+
+    setValue(
+        "global-co2",
+        co2 !== null
+            ? Math.round(co2)
+            : null,
+        " kt"
+    );
+
+} catch (error) {
+
+    console.error(
+        "CO2 error:",
+        error
+    );
+
+}
+
+
+// ---------------------------------
+// FOREST LOSS
+// ---------------------------------
+
+try {
+
+    const forest =
+        await worldBank(
+            "AG.LND.FRST.K2"
+        );
+
+    setValue(
+        "global-forest",
+        forest !== null
+            ? Math.round(forest)
+            : null,
+        " km²"
+    );
+
+} catch (error) {
+
+    console.error(
+        "Forest data error:",
+        error
+    );
+
+}
+
 
 // ---------------------------------
 // TREES PLANTED
@@ -865,70 +724,23 @@ try {
             1
         );
 
-    const secondsPassed =
-        (now - startOfYear) / 1000;
-
-    const secondsInYear =
-        (
-            new Date(
-                now.getFullYear() + 1,
-                0,
-                1
-            ) - startOfYear
-        ) / 1000;
-
-    const estimatedTrees =
-        Math.round(
-            treesPerYear *
-            (
-                secondsPassed /
-                secondsInYear
-            )
+    const endOfYear =
+        new Date(
+            now.getFullYear() + 1,
+            0,
+            1
         );
 
-    setValue(
-        "global-trees",
-        estimatedTrees
-    );
+    const elapsed =
+        now - startOfYear;
 
-} catch (error) {
-
-    console.error(
-        "Trees planted error:",
-        error
-    );
-
-}
-
-    
-
-    // ---------------------------------
-// FOREST TREES PLANTED
-// ---------------------------------
-
-try {
-
-    // Estimated global trees planted per year
-    const treesPerYear = 5000000000;
-
-    const now = new Date();
-
-    const startOfYear =
-        new Date(now.getFullYear(), 0, 1);
-
-    const secondsPassed =
-        (now - startOfYear) / 1000;
-
-    const secondsInYear =
-        (
-            new Date(now.getFullYear() + 1, 0, 1)
-            - startOfYear
-        ) / 1000;
+    const yearLength =
+        endOfYear - startOfYear;
 
     const estimatedTrees =
         Math.round(
             treesPerYear *
-            (secondsPassed / secondsInYear)
+            (elapsed / yearLength)
         );
 
     setValue(
@@ -944,6 +756,164 @@ try {
     );
 
 }
+
+
+// ---------------------------------
+// WATER CONSUMPTION
+// ---------------------------------
+
+try {
+
+    const water =
+        await worldBank(
+            "ER.H2O.FWAG.ZS"
+        );
+
+    setValue(
+        "global-water",
+        water,
+        "%"
+    );
+
+} catch (error) {
+
+    console.error(
+        "Water error:",
+        error
+    );
+
+}
+
+
+// ---------------------------------
+// RENEWABLE ENERGY
+// ---------------------------------
+
+try {
+
+    const renewable =
+        await worldBank(
+            "EG.FEC.RNEW.ZS"
+        );
+
+    setValue(
+        "global-renewable",
+        renewable,
+        "%"
+    );
+
+} catch (error) {
+
+    console.error(
+        "Renewable energy error:",
+        error
+    );
+
+}
+
+
+// ---------------------------------
+// ARCTIC ICE
+// ---------------------------------
+
+try {
+
+    const response =
+        await fetch(
+            "https://global-warming.org/api/arctic-ice"
+        );
+
+    const data =
+        await response.json();
+
+    if (
+        data &&
+        data.result &&
+        data.result.length
+    ) {
+
+        const latest =
+            data.result[data.result.length - 1];
+
+        const ice =
+            Number(
+                latest.extent ||
+                latest.value
+            );
+
+        if (!Number.isNaN(ice)) {
+
+            setValue(
+                "global-ice",
+                ice.toFixed(2),
+                " million km²"
+            );
+
+        }
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "Arctic ice error:",
+        error
+    );
+
+}
+
+
+// ---------------------------------
+// SEA LEVEL
+// ---------------------------------
+
+try {
+
+    const response =
+        await fetch(
+            "https://global-warming.org/api/sea-level"
+        );
+
+    const data =
+        await response.json();
+
+    if (
+        data &&
+        data.result &&
+        data.result.length
+    ) {
+
+        const latest =
+            data.result[data.result.length - 1];
+
+        const sea =
+            Number(
+                latest.sea_level ||
+                latest.value
+            );
+
+        if (!Number.isNaN(sea)) {
+
+            setValue(
+                "global-sea",
+                sea.toFixed(2),
+                " mm"
+            );
+
+        }
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "Sea level error:",
+        error
+    );
+
+}
+
+
 
 
     // =================================
