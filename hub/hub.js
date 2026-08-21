@@ -576,40 +576,49 @@ async function loadGlobalData() {
     }
 
 
-    // FOREST LOSS
+ // ---------------------------------
+// FOREST LOSS
+// ---------------------------------
 
-    try {
+try {
 
-        const response =
-            await fetch(
-                "https://api.globalforestwatch.org/v2/forest-loss"
-            );
+    // Estimated global forest loss per year
+    const forestLossPerYear = 10000000;
 
-        if (response.ok) {
+    const now = new Date();
 
-            const data =
-                await response.json();
+    const startOfYear =
+        new Date(now.getFullYear(), 0, 1);
 
-            if (data && data.value) {
+    const secondsPassed =
+        (now - startOfYear) / 1000;
 
-                setValue(
-                    "global-forest",
-                    data.value,
-                    " ha"
-                );
+    const secondsInYear =
+        (
+            new Date(now.getFullYear() + 1, 0, 1)
+            - startOfYear
+        ) / 1000;
 
-            }
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Forest loss error:",
-            error
+    const estimatedForestLoss =
+        Math.round(
+            forestLossPerYear *
+            (secondsPassed / secondsInYear)
         );
 
-    }
+    setValue(
+        "global-forest",
+        estimatedForestLoss,
+        " ha"
+    );
+
+} catch (error) {
+
+    console.error(
+        "Forest loss error:",
+        error
+    );
+
+}   
 
 
     // WATER CONSUMPTION
@@ -913,26 +922,97 @@ try {
         );
 
     }
-    // ---------------------------------
-// INTEREST RATES
+   // ---------------------------------
+// GLOBAL INTEREST RATE
 // ---------------------------------
 
 try {
 
-    const interest =
-        await worldBank("FR.INR.LEND");
+    // Major economies
+    const countries = [
+        "USA",
+        "CHN",
+        "JPN",
+        "DEU",
+        "GBR",
+        "IND",
+        "BRA",
+        "CAN",
+        "AUS"
+    ];
 
-    setValue(
-        "global-interest",
-        interest,
-        "%"
-    );
+    const indicator = "FR.INR.LEND";
+
+    const url =
+        `https://api.worldbank.org/v2/country/${countries.join(";")}/indicator/${indicator}?format=json&mrnev=1`;
+
+    const response = await fetch(url);
+
+    if (!response.ok) {
+        throw new Error(
+            `Interest rate HTTP ${response.status}`
+        );
+    }
+
+    const data = await response.json();
+
+    if (
+        data &&
+        data[1] &&
+        data[1].length
+    ) {
+
+        const rates = data[1]
+            .map(item => Number(item.value))
+            .filter(value =>
+                Number.isFinite(value)
+            );
+
+        if (rates.length) {
+
+            const average =
+                rates.reduce(
+                    (sum, value) => sum + value,
+                    0
+                ) / rates.length;
+
+            setValue(
+                "global-interest",
+                average.toFixed(2),
+                "%"
+            );
+
+        } else {
+
+            setValue(
+                "global-interest",
+                null
+            );
+
+        }
+
+    } else {
+
+        setValue(
+            "global-interest",
+            null
+        );
+
+    }
 
 } catch (error) {
 
-    console.error("Interest rate error:", error);
+    console.error(
+        "Global interest rate error:",
+        error
+    );
 
-}
+    setValue(
+        "global-interest",
+        null
+    );
+
+} 
 
 
 // ---------------------------------
@@ -1004,30 +1084,6 @@ try {
 
     }
 
-
-    // INTEREST RATES
-
-    try {
-
-        const interest =
-            await worldBank(
-                "FR.INR.LEND"
-            );
-
-        setValue(
-            "global-interest",
-            interest,
-            "%"
-        );
-
-    } catch (error) {
-
-        console.error(
-            "Interest rate error:",
-            error
-        );
-
-    }
 
 
     // CONSUMER SPENDING
