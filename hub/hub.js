@@ -630,17 +630,15 @@ try {
 // ---------------------------------
 
 try {
+const water =
+    await worldBank("ER.H2O.FWTL.K3");
 
-    const water =
-        await worldBank("ER.H2O.FWTL.K3");
-
-    setValue(
-        "global-water",
-        water !== null
-            ? Number(water).toFixed(1)
-            : null,
-        " billion m³"
-    );
+setValue(
+    "global-water",
+    water,
+    " billion m³"
+);
+    
 
 } catch (error) {
 
@@ -655,28 +653,41 @@ try {
 // ---------------------------------
 // RENEWABLE ENERGY
 // ---------------------------------
+async function worldBank(indicator) {
 
-try {
+    const url =
+        `https://api.worldbank.org/v2/country/WLD/indicator/${indicator}?format=json&mrnev=10`;
 
-    const renewable =
-        await worldBank("EG.FEC.RNEW.ZS");
+    const response =
+        await fetch(url);
 
-    setValue(
-        "global-renewable",
-        renewable !== null
-            ? Number(renewable).toFixed(2)
-            : null,
-        "%"
-    );
+    if (!response.ok) {
 
-} catch (error) {
+        throw new Error(
+            `World Bank HTTP ${response.status}`
+        );
 
-    console.error(
-        "Renewable energy error:",
-        error
-    );
+    }
 
+    const data =
+        await response.json();
+
+    if (!data || !data[1]) {
+        return null;
+    }
+
+    const latest =
+        data[1].find(
+            item =>
+                item.value !== null &&
+                item.value !== undefined
+        );
+
+    return latest
+        ? latest.value
+        : null;
 }
+
 
 
 // ---------------------------------
@@ -921,7 +932,7 @@ try {
         );
 
     setValue(
-        "global-trees",
+        "global-trees-planted",
         estimatedTrees
     );
 
