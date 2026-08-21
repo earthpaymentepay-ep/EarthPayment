@@ -1276,7 +1276,31 @@ try {
     );
 
 }
+// FOREIGN DIRECT INVESTMENT
 
+try {
+
+    const fdi =
+        await worldBank(
+            "BX.KLT.DINV.CD.WD"
+        );
+
+    setValue(
+        "global-fdi",
+        fdi !== null
+            ? Math.round(fdi / 1000000000)
+            : null,
+        " B USD"
+    );
+
+} catch (error) {
+
+    console.error(
+        "FDI error:",
+        error
+    );
+
+}
 
 // =================================
 // LOAD GLOBAL DATA
