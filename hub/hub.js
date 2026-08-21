@@ -762,6 +762,48 @@ async function loadGlobalData() {
         );
 
     }
+    // ---------------------------------
+// FOREST TREES PLANTED
+// ---------------------------------
+
+try {
+
+    // Estimated global trees planted per year
+    const treesPerYear = 5000000000;
+
+    const now = new Date();
+
+    const startOfYear =
+        new Date(now.getFullYear(), 0, 1);
+
+    const secondsPassed =
+        (now - startOfYear) / 1000;
+
+    const secondsInYear =
+        (
+            new Date(now.getFullYear() + 1, 0, 1)
+            - startOfYear
+        ) / 1000;
+
+    const estimatedTrees =
+        Math.round(
+            treesPerYear *
+            (secondsPassed / secondsInYear)
+        );
+
+    setValue(
+        "global-trees",
+        estimatedTrees
+    );
+
+} catch (error) {
+
+    console.error(
+        "Trees planted error:",
+        error
+    );
+
+}
 
 
     // =================================
