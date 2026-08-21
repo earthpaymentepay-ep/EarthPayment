@@ -871,6 +871,71 @@ async function loadGlobalData() {
         );
 
     }
+    // ---------------------------------
+// INTEREST RATES
+// ---------------------------------
+
+try {
+
+    const interest =
+        await worldBank("FR.INR.LEND");
+
+    setValue(
+        "global-interest",
+        interest,
+        "%"
+    );
+
+} catch (error) {
+
+    console.error("Interest rate error:", error);
+
+}
+
+
+// ---------------------------------
+// GLOBAL TRADE VOLUME
+// ---------------------------------
+
+try {
+
+    const exportsValue =
+        await worldBank("NE.EXP.GNFS.CD");
+
+    const importsValue =
+        await worldBank("NE.IMP.GNFS.CD");
+
+    if (
+        exportsValue !== null &&
+        importsValue !== null
+    ) {
+
+        const tradeVolume =
+            exportsValue + importsValue;
+
+        setValue(
+            "global-trade-volume",
+            Math.round(tradeVolume / 1000000000000),
+            " T USD"
+        );
+
+    } else {
+
+        setValue(
+            "global-trade-volume",
+            null
+        );
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "Global trade volume error:",
+        error
+    );
+
+}
 
 
     // GLOBAL EMPLOYMENT
