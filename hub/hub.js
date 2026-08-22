@@ -674,81 +674,80 @@ async function loadPlanet() {
 
     }
 
+// =================================
+// CO2 EMISSIONS
+// =================================
 
-    // ---------------------------------
-    // CO2
-    // ---------------------------------
+try {
 
-    try {
+    const co2 =
+        await worldBank("EN.ATM.CO2E.KT");
 
-        const co2 =
-            await worldBank(
-                "EN.ATM.CO2E.KT"
-            );
+    if (co2 !== null) {
 
         setValue(
             "global-co2",
-            co2 !== null
-                ? Math.round(co2)
-                : null,
-            " kt"
+            Math.round(co2 / 1000),
+            " Mt CO₂"
         );
 
-    } catch (error) {
+    } else {
 
-        console.error(
-            "CO2 error:",
-            error
-        );
-
-    }
-
-
-    // ---------------------------------
-    // FOREST LOSS
-    // ---------------------------------
-
-    try {
-
-        const response =
-            await fetch(
-                "https://api.globalforestwatch.org/v2/forest-loss"
-            );
-
-        if (response.ok) {
-
-            const data =
-                await response.json();
-
-            const value =
-                data?.value ??
-                data?.result?.value ??
-                data?.data?.value;
-
-            if (
-                value !== undefined &&
-                value !== null
-            ) {
-
-                setValue(
-                    "global-forest",
-                    value,
-                    " ha"
-                );
-
-            }
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Forest loss error:",
-            error
+        setValue(
+            "global-co2",
+            null
         );
 
     }
 
+} catch (error) {
+
+    console.error(
+        "CO2 error:",
+        error
+    );
+
+}
+    
+     // =================================
+// FOREST AREA
+// =================================
+
+try {
+
+    const forest =
+        await worldBank(
+            "AG.LND.FRST.K2"
+        );
+
+    if (forest !== null) {
+
+        setValue(
+            "global-forest",
+            Math.round(forest),
+            " km²"
+        );
+
+    } else {
+
+        setValue(
+            "global-forest",
+            null
+        );
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "Forest area error:",
+        error
+    );
+
+}           
+
+
+    
 
     // ---------------------------------
     // TREES PLANTED
