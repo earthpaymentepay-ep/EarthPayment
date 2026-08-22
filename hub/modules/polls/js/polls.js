@@ -1533,7 +1533,7 @@ async function loadEPTBalance() {
     */
 
     const EPT_MINT =
-        "YOUR_EPT_MINT_ADDRESS";
+    "Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL";
 
 
     if (
