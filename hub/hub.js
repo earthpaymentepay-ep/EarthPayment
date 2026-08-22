@@ -673,7 +673,6 @@ async function loadPlanet() {
         );
 
     }
-
 // =================================
 // CO2 ATMOSPHERIC CONCENTRATION
 // =================================
@@ -694,40 +693,56 @@ try {
     const data =
         await response.json();
 
+    let latestValue = null;
+
     if (
         data &&
         Array.isArray(data.co2) &&
         data.co2.length
     ) {
 
-        const latest =
-            data.co2[
-                data.co2.length - 1
-            ];
+        for (
+            let i = data.co2.length - 1;
+            i >= 0;
+            i--
+        ) {
 
-        const co2 =
-            Number(
-                latest.trend ??
-                latest.cycle ??
-                latest.co2
-            );
+            const item =
+                data.co2[i];
 
-        if (Number.isFinite(co2)) {
+            const value =
+                Number(
+                    item.trend ??
+                    item.co2 ??
+                    item.cycle
+                );
 
-            setValue(
-                "global-co2",
-                co2.toFixed(2),
-                " ppm"
-            );
+            if (
+                Number.isFinite(value)
+            ) {
 
-        } else {
+                latestValue =
+                    value;
 
-            setValue(
-                "global-co2",
-                null
-            );
+                break;
+
+            }
 
         }
+
+    }
+
+    if (
+        Number.isFinite(
+            latestValue
+        )
+    ) {
+
+        setValue(
+            "global-co2",
+            latestValue.toFixed(2),
+            " ppm"
+        );
 
     } else {
 
@@ -751,6 +766,8 @@ try {
     );
 
 }
+
+
     
      // =================================
 // FOREST AREA
@@ -910,9 +927,9 @@ try {
 
     }
 
-// =================================
-// ARCTIC ICE
-// NSIDC / NOAA
+    // =================================
+// ARCTIC SEA ICE EXTENT
+// NSIDC DAILY DATA
 // =================================
 
 try {
@@ -925,7 +942,7 @@ try {
     if (!response.ok) {
 
         throw new Error(
-            `NSIDC Arctic API HTTP ${response.status}`
+            `NSIDC Arctic HTTP ${response.status}`
         );
 
     }
@@ -940,40 +957,54 @@ try {
 
     let latestValue = null;
 
-    // Skip header lines and search
-    // backwards for latest valid record.
-
     for (
         let i = lines.length - 1;
-        i >= 2;
+        i >= 0;
         i--
     ) {
 
+        const line =
+            lines[i].trim();
+
+        if (!line) continue;
+
         const columns =
-            lines[i]
-                .split(",");
+            line.split(",");
 
-        if (
-            columns.length >= 4
-        ) {
+        // Hledáme řádek obsahující
+        // datum + hodnotu extentu.
 
-            const extent =
-                Number(
-                    columns[3]
+        const numbers =
+            columns
+                .map(value =>
+                    Number(
+                        value.trim()
+                    )
+                )
+                .filter(value =>
+                    Number.isFinite(value)
                 );
 
-            if (
-                Number.isFinite(
-                    extent
-                )
-            ) {
+        // Arctic extent je přibližně
+        // v rozmezí 2–20 million km².
+        // Najdeme poslední rozumnou hodnotu.
 
-                latestValue =
-                    extent;
+        const candidate =
+            numbers.find(value =>
+                value >= 2 &&
+                value <= 20
+            );
 
-                break;
+        if (
+            Number.isFinite(
+                candidate
+            )
+        ) {
 
-            }
+            latestValue =
+                candidate;
+
+            break;
 
         }
 
@@ -1012,18 +1043,18 @@ try {
         null
     );
 
-}
+}                
     
  // =================================
-// SEA LEVEL
-// WORLD BANK CLIMATE KNOWLEDGE PORTAL
+// GLOBAL SEA LEVEL
+// NASA / JPL
 // =================================
 
 try {
 
     const response =
         await fetch(
-            "https://climateknowledgeportal.worldbank.org/api/data/get-data?variable=sea_level&country=WLD"
+            "https://sealevel.nasa.gov/api/v1/sea-level-data/"
         );
 
     if (!response.ok) {
@@ -1045,9 +1076,7 @@ try {
             obj === null ||
             obj === undefined
         ) {
-
             return;
-
         }
 
         if (
@@ -1065,53 +1094,37 @@ try {
         if (
             typeof obj !== "object"
         ) {
-
             return;
-
         }
 
-        const possibleKeys = [
-            "sea_level",
-            "sealevel",
-            "value",
-            "global_mean_sea_level",
-            "gmsl"
-        ];
+        const keys =
+            Object.keys(obj);
 
         for (
-            const key of possibleKeys
+            let i = keys.length - 1;
+            i >= 0;
+            i--
         ) {
 
+            const key =
+                keys[i];
+
+            const value =
+                obj[key];
+
             if (
-                obj[key] !== undefined &&
-                obj[key] !== null
+                typeof value === "number" &&
+                Number.isFinite(value)
             ) {
 
-                const number =
-                    Number(
-                        obj[key]
-                    );
+                latestValue =
+                    value;
 
-                if (
-                    Number.isFinite(
-                        number
-                    )
-                ) {
-
-                    latestValue =
-                        number;
-
-                    return;
-
-                }
+                return;
 
             }
 
         }
-
-        const keys =
-            Object.keys(obj)
-                .sort();
 
         for (
             let i = keys.length - 1;
@@ -1142,7 +1155,7 @@ try {
         setValue(
             "global-sea",
             latestValue.toFixed(2),
-            " m"
+            " mm"
         );
 
     } else {
@@ -1166,7 +1179,10 @@ try {
         null
     );
 
-}  
+}
+    
+            
+
 
 
 // =================================
@@ -1482,22 +1498,90 @@ async function loadEconomy() {
 // =================================
 // GLOBAL TRADE VOLUME
 // EXPORTS + IMPORTS
+// WORLD BANK
 // =================================
 
 try {
 
-    const [exportsValue, importsValue] =
-        await Promise.all([
+    const exportResponse =
+        await fetch(
+            "https://api.worldbank.org/v2/country/WLD/indicator/NE.EXP.GNFS.CD?format=json&per_page=100"
+        );
 
-            worldBank("NE.EXP.GNFS.CD"),
-
-            worldBank("NE.IMP.GNFS.CD")
-
-        ]);
+    const importResponse =
+        await fetch(
+            "https://api.worldbank.org/v2/country/WLD/indicator/NE.IMP.GNFS.CD?format=json&per_page=100"
+        );
 
     if (
-        exportsValue !== null &&
-        importsValue !== null
+        !exportResponse.ok ||
+        !importResponse.ok
+    ) {
+
+        throw new Error(
+            "World Bank trade API error"
+        );
+
+    }
+
+    const exportData =
+        await exportResponse.json();
+
+    const importData =
+        await importResponse.json();
+
+    let exportsValue = null;
+    let importsValue = null;
+
+    if (
+        exportData &&
+        exportData[1]
+    ) {
+
+        const latestExport =
+            exportData[1].find(
+                item =>
+                    item.value !== null &&
+                    item.value !== undefined
+            );
+
+        if (latestExport) {
+
+            exportsValue =
+                Number(
+                    latestExport.value
+                );
+
+        }
+
+    }
+
+    if (
+        importData &&
+        importData[1]
+    ) {
+
+        const latestImport =
+            importData[1].find(
+                item =>
+                    item.value !== null &&
+                    item.value !== undefined
+            );
+
+        if (latestImport) {
+
+            importsValue =
+                Number(
+                    latestImport.value
+                );
+
+        }
+
+    }
+
+    if (
+        Number.isFinite(exportsValue) &&
+        Number.isFinite(importsValue)
     ) {
 
         const tradeVolume =
@@ -1507,7 +1591,8 @@ try {
         setValue(
             "global-trade-volume",
             Math.round(
-                tradeVolume / 1000000000
+                tradeVolume /
+                1000000000
             ),
             " B USD"
         );
