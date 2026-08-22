@@ -1489,3 +1489,17 @@ footer {
 .global-expand-button:hover {
     background: rgba(28, 255, 92, 0.08);
 }
+.data-status {
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.55;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
+.data-status {
+    font-size: 10px;
+    font-weight: 500;
+    opacity: 0.55;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+}
