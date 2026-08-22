@@ -867,123 +867,165 @@ try {
 
     }
 
+// =================================
+// ARCTIC ICE
+// =================================
 
-    // ---------------------------------
-    // ARCTIC ICE
-    // ---------------------------------
+try {
 
-    try {
+    const response =
+        await fetch(
+            "https://global-warming.org/api/arctic-ice"
+        );
 
-        const response =
-            await fetch(
-                "https://global-warming.org/api/arctic-ice"
+    if (!response.ok) {
+        throw new Error(
+            `Arctic API HTTP ${response.status}`
+        );
+    }
+
+    const data =
+        await response.json();
+
+    if (
+        data &&
+        Array.isArray(data.result) &&
+        data.result.length
+    ) {
+
+        const latest =
+            data.result[
+                data.result.length - 1
+            ];
+
+        const ice =
+            Number(
+                latest.extent ??
+                latest.value ??
+                latest.area
             );
 
-        if (!response.ok)
-            throw new Error("Arctic API error");
-
-        const data =
-            await response.json();
-
         if (
-            data &&
-            data.result &&
-            data.result.length
+            Number.isFinite(ice)
         ) {
 
-            const latest =
-                data.result[
-                    data.result.length - 1
-                ];
+            setValue(
+                "global-ice",
+                ice.toFixed(2),
+                " million km²"
+            );
 
-            const ice =
-                Number(
-                    latest.extent ??
-                    latest.value
-                );
+        } else {
 
-            if (
-                !Number.isNaN(ice)
-            ) {
-
-                setValue(
-                    "global-ice",
-                    ice.toFixed(2),
-                    " million km²"
-                );
-
-            }
+            setValue(
+                "global-ice",
+                null
+            );
 
         }
 
-    } catch (error) {
+    } else {
 
-        console.error(
-            "Arctic ice error:",
-            error
+        setValue(
+            "global-ice",
+            null
         );
 
     }
 
+} catch (error) {
 
-    // ---------------------------------
-    // SEA LEVEL
-    // ---------------------------------
+    console.error(
+        "Arctic ice error:",
+        error
+    );
 
-    try {
-
-        const response =
-            await fetch(
-                "https://global-warming.org/api/sea-level"
-            );
-
-        if (!response.ok)
-            throw new Error("Sea level API error");
-
-        const data =
-            await response.json();
-
-        if (
-            data &&
-            data.result &&
-            data.result.length
-        ) {
-
-            const latest =
-                data.result[
-                    data.result.length - 1
-                ];
-
-            const sea =
-                Number(
-                    latest.sea_level ??
-                    latest.value
-                );
-
-            if (
-                !Number.isNaN(sea)
-            ) {
-
-                setValue(
-                    "global-sea",
-                    sea.toFixed(2),
-                    " mm"
-                );
-
-            }
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Sea level error:",
-            error
-        );
-
-    }
+    setValue(
+        "global-ice",
+        null
+    );
 
 }
+   // =================================
+// SEA LEVEL
+// =================================
+
+try {
+
+    const response =
+        await fetch(
+            "https://global-warming.org/api/sea-level"
+        );
+
+    if (!response.ok) {
+        throw new Error(
+            `Sea level API HTTP ${response.status}`
+        );
+    }
+
+    const data =
+        await response.json();
+
+    if (
+        data &&
+        Array.isArray(data.result) &&
+        data.result.length
+    ) {
+
+        const latest =
+            data.result[
+                data.result.length - 1
+            ];
+
+        const sea =
+            Number(
+                latest.sea_level ??
+                latest.value ??
+                latest.level
+            );
+
+        if (
+            Number.isFinite(sea)
+        ) {
+
+            setValue(
+                "global-sea",
+                sea.toFixed(2),
+                " mm"
+            );
+
+        } else {
+
+            setValue(
+                "global-sea",
+                null
+            );
+
+        }
+
+    } else {
+
+        setValue(
+            "global-sea",
+            null
+        );
+
+    }
+
+} catch (error) {
+
+    console.error(
+        "Sea level error:",
+        error
+    );
+
+    setValue(
+        "global-sea",
+        null
+    );
+
+} 
+    
 
 
 // =================================
