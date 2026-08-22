@@ -675,21 +675,59 @@ async function loadPlanet() {
     }
 
 // =================================
-// CO2 EMISSIONS
+// CO2 ATMOSPHERIC CONCENTRATION
 // =================================
 
 try {
 
-    const co2 =
-        await worldBank("EN.ATM.CO2E.KT");
-
-    if (co2 !== null) {
-
-        setValue(
-            "global-co2",
-            Math.round(co2 / 1000),
-            " Mt CO₂"
+    const response =
+        await fetch(
+            "https://global-warming.org/api/co2-api"
         );
+
+    if (!response.ok) {
+        throw new Error(
+            `CO2 API HTTP ${response.status}`
+        );
+    }
+
+    const data =
+        await response.json();
+
+    if (
+        data &&
+        Array.isArray(data.co2) &&
+        data.co2.length
+    ) {
+
+        const latest =
+            data.co2[
+                data.co2.length - 1
+            ];
+
+        const co2 =
+            Number(
+                latest.trend ??
+                latest.cycle ??
+                latest.co2
+            );
+
+        if (Number.isFinite(co2)) {
+
+            setValue(
+                "global-co2",
+                co2.toFixed(2),
+                " ppm"
+            );
+
+        } else {
+
+            setValue(
+                "global-co2",
+                null
+            );
+
+        }
 
     } else {
 
@@ -705,6 +743,11 @@ try {
     console.error(
         "CO2 error:",
         error
+    );
+
+    setValue(
+        "global-co2",
+        null
     );
 
 }
@@ -875,7 +918,7 @@ try {
 
     const response =
         await fetch(
-            "https://global-warming.org/api/arctic-ice"
+            "https://global-warming.org/api/arctic-api"
         );
 
     if (!response.ok) {
@@ -886,6 +929,12 @@ try {
 
     const data =
         await response.json();
+
+    let latestValue = null;
+
+    // ---------------------------------
+    // FORMAT 1
+    // ---------------------------------
 
     if (
         data &&
@@ -898,31 +947,58 @@ try {
                 data.result.length - 1
             ];
 
-        const ice =
+        latestValue =
             Number(
-                latest.extent ??
                 latest.value ??
+                latest.extent ??
                 latest.area
             );
 
-        if (
-            Number.isFinite(ice)
-        ) {
+    }
 
-            setValue(
-                "global-ice",
-                ice.toFixed(2),
-                " million km²"
-            );
+    // ---------------------------------
+    // FORMAT 2
+    // ---------------------------------
 
-        } else {
+    else if (
+        data &&
+        data.data &&
+        typeof data.data === "object"
+    ) {
 
-            setValue(
-                "global-ice",
-                null
-            );
+        const keys =
+            Object.keys(data.data)
+                .sort();
+
+        if (keys.length) {
+
+            const latest =
+                data.data[
+                    keys[keys.length - 1]
+                ];
+
+            latestValue =
+                Number(
+                    latest.value ??
+                    latest.extent ??
+                    latest.area
+                );
 
         }
+
+    }
+
+    if (
+        Number.isFinite(
+            latestValue
+        )
+    ) {
+
+        setValue(
+            "global-ice",
+            latestValue.toFixed(2),
+            " million km²"
+        );
 
     } else {
 
