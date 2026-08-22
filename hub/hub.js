@@ -912,77 +912,68 @@ try {
 
 // =================================
 // ARCTIC ICE
+// NSIDC / NOAA
 // =================================
 
 try {
 
     const response =
         await fetch(
-            "https://global-warming.org/api/arctic-api"
+            "https://noaadata.apps.nsidc.org/NOAA/G02135/north/daily/data/N_seaice_extent_daily_v4.0.csv"
         );
 
     if (!response.ok) {
+
         throw new Error(
-            `Arctic API HTTP ${response.status}`
+            `NSIDC Arctic API HTTP ${response.status}`
         );
+
     }
 
-    const data =
-        await response.json();
+    const text =
+        await response.text();
+
+    const lines =
+        text
+            .trim()
+            .split(/\r?\n/);
 
     let latestValue = null;
 
-    // ---------------------------------
-    // FORMAT 1
-    // ---------------------------------
+    // Skip header lines and search
+    // backwards for latest valid record.
 
-    if (
-        data &&
-        Array.isArray(data.result) &&
-        data.result.length
+    for (
+        let i = lines.length - 1;
+        i >= 2;
+        i--
     ) {
 
-        const latest =
-            data.result[
-                data.result.length - 1
-            ];
+        const columns =
+            lines[i]
+                .split(",");
 
-        latestValue =
-            Number(
-                latest.value ??
-                latest.extent ??
-                latest.area
-            );
+        if (
+            columns.length >= 4
+        ) {
 
-    }
-
-    // ---------------------------------
-    // FORMAT 2
-    // ---------------------------------
-
-    else if (
-        data &&
-        data.data &&
-        typeof data.data === "object"
-    ) {
-
-        const keys =
-            Object.keys(data.data)
-                .sort();
-
-        if (keys.length) {
-
-            const latest =
-                data.data[
-                    keys[keys.length - 1]
-                ];
-
-            latestValue =
+            const extent =
                 Number(
-                    latest.value ??
-                    latest.extent ??
-                    latest.area
+                    columns[3]
                 );
+
+            if (
+                Number.isFinite(
+                    extent
+                )
+            ) {
+
+                latestValue =
+                    extent;
+
+                break;
+
+            }
 
         }
 
@@ -1022,62 +1013,137 @@ try {
     );
 
 }
-   // =================================
+    
+ // =================================
 // SEA LEVEL
+// WORLD BANK CLIMATE KNOWLEDGE PORTAL
 // =================================
 
 try {
 
     const response =
         await fetch(
-            "https://global-warming.org/api/sea-level"
+            "https://climateknowledgeportal.worldbank.org/api/data/get-data?variable=sea_level&country=WLD"
         );
 
     if (!response.ok) {
+
         throw new Error(
-            `Sea level API HTTP ${response.status}`
+            `Sea Level API HTTP ${response.status}`
         );
+
     }
 
     const data =
         await response.json();
 
-    if (
-        data &&
-        Array.isArray(data.result) &&
-        data.result.length
-    ) {
+    let latestValue = null;
 
-        const latest =
-            data.result[
-                data.result.length - 1
-            ];
-
-        const sea =
-            Number(
-                latest.sea_level ??
-                latest.value ??
-                latest.level
-            );
+    function findSeaLevel(obj) {
 
         if (
-            Number.isFinite(sea)
+            obj === null ||
+            obj === undefined
         ) {
 
-            setValue(
-                "global-sea",
-                sea.toFixed(2),
-                " mm"
-            );
+            return;
 
-        } else {
+        }
 
-            setValue(
-                "global-sea",
-                null
+        if (
+            typeof obj === "number" &&
+            Number.isFinite(obj)
+        ) {
+
+            latestValue =
+                obj;
+
+            return;
+
+        }
+
+        if (
+            typeof obj !== "object"
+        ) {
+
+            return;
+
+        }
+
+        const possibleKeys = [
+            "sea_level",
+            "sealevel",
+            "value",
+            "global_mean_sea_level",
+            "gmsl"
+        ];
+
+        for (
+            const key of possibleKeys
+        ) {
+
+            if (
+                obj[key] !== undefined &&
+                obj[key] !== null
+            ) {
+
+                const number =
+                    Number(
+                        obj[key]
+                    );
+
+                if (
+                    Number.isFinite(
+                        number
+                    )
+                ) {
+
+                    latestValue =
+                        number;
+
+                    return;
+
+                }
+
+            }
+
+        }
+
+        const keys =
+            Object.keys(obj)
+                .sort();
+
+        for (
+            let i = keys.length - 1;
+            i >= 0;
+            i--
+        ) {
+
+            if (
+                latestValue !== null
+            ) break;
+
+            findSeaLevel(
+                obj[keys[i]]
             );
 
         }
+
+    }
+
+    findSeaLevel(data);
+
+    if (
+        Number.isFinite(
+            latestValue
+        )
+    ) {
+
+        setValue(
+            "global-sea",
+            latestValue.toFixed(2),
+            " m"
+        );
 
     } else {
 
@@ -1100,9 +1166,8 @@ try {
         null
     );
 
-} 
-    
-}
+}  
+
 
 // =================================
 // ECONOMY
@@ -1414,40 +1479,61 @@ async function loadEconomy() {
 
     }
 
+// =================================
+// GLOBAL TRADE VOLUME
+// EXPORTS + IMPORTS
+// =================================
 
-    // ---------------------------------
-    // GLOBAL TRADE VOLUME
-    // ---------------------------------
+try {
 
-    try {
+    const [exportsValue, importsValue] =
+        await Promise.all([
+
+            worldBank("NE.EXP.GNFS.CD"),
+
+            worldBank("NE.IMP.GNFS.CD")
+
+        ]);
+
+    if (
+        exportsValue !== null &&
+        importsValue !== null
+    ) {
 
         const tradeVolume =
-            await worldBank(
-                "NE.TRD.GNFS.CD"
-            );
+            exportsValue +
+            importsValue;
 
         setValue(
             "global-trade-volume",
-            tradeVolume !== null
-                ? Math.round(
-                    tradeVolume /
-                    1000000000
-                )
-                : null,
+            Math.round(
+                tradeVolume / 1000000000
+            ),
             " B USD"
         );
 
-    } catch (error) {
+    } else {
 
-        console.error(
-            "Trade volume error:",
-            error
+        setValue(
+            "global-trade-volume",
+            null
         );
 
     }
 
-}
+} catch (error) {
 
+    console.error(
+        "Global trade volume error:",
+        error
+    );
+
+    setValue(
+        "global-trade-volume",
+        null
+    );
+
+}
 
 // =================================
 // LOAD EVERYTHING
