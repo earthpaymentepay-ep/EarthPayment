@@ -1619,7 +1619,426 @@ try {
     );
 
 }
+// =================================
+// GLOBAL CONNECTIVITY
+// =================================
 
+async function loadGlobalConnectivity() {
+
+    console.log(
+        "Loading Global Connectivity..."
+    );
+
+
+    // =================================
+    // HELPER
+    // =================================
+
+    async function wb(indicator) {
+
+        const url =
+            `https://api.worldbank.org/v2/country/WLD/indicator/${indicator}?format=json&per_page=100`;
+
+        const response =
+            await fetch(url);
+
+        if (!response.ok) {
+
+            throw new Error(
+                `World Bank HTTP ${response.status}`
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        if (
+            !data ||
+            !data[1]
+        ) {
+
+            return null;
+
+        }
+
+        const latest =
+            data[1].find(
+                item =>
+                    item.value !== null &&
+                    item.value !== undefined
+            );
+
+        return latest
+            ? Number(latest.value)
+            : null;
+
+    }
+
+
+    // =================================
+    // ACTIVE SATELLITES
+    // =================================
+
+    try {
+
+        const response =
+            await fetch(
+                "https://celestrak.org/satcat/records.php?ACTIVE=TRUE&PAYLOADS=TRUE&FORMAT=JSON"
+            );
+
+        if (!response.ok) {
+
+            throw new Error(
+                `CelesTrak HTTP ${response.status}`
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        if (Array.isArray(data)) {
+
+            const satellites =
+                data.filter(
+                    item =>
+                        item.OBJECT_TYPE === "PAY" ||
+                        item.TYPE === "PAY"
+                );
+
+            const value =
+                satellites.length;
+
+            setValue(
+                "connectivity-satellites",
+                value
+            );
+
+        } else {
+
+            setValue(
+                "connectivity-satellites",
+                null
+            );
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Active satellites error:",
+            error
+        );
+
+        setValue(
+            "connectivity-satellites",
+            null
+        );
+
+    }
+
+
+    // =================================
+    // MOBILE CONNECTIONS
+    // =================================
+
+    try {
+
+        const value =
+            await wb(
+                "IT.CEL.SETS"
+            );
+
+        setValue(
+            "connectivity-mobile",
+            value !== null
+                ? Math.round(value * 1000)
+                : null
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Mobile connections error:",
+            error
+        );
+
+        setValue(
+            "connectivity-mobile",
+            null
+        );
+
+    }
+
+
+    // =================================
+    // MOBILE PENETRATION
+    // =================================
+
+    try {
+
+        const value =
+            await wb(
+                "IT.CEL.SETS.P2"
+            );
+
+        setValue(
+            "connectivity-mobile-rate",
+            value !== null
+                ? value.toFixed(1)
+                : null,
+            " / 100"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Mobile penetration error:",
+            error
+        );
+
+        setValue(
+            "connectivity-mobile-rate",
+            null
+        );
+
+    }
+
+
+    // =================================
+    // SECURE INTERNET SERVERS
+    // =================================
+
+    try {
+
+        const value =
+            await wb(
+                "IT.NET.SECR.P6"
+            );
+
+        setValue(
+            "connectivity-servers",
+            value !== null
+                ? Math.round(value)
+                : null,
+            " / 1M"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Secure servers error:",
+            error
+        );
+
+        setValue(
+            "connectivity-servers",
+            null
+        );
+
+    }
+
+
+    // =================================
+    // FIXED BROADBAND
+    // =================================
+
+    try {
+
+        const value =
+            await wb(
+                "IT.NET.BBND.P2"
+            );
+
+        setValue(
+            "connectivity-broadband",
+            value !== null
+                ? value.toFixed(1)
+                : null,
+            " / 100"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Broadband error:",
+            error
+        );
+
+        setValue(
+            "connectivity-broadband",
+            null
+        );
+
+    }
+
+
+    // =================================
+    // INTERNATIONAL VOICE TRAFFIC
+    // =================================
+
+    try {
+
+        const value =
+            await wb(
+                "IT.INT.CTRF.MN.PC"
+            );
+
+        setValue(
+            "connectivity-voice",
+            value !== null
+                ? value.toFixed(1)
+                : null,
+            " min/person"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Voice traffic error:",
+            error
+        );
+
+        setValue(
+            "connectivity-voice",
+            null
+        );
+
+    }
+
+
+    // =================================
+    // INTERNATIONAL TOURISM
+    // =================================
+
+    try {
+
+        const value =
+            await wb(
+                "ST.INT.ARVL"
+            );
+
+        setValue(
+            "connectivity-tourism",
+            value !== null
+                ? Math.round(
+                    value / 1000000
+                )
+                : null,
+            " M"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Tourism arrivals error:",
+            error
+        );
+
+        setValue(
+            "connectivity-tourism",
+            null
+        );
+
+    }
+
+
+    // =================================
+    // TOURISM RECEIPTS
+    // =================================
+
+    try {
+
+        const value =
+            await wb(
+                "ST.INT.RCPT.CD"
+            );
+
+        setValue(
+            "connectivity-receipts",
+            value !== null
+                ? Math.round(
+                    value / 1000000000
+                )
+                : null,
+            " B USD"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Tourism receipts error:",
+            error
+        );
+
+        setValue(
+            "connectivity-receipts",
+            null
+        );
+
+    }
+
+
+    // =================================
+    // TOURISM EXPENDITURE
+    // =================================
+
+    try {
+
+        const value =
+            await wb(
+                "ST.INT.DPRT"
+            );
+
+        setValue(
+            "connectivity-expenditure",
+            value !== null
+                ? Math.round(
+                    value / 1000000
+                )
+                : null,
+            " M"
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Tourism expenditure error:",
+            error
+        );
+
+        setValue(
+            "connectivity-expenditure",
+            null
+        );
+
+    }
+
+
+    console.log(
+        "Global Connectivity loaded."
+    );
+
+}
+
+
+// =================================
+// LOAD
+// =================================
+
+loadGlobalConnectivity();
+
+
+// =================================
+// REFRESH
+// =================================
+
+setInterval(
+    loadGlobalConnectivity,
+    600000
+);
+    
 // =================================
 // LOAD EVERYTHING
 // =================================
