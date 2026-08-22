@@ -1141,34 +1141,37 @@ async function loadEconomy() {
 
     }
 
-
     // ---------------------------------
-    // GLOBAL TRADE
+    // GLOBAL DEBT
     // ---------------------------------
 
     try {
 
-        const trade =
+        const debt =
             await worldBank(
-                "NE.TRD.GNFS.ZS"
+                "GC.DOD.TOTL.GD.ZS"
             );
 
         setValue(
-            "global-trade",
-            trade,
+            "global-debt",
+            debt,
             "% GDP"
         );
 
     } catch (error) {
 
         console.error(
-            "Global trade error:",
+            "Global debt error:",
             error
         );
 
+        setValue(
+            "global-debt",
+            null
+        );
+
     }
-
-
+    
     // ---------------------------------
     // MONEY SUPPLY
     // ---------------------------------
