@@ -578,14 +578,13 @@ function addPriceToChart(price) {
     priceChart.update("none");
 }
 
-
 // =====================================================
-// LOAD HISTORY FROM SUPABASE
+// LOAD LATEST HISTORY FROM SUPABASE
 // =====================================================
 
 async function loadPriceHistory() {
 
-    console.log("Loading EPT price history...");
+    console.log("Loading latest EPT price history...");
 
 
     const { data, error } =
@@ -595,7 +594,7 @@ async function loadPriceHistory() {
             .order(
                 "created_at",
                 {
-                    ascending: true
+                    ascending: false
                 }
             )
             .limit(3360);
@@ -609,12 +608,11 @@ async function loadPriceHistory() {
         );
 
         return;
-
     }
 
 
     console.log(
-        "Supabase history:",
+        "Latest Supabase history:",
         data
     );
 
@@ -629,22 +627,40 @@ async function loadPriceHistory() {
         );
 
         return;
-
     }
+
+
+    // Supabase returned newest first.
+    // Reverse it so the chart goes from oldest to newest.
+
+    data.reverse();
 
 
     const labels =
         data.map(
-            row =>
-                new Date(
-                    row.created_at
-                ).toLocaleTimeString(
+            row => {
+
+                const date =
+                    new Date(
+                        row.created_at
+                    );
+
+                return date.toLocaleDateString(
+                    [],
+                    {
+                        day: "2-digit",
+                        month: "2-digit"
+                    }
+                ) +
+                " " +
+                date.toLocaleTimeString(
                     [],
                     {
                         hour: "2-digit",
                         minute: "2-digit"
                     }
-                )
+                );
+            }
         );
 
 
@@ -662,7 +678,15 @@ async function loadPriceHistory() {
         prices
     );
 
+
+    console.log(
+        "Chart loaded:",
+        data.length,
+        "latest points"
+    );
 }
+
+            
 
     
 // =====================================================
