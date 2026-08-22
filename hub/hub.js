@@ -927,7 +927,7 @@ try {
 
     }
 
-    // =================================
+   // =================================
 // ARCTIC SEA ICE EXTENT
 // NSIDC DAILY DATA
 // =================================
@@ -940,20 +940,16 @@ try {
         );
 
     if (!response.ok) {
-
         throw new Error(
-            `NSIDC Arctic HTTP ${response.status}`
+            `NSIDC HTTP ${response.status}`
         );
-
     }
 
     const text =
         await response.text();
 
     const lines =
-        text
-            .trim()
-            .split(/\r?\n/);
+        text.trim().split(/\r?\n/);
 
     let latestValue = null;
 
@@ -963,47 +959,38 @@ try {
         i--
     ) {
 
-        const line =
-            lines[i].trim();
-
-        if (!line) continue;
-
         const columns =
-            line.split(",");
+            lines[i]
+                .split(",")
+                .map(v => v.trim());
 
-        // Hledáme řádek obsahující
-        // datum + hodnotu extentu.
+        if (columns.length < 4) continue;
 
-        const numbers =
-            columns
-                .map(value =>
-                    Number(
-                        value.trim()
-                    )
-                )
-                .filter(value =>
-                    Number.isFinite(value)
-                );
+        const year =
+            Number(columns[0]);
 
-        // Arctic extent je přibližně
-        // v rozmezí 2–20 million km².
-        // Najdeme poslední rozumnou hodnotu.
+        const month =
+            Number(columns[1]);
 
-        const candidate =
-            numbers.find(value =>
-                value >= 2 &&
-                value <= 20
-            );
+        const day =
+            Number(columns[2]);
+
+        const extent =
+            Number(columns[3]);
 
         if (
-            Number.isFinite(
-                candidate
-            )
+            Number.isFinite(year) &&
+            Number.isFinite(month) &&
+            Number.isFinite(day) &&
+            Number.isFinite(extent) &&
+            year >= 1978 &&
+            month >= 1 &&
+            month <= 12 &&
+            day >= 1 &&
+            day <= 31
         ) {
 
-            latestValue =
-                candidate;
-
+            latestValue = extent;
             break;
 
         }
@@ -1011,14 +998,12 @@ try {
     }
 
     if (
-        Number.isFinite(
-            latestValue
-        )
+        Number.isFinite(latestValue)
     ) {
 
         setValue(
             "global-ice",
-            latestValue.toFixed(2),
+            latestValue.toFixed(3),
             " million km²"
         );
 
@@ -1043,7 +1028,8 @@ try {
         null
     );
 
-}                
+} 
+                                
     
  // =================================
 // GLOBAL SEA LEVEL
@@ -1676,61 +1662,35 @@ async function loadGlobalConnectivity() {
 
     }
 
+// =================================
+// ACTIVE SATELLITES
+// CELESTRAK SATCAT
+// =================================
 
-    // =================================
-    // ACTIVE SATELLITES
-    // =================================
+try {
 
-    try {
-
-        const response =
-            await fetch(
-                "https://celestrak.org/satcat/records.php?ACTIVE=TRUE&PAYLOADS=TRUE&FORMAT=JSON"
-            );
-
-        if (!response.ok) {
-
-            throw new Error(
-                `CelesTrak HTTP ${response.status}`
-            );
-
-        }
-
-        const data =
-            await response.json();
-
-        if (Array.isArray(data)) {
-
-            const satellites =
-                data.filter(
-                    item =>
-                        item.OBJECT_TYPE === "PAY" ||
-                        item.TYPE === "PAY"
-                );
-
-            const value =
-                satellites.length;
-
-            setValue(
-                "connectivity-satellites",
-                value
-            );
-
-        } else {
-
-            setValue(
-                "connectivity-satellites",
-                null
-            );
-
-        }
-
-    } catch (error) {
-
-        console.error(
-            "Active satellites error:",
-            error
+    const response =
+        await fetch(
+            "https://celestrak.org/satcat/records.php?ACTIVE=TRUE&PAYLOADS=TRUE&FORMAT=JSON"
         );
+
+    if (!response.ok) {
+        throw new Error(
+            `CelesTrak HTTP ${response.status}`
+        );
+    }
+
+    const data =
+        await response.json();
+
+    if (Array.isArray(data)) {
+
+        setValue(
+            "connectivity-satellites",
+            data.length
+        );
+
+    } else {
 
         setValue(
             "connectivity-satellites",
@@ -1738,6 +1698,21 @@ async function loadGlobalConnectivity() {
         );
 
     }
+
+} catch (error) {
+
+    console.error(
+        "Active satellites error:",
+        error
+    );
+
+    setValue(
+        "connectivity-satellites",
+        null
+    );
+
+}
+    
 
 
     // =================================
