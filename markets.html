@@ -586,18 +586,23 @@ async function loadPriceHistory() {
 
     console.log("Loading latest EPT price history...");
 
-
-    const { data, error } =
-        await supabaseClient
-            .from("ept_price_history")
-            .select("created_at, price_usd")
-            .order(
-                "created_at",
-                {
-                    ascending: false
-                }
-            )
-            .limit(3360);
+const { data, error } =
+    await supabaseClient
+        .from("ept_price_history")
+        .select("created_at, price_usd")
+        .gte(
+            "created_at",
+            new Date(
+                Date.now() - 7 * 24 * 60 * 60 * 1000
+            ).toISOString()
+        )
+        .order(
+            "created_at",
+            {
+                ascending: true
+            }
+        );
+    
 
 
     if (error) {
@@ -630,10 +635,6 @@ async function loadPriceHistory() {
     }
 
 
-    // Supabase returned newest first.
-    // Reverse it so the chart goes from oldest to newest.
-
-    data.reverse();
 
 
     const labels =
