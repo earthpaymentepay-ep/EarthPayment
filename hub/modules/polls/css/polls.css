@@ -1,0 +1,805 @@
+/* =========================================================
+   EARTHPAYMENT HUB
+   POLLS / ASK THE WORLD
+   ========================================================= */
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.polls-page {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 24px 80px;
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.polls-hero {
+    position: relative;
+    text-align: center;
+    padding: 70px 25px 55px;
+    margin-bottom: 35px;
+    border: 1px solid rgba(28, 255, 92, 0.16);
+    border-radius: 24px;
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(28, 255, 92, 0.08),
+            transparent 55%
+        ),
+        rgba(255, 255, 255, 0.015);
+    overflow: hidden;
+}
+
+.polls-hero::before {
+    content: "";
+    position: absolute;
+    width: 260px;
+    height: 260px;
+    top: -140px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(28, 255, 92, 0.08);
+    filter: blur(70px);
+    pointer-events: none;
+}
+
+.polls-hero h1 {
+    position: relative;
+    margin: 12px 0 12px;
+    font-size: clamp(34px, 5vw, 58px);
+    line-height: 1.1;
+}
+
+.polls-hero p {
+    position: relative;
+    max-width: 650px;
+    margin: 0 auto;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   IDENTITY
+   ========================================================= */
+
+.poll-identity {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+    padding: 9px 15px;
+    border: 1px solid rgba(28, 255, 92, 0.2);
+    border-radius: 999px;
+    background: rgba(28, 255, 92, 0.05);
+    font-size: 13px;
+}
+
+#identity-type {
+    color: #1cff5c;
+    font-weight: 700;
+}
+
+#identity-status {
+    color: rgba(255, 255, 255, 0.55);
+}
+
+
+/* =========================================================
+   SECTIONS
+   ========================================================= */
+
+.poll-section {
+    margin-top: 45px;
+}
+
+.poll-section:first-child {
+    margin-top: 0;
+}
+
+
+/* =========================================================
+   CREATE POLL
+   ========================================================= */
+
+.create-poll-card {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 28px;
+    border: 1px solid rgba(28, 255, 92, 0.13);
+    border-radius: 20px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(28, 255, 92, 0.035),
+            rgba(255, 255, 255, 0.012)
+        );
+    box-shadow:
+        0 15px 45px rgba(0, 0, 0, 0.18);
+}
+
+.create-poll-card label,
+.profile-card label {
+    display: block;
+    margin: 0 0 8px;
+    color: rgba(255, 255, 255, 0.72);
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.create-poll-card label:not(:first-child) {
+    margin-top: 22px;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.create-poll-card input,
+.create-poll-card select,
+.profile-card input,
+.profile-card textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 12px;
+    outline: none;
+    background: rgba(0, 0, 0, 0.25);
+    color: #fff;
+    padding: 14px 15px;
+    font-family: inherit;
+    font-size: 15px;
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.create-poll-card input::placeholder,
+.profile-card input::placeholder,
+.profile-card textarea::placeholder {
+    color: rgba(255, 255, 255, 0.32);
+}
+
+.create-poll-card input:focus,
+.create-poll-card select:focus,
+.profile-card input:focus,
+.profile-card textarea:focus {
+    border-color: rgba(28, 255, 92, 0.55);
+    background: rgba(28, 255, 92, 0.025);
+    box-shadow:
+        0 0 0 3px rgba(28, 255, 92, 0.07);
+}
+
+.create-poll-card select {
+    cursor: pointer;
+}
+
+.create-poll-card select option {
+    background: #091209;
+    color: #fff;
+}
+
+.profile-card textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+
+/* =========================================================
+   INFO TEXT
+   ========================================================= */
+
+.poll-info {
+    margin: 18px 0;
+    padding: 13px 15px;
+    border-left: 2px solid rgba(28, 255, 92, 0.45);
+    background: rgba(28, 255, 92, 0.025);
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.poll-info strong {
+    color: #1cff5c;
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.poll-primary-button,
+.poll-small-button,
+.vote-button {
+    border: none;
+    font-family: inherit;
+    cursor: pointer;
+    transition:
+        transform 0.18s ease,
+        box-shadow 0.18s ease,
+        background 0.18s ease,
+        border-color 0.18s ease;
+}
+
+.poll-primary-button {
+    width: 100%;
+    margin-top: 5px;
+    padding: 14px 20px;
+    border-radius: 12px;
+    background: #1cff5c;
+    color: #031006;
+    font-size: 15px;
+    font-weight: 800;
+}
+
+.poll-primary-button:hover {
+    transform: translateY(-1px);
+    box-shadow:
+        0 8px 25px rgba(28, 255, 92, 0.18);
+}
+
+.poll-primary-button:active {
+    transform: translateY(0);
+}
+
+.poll-small-button {
+    padding: 9px 14px;
+    border: 1px solid rgba(28, 255, 92, 0.18);
+    border-radius: 10px;
+    background: rgba(28, 255, 92, 0.035);
+    color: #1cff5c;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.poll-small-button:hover {
+    border-color: rgba(28, 255, 92, 0.45);
+    background: rgba(28, 255, 92, 0.07);
+}
+
+
+/* =========================================================
+   POLL LIST
+   ========================================================= */
+
+.poll-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.poll-card {
+    position: relative;
+    padding: 23px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 18px;
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255, 255, 255, 0.025),
+            rgba(255, 255, 255, 0.008)
+        );
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease;
+}
+
+.poll-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(28, 255, 92, 0.25);
+    background:
+        linear-gradient(
+            145deg,
+            rgba(28, 255, 92, 0.04),
+            rgba(255, 255, 255, 0.012)
+        );
+}
+
+.poll-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.poll-category {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding: 5px 9px;
+    border: 1px solid rgba(28, 255, 92, 0.18);
+    border-radius: 999px;
+    color: #1cff5c;
+    background: rgba(28, 255, 92, 0.045);
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.poll-status {
+    color: #1cff5c;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.poll-card h3 {
+    margin: 0 0 18px;
+    color: #fff;
+    font-size: 19px;
+    line-height: 1.45;
+}
+
+.poll-card-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 15px;
+    margin-bottom: 18px;
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 12px;
+}
+
+.poll-card-meta span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.poll-card-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.poll-card-actions button {
+    flex: 1;
+}
+
+
+/* =========================================================
+   LOADING / EMPTY
+   ========================================================= */
+
+.poll-loading,
+.poll-empty {
+    grid-column: 1 / -1;
+    padding: 35px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.45);
+}
+
+
+/* =========================================================
+   DETAIL
+   ========================================================= */
+
+.hidden {
+    display: none !important;
+}
+
+.poll-detail-card {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid rgba(28, 255, 92, 0.14);
+    border-radius: 22px;
+    background:
+        radial-gradient(
+            circle at top right,
+            rgba(28, 255, 92, 0.05),
+            transparent 40%
+        ),
+        rgba(255, 255, 255, 0.015);
+}
+
+.poll-detail-card h3#detail-question {
+    margin: 18px 0 30px;
+    font-size: clamp(23px, 3vw, 34px);
+    line-height: 1.35;
+}
+
+
+/* =========================================================
+   VOTING
+   ========================================================= */
+
+.vote-area {
+    padding: 22px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 17px;
+    background: rgba(0, 0, 0, 0.16);
+}
+
+.vote-area > p {
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.vote-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.vote-button {
+    padding: 17px;
+    border-radius: 13px;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.yes-button {
+    border: 1px solid rgba(28, 255, 92, 0.28);
+    background: rgba(28, 255, 92, 0.08);
+    color: #1cff5c;
+}
+
+.yes-button:hover {
+    background: rgba(28, 255, 92, 0.16);
+    box-shadow:
+        0 8px 25px rgba(28, 255, 92, 0.08);
+}
+
+.no-button {
+    border: 1px solid rgba(255, 80, 80, 0.22);
+    background: rgba(255, 80, 80, 0.055);
+    color: #ff7777;
+}
+
+.no-button:hover {
+    background: rgba(255, 80, 80, 0.12);
+}
+
+
+/* =========================================================
+   RESULTS
+   ========================================================= */
+
+.poll-results {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.poll-results > h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+.result-group {
+    margin-bottom: 18px;
+    padding: 19px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.012);
+}
+
+.result-group-title {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    margin-bottom: 15px;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 14px;
+}
+
+.result-group-title strong {
+    color: rgba(255, 255, 255, 0.42);
+    font-size: 12px;
+}
+
+.result-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 13px;
+}
+
+.result-row strong {
+    color: #fff;
+}
+
+.result-bar {
+    width: 100%;
+    height: 7px;
+    margin-top: 7px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.06);
+}
+
+.result-bar-fill {
+    width: 0%;
+    height: 100%;
+    border-radius: inherit;
+    transition: width 0.45s ease;
+}
+
+.yes-fill {
+    background: #1cff5c;
+    box-shadow:
+        0 0 12px rgba(28, 255, 92, 0.22);
+}
+
+.no-fill {
+    background: #ff6666;
+    box-shadow:
+        0 0 12px rgba(255, 102, 102, 0.18);
+}
+
+.results-note {
+    margin-top: 18px;
+    color: rgba(255, 255, 255, 0.38);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.profile-card {
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 27px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.012);
+}
+
+.profile-wallet-status {
+    margin-bottom: 22px;
+    padding: 13px 15px;
+    border-radius: 11px;
+    background: rgba(28, 255, 92, 0.035);
+    border: 1px solid rgba(28, 255, 92, 0.11);
+    color: rgba(255, 255, 255, 0.58);
+    font-size: 13px;
+}
+
+#profile-form label:not(:first-child) {
+    margin-top: 18px;
+}
+
+#profile-form .poll-primary-button {
+    margin-top: 20px;
+}
+
+
+/* =========================================================
+   INFORMATION / RULES
+   ========================================================= */
+
+.poll-info-card {
+    padding: 27px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.012);
+}
+
+.poll-info-card h3 {
+    margin-bottom: 22px;
+    font-size: 21px;
+}
+
+.poll-rules {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.poll-rules > div {
+    display: grid;
+    grid-template-columns: 30px 1fr;
+    column-gap: 10px;
+    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.055);
+    border-radius: 14px;
+    background: rgba(0, 0, 0, 0.13);
+}
+
+.poll-rules > div > strong {
+    color: #fff;
+}
+
+.poll-rules > div > span {
+    grid-column: 2;
+    margin-top: 4px;
+    color: rgba(255, 255, 255, 0.43);
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+
+/* =========================================================
+   MESSAGES
+   ========================================================= */
+
+.poll-message {
+    min-height: 20px;
+    margin-top: 12px;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.poll-message.success {
+    color: #1cff5c;
+}
+
+.poll-message.error {
+    color: #ff7777;
+}
+
+
+/* =========================================================
+   DISABLED
+   ========================================================= */
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+
+/* =========================================================
+   WALLET STATE
+   ========================================================= */
+
+.wallet-connected {
+    border-color: rgba(28, 255, 92, 0.35) !important;
+}
+
+.holder-identity {
+    color: #1cff5c !important;
+}
+
+.verified-identity {
+    color: #72d9ff !important;
+}
+
+.public-identity {
+    color: rgba(255, 255, 255, 0.65) !important;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 850px) {
+
+    .polls-page {
+        padding: 30px 17px 60px;
+    }
+
+    .poll-list {
+        grid-template-columns: 1fr;
+    }
+
+    .poll-rules {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .polls-page {
+        padding: 22px 12px 50px;
+    }
+
+    .polls-hero {
+        padding: 48px 17px 38px;
+        border-radius: 18px;
+    }
+
+    .polls-hero h1 {
+        font-size: 34px;
+    }
+
+    .polls-hero p {
+        font-size: 14px;
+    }
+
+    .poll-identity {
+        flex-direction: column;
+        gap: 4px;
+        border-radius: 14px;
+    }
+
+    .create-poll-card,
+    .poll-detail-card,
+    .profile-card,
+    .poll-info-card {
+        padding: 19px;
+        border-radius: 16px;
+    }
+
+    .section-heading {
+        gap: 12px;
+    }
+
+    .section-heading h2 {
+        font-size: 22px;
+    }
+
+    .poll-card {
+        padding: 18px;
+    }
+
+    .poll-card-header {
+        align-items: flex-start;
+    }
+
+    .poll-card h3 {
+        font-size: 17px;
+    }
+
+    .poll-card-actions {
+        flex-direction: column;
+    }
+
+    .vote-buttons {
+        grid-template-columns: 1fr;
+    }
+
+    .vote-button {
+        padding: 15px;
+    }
+
+    .result-group-title {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .poll-rules > div {
+        grid-template-columns: 27px 1fr;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+    .polls-page {
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+
+    .polls-hero h1 {
+        font-size: 29px;
+    }
+
+    .create-poll-card,
+    .poll-detail-card,
+    .profile-card,
+    .poll-info-card {
+        padding: 15px;
+    }
+
+}
