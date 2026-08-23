@@ -1129,19 +1129,21 @@ async function createPoll() {
 
     try {
 
-        const poll = {
+const poll = {
 
-            question,
+    question: question,
 
-            category,
+    category: category,
 
-            status:
-                "active",
+    status: "active",
 
-            creator_wallet:
-                connectedWallet
+    yes_votes: 0,
 
-        };
+    no_votes: 0,
+
+    total_votes: 0
+
+};
 
 
         await supabaseRequest(
