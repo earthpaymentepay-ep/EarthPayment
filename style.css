@@ -10,13 +10,14 @@ html {
 scroll-behavior: smooth;
 }
 
-
 body {
 background: #061006;
 color: white;
 line-height: 1.6;
+min-height: 100vh;
+display: flex;
+flex-direction: column;
 }
-
 
 /* MENU */
 
@@ -277,7 +278,7 @@ footer {
 text-align: center;
 padding: 30px;
 border-top: 1px solid #1cff5c;
-margin-top: 40px;
+margin-top: auto;
 color: #aaa;
 }
 
