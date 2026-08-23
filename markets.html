@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>EarthPayment Markets</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+<div class="nav-logo">
+
+<img src="assets/logo.png" alt="EarthPayment Logo">
+
+</div>
+
+
+<div class="nav-links">
+
+<a href="index.html">Home</a>
+
+<a href="index.html#about">About</a>
+
+<a href="index.html#tokenomics">Tokenomics</a>
+
+<a href="index.html#roadmap">Roadmap</a>
+
+<a href="index.html#vision">Vision</a>
+
+<a href="markets.html">Markets</a>
+
+<a href="news.html">Announcements</a>
+
+<a href="whitepaper.html">Whitepaper</a>
+
+<a href="mailto:earthpaymentsupport@gmail.com" class="support">
+Support
+</a>
+
+<a
+href="https://raydium.io/swap/?inputMint=Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL&outputMint=sol"
+target="_blank"
+class="buy">
+
+Buy EPT
+
+</a>
+
+</div>
+
+</nav>
+
+
+
+<header>
+
+<h1>Markets</h1>
+
+
+<div class="market-mini">
+
+<div class="market-title">
+
+🟢 Raydium | EPT / SOL
+
+</div>
+
+
+<br>
+
+
+<div class="market-data">
+
+<span>
+💰 Price:
+<b id="price">$--</b>
+</span>
+
+
+<span>
+📈 Market Cap:
+<b id="marketcap">$--</b>
+</span>
+
+
+<span>
+💧 Liquidity:
+<b id="liquidity">$--</b>
+</span>
+
+
+<span>
+📊 Volume 24h:
+<b id="volume">$--</b>
+</span>
+
+</div>
+
+</div>
+
+</header>
+
+
+
+<section class="markets-section">
+
+<h2>REAL-TIME EPT PRICE CHART</h2>
+
+
+<div class="chart-box">
+
+<canvas id="priceChart"></canvas>
+
+</div>
+
+</section>
+
+
+
+<section class="markets-section">
+
+<h2>Liquidity Pool</h2>
+
+
+<div class="card">
+
+<p>
+<b>DEX:</b> Raydium
+</p>
+
+
+<p>
+<b>Pair:</b> EPT / SOL
+</p>
+
+
+<p>
+
+<b>Pool ID:</b><br>
+
+7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<section class="markets-section">
+
+<h2>Token Distribution</h2>
+
+
+<div class="card">
+
+<p>
+Reserve — 20%
+</p>
+
+
+<p>
+Users — 30%
+</p>
+
+
+<p>
+Dev Team — 20%
+</p>
+
+
+<p>
+Liquidity — 30%
+</p>
+
+</div>
+
+</section>
+
+
+
+<section class="markets-section">
+
+<h2>Market Links</h2>
+
+
+<div class="card">
+
+<p>
+
+<a
+href="https://raydium.io/swap/?inputMint=Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL&outputMint=sol"
+target="_blank">
+
+Raydium
+
+</a>
+
+</p>
+
+
+<p>
+Contract:
+</p>
+
+
+<p>
+
+Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL
+
+</p>
+
+</div>
+
+</section>
+
+
+
+<footer>
+
+<p>
+© 2026 EarthPayment. All rights reserved.
+</p>
+
+
+<div class="social-links">
+
+
+<a
+href="https://x.com/EarthPaymentEPT"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="EarthPayment on X">
+
+<svg viewBox="0 0 24 24" aria-hidden="true">
+
+<path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.964 6.817H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.45-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z"/>
+
+</svg>
+
+</a>
+
+
+
+<a
+href="https://www.instagram.com/earthpayment.ept/"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="EarthPayment on Instagram">
+
+<svg viewBox="0 0 24 24" aria-hidden="true">
+
+<rect
+x="3"
+y="3"
+width="18"
+height="18"
+rx="5"
+ry="5"/>
+
+<circle
+cx="12"
+cy="12"
+r="4"/>
+
+<circle
+cx="17.5"
+cy="6.5"
+r="1"/>
+
+</svg>
+
+</a>
+
+
+</div>
+
+</footer>
+
+
+
+<script>
+
+
+let priceChart = null;
+
+const POOL_ADDRESS =
+"7skrA5jmLbhF5ududcoQekkV7sEjJx1w7hnymMytyZDx";
+
+const TOKEN_ADDRESS =
+"Fp7Xuys2d3mpUnJWYu6EUquxVKG1edC9yS9B8KSaM6GL";
+
+const TOTAL_SUPPLY = 100000000;
+
+
+// =====================================================
+// SUPABASE
+// =====================================================
+
+const SUPABASE_URL =
+"https://pnjxoinimtewqjdmfaza.supabase.co";
+
+const SUPABASE_KEY =
+"sb_publishable_IFMFe9qwEhWJnFchuRB2tA_tmfDQGNa";
+
+const supabaseClient =
+window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+
+// =====================================================
+// RAYDIUM
+// =====================================================
+
+async function getRaydiumPool() {
+
+    const response = await fetch(
+        "https://api-v3.raydium.io/pools/info/ids?ids=" +
+        POOL_ADDRESS
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            "Raydium HTTP " + response.status
+        );
+    }
+
+    const data = await response.json();
+
+    const pool = data.data?.[0];
+
+    if (!pool) {
+        throw new Error("Raydium pool not found");
+    }
+
+    return pool;
+}
+
+
+// =====================================================
+// SOL USD
+// =====================================================
+
+async function getSolUsd() {
+
+    const response = await fetch(
+        "https://api.jup.ag/price/v3?ids=So11111111111111111111111111111111111111112"
+    );
+
+    if (!response.ok) {
+        throw new Error(
+            "SOL price HTTP " + response.status
+        );
+    }
+
+    const data = await response.json();
+
+    const solData =
+        data[
+            "So11111111111111111111111111111111111111112"
+        ];
+
+    if (!solData) {
+        throw new Error("SOL price not found");
+    }
+
+    const solUsd = Number(solData.usdPrice);
+
+    if (
+        !Number.isFinite(solUsd) ||
+        solUsd <= 0
+    ) {
+        throw new Error("Invalid SOL/USD price");
+    }
+
+    return solUsd;
+}
+
+
+// =====================================================
+// CREATE CHART
+// =====================================================
+
+function createChart(labels, prices) {
+
+    const canvas =
+        document.getElementById("priceChart");
+
+    if (!canvas) return;
+
+    const ctx =
+        canvas.getContext("2d");
+
+    priceChart =
+        new Chart(
+            ctx,
+            {
+
+                type: "line",
+
+                data: {
+
+                    labels: labels,
+
+                    datasets: [{
+
+                        label: "EPT Price",
+
+                        data: prices,
+
+                        tension: 0.25,
+
+                        pointRadius: 0,
+
+                        borderWidth: 2,
+
+                        fill: false
+
+                    }]
+
+                },
+
+                options: {
+
+                    responsive: true,
+
+                    maintainAspectRatio: false,
+
+                    animation: false,
+
+                    
+plugins: {
+
+    legend: {
+        display: false
+    },
+
+    tooltip: {
+
+        callbacks: {
+
+            label: function(context) {
+
+                return "EPT: $" +
+                    Number(
+                        context.parsed.y
+                    ).toFixed(10);
+
+            }
+
+        }
+
+    }
+
+},
+scales: {
+
+    x: {
+
+        grid: {
+            display: true,
+            drawOnChartArea: true
+        },
+
+        ticks: {
+
+            maxTicksLimit: 8,
+
+            autoSkip: true,
+
+            maxRotation: 0,
+
+            minRotation: 0
+        }
+
+    },
+
+    y: {
+
+        beginAtZero: false,
+
+        grid: {
+            display: true,
+            drawOnChartArea: true
+        },
+
+        ticks: {
+
+            callback: function(value) {
+
+                return "$" +
+                    Number(value).toFixed(8);
+
+            }
+
+        }
+
+    }
+
+} 
+
+                }
+
+            }
+        );
+}
+
+
+// =====================================================
+// ADD PRICE TO CHART
+// =====================================================
+
+function addPriceToChart(price) {
+
+    if (!priceChart) {
+
+        createChart(
+            [
+                new Date().toLocaleTimeString(
+                    [],
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        second: "2-digit"
+                    }
+                )
+            ],
+            [price]
+        );
+
+        return;
+    }
+
+
+    const label =
+        new Date().toLocaleTimeString(
+            [],
+            {
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit"
+            }
+        );
+
+
+    priceChart.data.labels.push(label);
+
+    priceChart.data.datasets[0].data.push(price);
+
+
+    if (
+        priceChart.data.labels.length > 3360
+    ) {
+
+        priceChart.data.labels.shift();
+
+        priceChart.data.datasets[0].data.shift();
+
+    }
+
+
+    priceChart.update("none");
+}
+
+// =====================================================
+// LOAD LATEST HISTORY FROM SUPABASE
+// =====================================================
+async function loadPriceHistory() {
+
+    console.log("Loading EPT price history...");
+
+    const { data, error } =
+        await supabaseClient
+            .from("ept_price_history")
+            .select("created_at, price_usd")
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            )
+            .limit(11760);
+
+
+    if (error) {
+
+        console.error(
+            "SUPABASE HISTORY ERROR:",
+            error
+        );
+
+        return;
+    }
+
+
+    if (
+        !data ||
+        data.length === 0
+    ) {
+
+        console.log(
+            "No price history found."
+        );
+
+        return;
+    }
+
+
+    data.reverse();
+
+
+    const labels =
+        data.map(
+            row => {
+
+                const date =
+                    new Date(
+                        row.created_at
+                    );
+
+                return date.toLocaleDateString(
+                    [],
+                    {
+                        day: "2-digit",
+                        month: "2-digit"
+                    }
+                ) +
+                " " +
+                date.toLocaleTimeString(
+                    [],
+                    {
+                        hour: "2-digit",
+                        minute: "2-digit"
+                    }
+                );
+            }
+        );
+
+
+    const prices =
+        data.map(
+            row =>
+                Number(
+                    row.price_usd
+                )
+        );
+
+
+    createChart(
+        labels,
+        prices
+    );
+
+
+    console.log(
+        "Chart loaded:",
+        data.length,
+        "points"
+    );
+}
+    
+// =====================================================
+// SUPABASE SAVE TIMER
+// =====================================================
+
+let lastSupabaseSave = 0;
+
+const SUPABASE_SAVE_INTERVAL =
+    5 * 60 * 1000;
+
+// =====================================================
+// LOAD CURRENT MARKET DATA
+// =====================================================
+
+async function loadMarketData() {
+
+    try {
+
+        const pool =
+            await getRaydiumPool();
+
+
+        // LIQUIDITY
+
+        const liquidityElement =
+            document.getElementById("liquidity");
+
+        if (liquidityElement) {
+
+            liquidityElement.textContent =
+                "$" +
+                Number(
+                    pool.tvl || 0
+                ).toLocaleString(
+                    undefined,
+                    {
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+
+        // VOLUME
+
+        const volumeElement =
+            document.getElementById("volume");
+
+        if (volumeElement) {
+
+            volumeElement.textContent =
+                "$" +
+                Number(
+                    pool.day?.volume || 0
+                ).toLocaleString(
+                    undefined,
+                    {
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+
+        // POOL AMOUNTS
+
+        const solAmount =
+            Number(pool.mintAmountA);
+
+        const eptAmount =
+            Number(pool.mintAmountB);
+
+
+        if (
+            !Number.isFinite(solAmount) ||
+            !Number.isFinite(eptAmount) ||
+            solAmount <= 0 ||
+            eptAmount <= 0
+        ) {
+
+            throw new Error(
+                "Invalid Raydium pool amounts"
+            );
+
+        }
+
+
+        // EPT / SOL
+
+        const eptSol =
+            solAmount / eptAmount;
+
+
+        // SOL / USD
+
+        const solUsd =
+            await getSolUsd();
+
+
+        // EPT / USD
+
+        const eptUsd =
+            eptSol * solUsd;
+
+
+        if (
+            !Number.isFinite(eptUsd) ||
+            eptUsd <= 0
+        ) {
+
+            throw new Error(
+                "Invalid EPT/USD price"
+            );
+
+        }
+
+
+        // PRICE
+
+        const priceElement =
+            document.getElementById("price");
+
+        if (priceElement) {
+
+            priceElement.textContent =
+                "$" +
+                eptUsd.toFixed(8);
+
+        }
+
+
+        // MARKET CAP
+
+        const marketcapElement =
+            document.getElementById("marketcap");
+
+        if (marketcapElement) {
+
+            const marketCap =
+                eptUsd *
+                TOTAL_SUPPLY;
+
+            marketcapElement.textContent =
+                "$" +
+                marketCap.toLocaleString(
+                    undefined,
+                    {
+                        maximumFractionDigits: 2
+                    }
+                );
+
+        }
+
+// =================================================
+// SAVE PRICE TO SUPABASE EVERY 5 MINUTES
+// =================================================
+
+const now = Date.now();
+
+if (
+    now - lastSupabaseSave >=
+    SUPABASE_SAVE_INTERVAL
+) {
+
+    const { data, error } =
+        await supabaseClient
+            .from("ept_price_history")
+            .insert({
+                price_usd: eptUsd
+            })
+            .select();
+
+
+    if (error) {
+
+        console.error(
+            "SUPABASE INSERT ERROR:",
+            error
+        );
+
+    } else {
+
+        console.log(
+            "PRICE SAVED TO SUPABASE:",
+            data
+        );
+
+        lastSupabaseSave = now;
+    }
+}
+        
+
+        // =================================================
+        // UPDATE CHART
+        // =================================================
+
+        addPriceToChart(
+            eptUsd
+        );
+
+
+        console.log(
+            "EPT MARKET DATA:",
+            {
+                EPT_USD: eptUsd,
+                MARKET_CAP:
+                    eptUsd * TOTAL_SUPPLY,
+                SOL_USD: solUsd,
+                LIQUIDITY: pool.tvl,
+                VOLUME:
+                    pool.day?.volume || 0
+            }
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "MARKET DATA ERROR:",
+            error
+        );
+
+    }
+
+}        
+
+// =====================================================
+// START
+// =====================================================
+
+async function startMarkets() {
+
+    // First load history
+    await loadPriceHistory();
+
+    // Then load current price
+    await loadMarketData();
+
+}
+
+
+// Start
+startMarkets();
+
+
+// Update every 15 seconds
+setInterval(
+    loadMarketData,
+    15000
+);
+
+</script>
+
+
+
+<script>
+
+// =====================================================
+// ACTIVE MENU ITEM
+// =====================================================
+
+
+const currentPage =
+window.location.pathname
+.split("/")
+.pop() ||
+"index.html";
+
+
+document
+.querySelectorAll(
+".nav-links a"
+)
+.forEach(
+link => {
+
+
+const href =
+link.getAttribute(
+"href"
+);
+
+
+if (
+href === currentPage
+) {
+
+link.classList.add(
+"active"
+);
+
+}
+
+}
+);
+
+</script>
+
+
+
+<script>
+
+
+// =====================================================
+// HIDE MENU ON SCROLL
+// =====================================================
+
+
+let lastScrollTop = 0;
+
+const nav =
+document.querySelector(
+"nav"
+);
+
+
+window.addEventListener(
+"scroll",
+function () {
+
+
+let currentScroll =
+window.pageYOffset ||
+document.documentElement.scrollTop;
+
+
+if (
+currentScroll >
+lastScrollTop &&
+currentScroll > 80
+) {
+
+nav.classList.add(
+"hide-menu"
+);
+
+} else {
+
+nav.classList.remove(
+"hide-menu"
+);
+
+}
+
+
+lastScrollTop =
+currentScroll <= 0
+? 0
+: currentScroll;
+
+}
+);
+
+</script>
+
+
+</body>
+
+</html>
