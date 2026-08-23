@@ -1943,7 +1943,29 @@ function closePollDetail() {
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+const params =
+    new URLSearchParams(
+        window.location.search
+    );
 
+if (
+    params.get("create") === "1"
+) {
+
+    const modal =
+        document.getElementById(
+            "create-poll-modal"
+        );
+
+    if (modal) {
+
+        modal.classList.remove(
+            "hidden"
+        );
+
+    }
+
+}
 
         // ------------------------------------
         // CREATE POLL MODAL
