@@ -1968,7 +1968,6 @@ if (
             "poll-modal-open"
         );
 
-        // Přesune stránku přímo k modalu
         setTimeout(
             () => {
 
@@ -1986,7 +1985,6 @@ if (
 }
 
 
-}
 
         // ------------------------------------
         // CREATE POLL MODAL
@@ -2161,4 +2159,5 @@ if (
 
 console.log(
     "EarthPayment Polls ready."
+
 );
