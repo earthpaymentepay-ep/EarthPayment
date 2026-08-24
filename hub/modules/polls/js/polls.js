@@ -1943,6 +1943,7 @@ function closePollDetail() {
 document.addEventListener(
     "DOMContentLoaded",
     () => {
+
 const params =
     new URLSearchParams(
         window.location.search
@@ -1963,7 +1964,27 @@ if (
             "hidden"
         );
 
+        document.body.classList.add(
+            "poll-modal-open"
+        );
+
+        // Přesune stránku přímo k modalu
+        setTimeout(
+            () => {
+
+                modal.scrollIntoView({
+                    behavior: "instant",
+                    block: "center"
+                });
+
+            },
+            50
+        );
+
     }
+
+}
+
 
 }
 
