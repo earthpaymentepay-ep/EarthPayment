@@ -1978,11 +1978,33 @@ if (
 
             },
             50
-        );
+           );
 
     }
 
-}
+    
+      // ------------------------------------
+      // REMOVE CREATE PARAMETER
+      // ------------------------------------
+
+    params.delete("create");
+
+    const cleanUrl =
+        window.location.pathname +
+        (
+            params.toString()
+                ? "?" + params.toString()
+                : ""
+        ) +
+        window.location.hash;
+
+    window.history.replaceState(
+        {},
+        "",
+        cleanUrl
+    );
+
+    }
 
 
 
