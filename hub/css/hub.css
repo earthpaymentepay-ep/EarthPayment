@@ -33,26 +33,23 @@ button {
 /* =========================================
    HEADER
 ========================================= */
-
 header {
     position: sticky;
     top: 0;
     z-index: 1000;
 
     width: 100%;
-    min-width: 0;
 
     display: grid;
 
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
-        "live logo"
+        "live branding"
         "nav nav";
 
     align-items: center;
 
-    column-gap: 20px;
-    row-gap: 7px;
+    gap: 7px 20px;
 
     padding: 9px 3%;
 
@@ -61,6 +58,7 @@ header {
 
     backdrop-filter: blur(12px);
 }
+
 
 
 /* GLOBAL DATA */
