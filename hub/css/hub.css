@@ -30,7 +30,6 @@ button {
     font-family: inherit;
 }
 
-
 /* =========================================
    HEADER
 ========================================= */
@@ -43,12 +42,19 @@ header {
     width: 100%;
     min-width: 0;
 
-    display: flex;
+    display: grid;
+
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+        "live logo"
+        "nav nav";
+
     align-items: center;
 
-    gap: 14px;
+    column-gap: 20px;
+    row-gap: 7px;
 
-    padding: 11px 3%;
+    padding: 9px 3%;
 
     background: rgba(5, 8, 5, 0.96);
     border-bottom: 1px solid rgba(28, 255, 92, 0.20);
@@ -56,8 +62,56 @@ header {
     backdrop-filter: blur(12px);
 }
 
-.hub-logo {
+
+/* GLOBAL DATA */
+
+.global-live-bar {
+    grid-area: live;
+
+    min-width: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    gap: 16px;
+
+    padding: 0;
+
+    background: transparent;
+    border: none;
+
+    color: #999;
+
+    font-size: 12px;
+
+    white-space: nowrap;
+
+    overflow-x: auto;
+    scrollbar-width: none;
+}
+
+.global-live-bar::-webkit-scrollbar {
+    display: none;
+}
+
+.global-live-bar span {
+    display: inline-flex;
+    align-items: center;
+
     flex: 0 0 auto;
+}
+
+.global-live-bar span:last-child {
+    color: #1cff5c;
+    font-weight: 600;
+}
+
+
+/* LOGO */
+
+.hub-logo {
+    grid-area: logo;
 
     white-space: nowrap;
 
@@ -65,23 +119,39 @@ header {
 
     font-size: 20px;
     font-weight: 700;
+
+    text-align: right;
 }
 
 .hub-logo span {
     color: #fff;
 }
 
+
+/* NAVIGATION */
+
 nav {
-    flex: 1 1 auto;
+    grid-area: nav;
+
+    width: 100%;
     min-width: 0;
 
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
 
-    gap: 13px;
+    gap: 18px;
 
-    overflow: hidden;
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    padding: 3px 0 5px;
+
+    scrollbar-width: none;
+}
+
+nav::-webkit-scrollbar {
+    display: none;
 }
 
 nav a {
@@ -100,39 +170,16 @@ nav a:hover {
     color: #1cff5c;
 }
 
-.search-button {
-    flex: 0 0 34px;
 
-    width: 34px;
-    height: 34px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: 1px solid rgba(28,255,92,.18);
-    border-radius: 8px;
-
-    background: transparent;
-
-    color: #aaa;
-
-    font-size: 15px;
-
-    cursor: pointer;
-}
-
-.search-button:hover {
-    color: #1cff5c;
-    border-color: #1cff5c;
-}
+/* WALLET */
 
 .wallet-button {
-    flex: 0 0 auto;
+    position: absolute;
 
-    max-width: 150px;
+    top: 9px;
+    right: 3%;
 
-    padding: 8px 11px;
+    padding: 7px 10px;
 
     border: 1px solid #1cff5c;
     border-radius: 8px;
@@ -154,47 +201,7 @@ nav a:hover {
     color: #050805;
 }
 
-
-/* =========================================
-   GLOBAL LIVE BAR
-========================================= */
-
-.global-live-bar {
-    width: 100%;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    gap: 18px;
-
-    padding: 7px 10px;
-
-    background: #070b07;
-
-    border-bottom: 1px solid rgba(28,255,92,.10);
-
-    color: #999;
-
-    font-size: 12px;
-
-    white-space: nowrap;
-}
-
-.global-live-bar span {
-    display: inline-flex;
-    align-items: center;
-
-    gap: 4px;
-
-    flex: 0 0 auto;
-}
-
-.global-live-bar span:last-child {
-    color: #1cff5c;
-    font-weight: 600;
-}
-
+        
 
 /* =========================================
    MAIN
