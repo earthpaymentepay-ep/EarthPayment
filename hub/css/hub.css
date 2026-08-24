@@ -1073,9 +1073,6 @@ footer {
 
 @media (max-width: 1050px) {
 
-    nav {
-        display: none;
-    }
 
     .module-grid,
     .feature-grid {
@@ -1100,9 +1097,7 @@ footer {
         font-size: 16px;
     }
 
-    nav {
-        display: none;
-    }
+
 
     .search-button {
         width: 32px;
@@ -1383,7 +1378,7 @@ footer {
 @media (max-width: 430px) {
 
     .hub-logo span {
-        display: none;
+        display: inline;
     }
 
     .hub-logo {
