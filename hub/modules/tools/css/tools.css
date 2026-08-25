@@ -1,0 +1,305 @@
+/* =========================================
+   EARTHPAYMENT HUB
+   TOOLS
+========================================= */
+
+.tools-grid {
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 10px;
+}
+
+
+/* =========================================
+   TOOL CARD
+========================================= */
+
+.tool-card {
+    display: block;
+
+    min-width: 0;
+
+    padding: 18px 15px;
+
+    background: #090e09;
+
+    border: 1px solid rgba(28, 255, 92, 0.14);
+    border-radius: 11px;
+
+    color: #fff;
+    text-decoration: none;
+
+    transition:
+        transform .2s ease,
+        border-color .2s ease,
+        background .2s ease,
+        box-shadow .2s ease;
+}
+
+.tool-card:hover {
+    transform: translateY(-3px);
+
+    border-color: rgba(28, 255, 92, 0.50);
+
+    background: #0b130b;
+
+    box-shadow:
+        0 0 20px rgba(28, 255, 92, 0.08);
+}
+
+
+/* =========================================
+   TOOL ICON
+========================================= */
+
+.tool-icon {
+    display: block;
+
+    margin-bottom: 9px;
+
+    font-size: 27px;
+}
+
+
+/* =========================================
+   TOOL TITLE
+========================================= */
+
+.tool-card h3 {
+    margin-bottom: 5px;
+
+    color: #fff;
+
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+/* =========================================
+   TOOL DESCRIPTION
+========================================= */
+
+.tool-card p {
+    color: #777;
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   SEARCH
+========================================= */
+
+.hub-search {
+    width: 100%;
+    max-width: 600px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 9px;
+
+    margin: 25px auto 0;
+
+    padding: 10px 13px;
+
+    background: #090e09;
+
+    border: 1px solid rgba(28, 255, 92, 0.15);
+    border-radius: 10px;
+}
+
+.hub-search span {
+    flex: 0 0 auto;
+
+    font-size: 15px;
+}
+
+.hub-search input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    color: #fff;
+
+    font-family: inherit;
+    font-size: 13px;
+}
+
+.hub-search input::placeholder {
+    color: #666;
+}
+
+
+/* =========================================
+   TOOLS HEADING
+========================================= */
+
+.tools-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 17px;
+
+    padding-bottom: 9px;
+
+    border-bottom: 1px solid rgba(28, 255, 92, 0.14);
+}
+
+.tools-heading h2 {
+    font-size: 26px;
+}
+
+#toolCount {
+    color: #666;
+
+    font-size: 11px;
+}
+
+
+/* =========================================
+   NO RESULTS
+========================================= */
+
+.no-tools {
+    padding: 30px 15px;
+
+    text-align: center;
+
+    color: #666;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   COMING SOON
+========================================= */
+
+.coming-soon {
+    margin-top: 45px;
+
+    padding: 28px;
+
+    text-align: center;
+
+    background: linear-gradient(
+        120deg,
+        #0b130b,
+        #080c08
+    );
+
+    border: 1px solid rgba(28, 255, 92, 0.18);
+    border-radius: 14px;
+}
+
+.coming-soon > span {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #1cff5c;
+
+    font-size: 28px;
+}
+
+.coming-soon h2 {
+    margin-bottom: 6px;
+
+    font-size: 22px;
+}
+
+.coming-soon p {
+    color: #777;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 1050px) {
+
+    .tools-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .tools-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 8px;
+    }
+
+    .tool-card {
+        padding: 14px 11px;
+    }
+
+    .tool-icon {
+        font-size: 22px;
+    }
+
+    .tool-card h3 {
+        font-size: 13px;
+    }
+
+    .tool-card p {
+        font-size: 11px;
+    }
+
+    .tools-heading h2 {
+        font-size: 23px;
+    }
+
+    .hub-search {
+        margin-top: 20px;
+    }
+
+    .coming-soon {
+        padding: 22px 18px;
+    }
+
+}
+
+
+@media (max-width: 430px) {
+
+    .tools-grid {
+        grid-template-columns: 1fr 1fr;
+
+        gap: 7px;
+    }
+
+    .tool-card {
+        padding: 13px 10px;
+    }
+
+    .tool-icon {
+        font-size: 21px;
+    }
+
+    .tool-card h3 {
+        font-size: 12px;
+    }
+
+    .tool-card p {
+        font-size: 10px;
+    }
+
+}
