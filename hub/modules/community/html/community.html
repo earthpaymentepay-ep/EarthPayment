@@ -1,1 +1,1669 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Community | EarthPayment Hub</title>
+
+<link rel="stylesheet" href="../../../css/hub.css">
+<link rel="stylesheet" href="../css/community.css">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+     ========================================= -->
+
+<header>
+
+    <div class="hub-logo">
+        🌍 <span>EarthPayment</span> Hub
+    </div>
+
+
+    <!-- MINI GLOBAL DATA -->
+
+    <div class="mini-global-data">
+
+        <div class="mini-data">
+            <span>🌤️</span>
+            <span id="miniWeather">--°C</span>
+        </div>
+
+        <div class="mini-data">
+            <span>💱</span>
+            <span id="miniCurrency">USD/EUR --</span>
+        </div>
+
+        <div class="mini-data">
+            <span>🕒</span>
+            <span id="miniTime">--:--</span>
+        </div>
+
+    </div>
+
+
+    <div class="hub-header-right">
+
+        <button
+            id="walletButton"
+            class="wallet-button"
+            type="button">
+            🔗 Connect Wallet
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =========================================
+     NAVIGATION
+     ========================================= -->
+
+<nav class="hub-nav">
+
+    <a href="../index.html">Hub</a>
+
+    <a href="../global-pulse/global-pulse.html">
+        Global
+    </a>
+
+    <a href="../polls/polls.html">
+        Ask the World
+    </a>
+
+    <a href="community.html" class="active">
+        Community
+    </a>
+
+    <a href="../tools/tools.html">
+        Tools
+    </a>
+
+    <a href="../games/games.html">
+        Games
+    </a>
+
+    <a href="../world/world.html">
+        World
+    </a>
+
+</nav>
+
+
+
+<!-- =========================================
+     COMMUNITY HERO
+     ========================================= -->
+
+<main class="community-page">
+
+
+<section class="community-hero">
+
+    <div class="community-hero-content">
+
+        <div class="section-badge">
+            🌍 EARTHPAYMENT COMMUNITY
+        </div>
+
+        <h1>
+            One world.<br>
+            <span>One community.</span>
+        </h1>
+
+        <p>
+            Connect with people, discover projects, share ideas
+            and build something together.
+        </p>
+
+
+        <div class="community-actions">
+
+            <button
+                id="createProfileButton"
+                class="primary-button"
+                type="button">
+                👤 Create / Edit Profile
+            </button>
+
+            <button
+                id="discoverButton"
+                class="secondary-button"
+                type="button">
+                🌎 Discover Community
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- COMMUNITY STATUS -->
+
+    <div class="community-status-card">
+
+        <div class="status-title">
+            COMMUNITY PULSE
+        </div>
+
+        <div class="status-number">
+            <span id="onlineUsers">1,248</span>
+        </div>
+
+        <div class="status-label">
+            people connected around the world
+        </div>
+
+
+        <div class="status-grid">
+
+            <div>
+                <strong id="activeProjects">86</strong>
+                <span>Projects</span>
+            </div>
+
+            <div>
+                <strong id="activeCountries">74</strong>
+                <span>Countries</span>
+            </div>
+
+            <div>
+                <strong id="communityPosts">3.2K</strong>
+                <span>Posts</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     COMMUNITY NAV
+     ========================================= -->
+
+<section class="community-tabs">
+
+    <button class="community-tab active" data-section="feed">
+        📰 Feed
+    </button>
+
+    <button class="community-tab" data-section="people">
+        👥 People
+    </button>
+
+    <button class="community-tab" data-section="projects">
+        🚀 Projects
+    </button>
+
+    <button class="community-tab" data-section="countries">
+        🌎 Countries
+    </button>
+
+    <button class="community-tab" data-section="events">
+        📅 Events
+    </button>
+
+</section>
+
+
+
+<!-- =========================================
+     COMMUNITY GRID
+     ========================================= -->
+
+<section class="community-layout">
+
+
+<!-- =========================================
+     LEFT SIDEBAR
+     ========================================= -->
+
+<aside class="community-sidebar">
+
+
+    <!-- PROFILE CARD -->
+
+    <div class="community-card my-profile-card">
+
+        <div class="card-heading">
+            <span>YOUR PROFILE</span>
+        </div>
+
+
+        <div id="profilePreview">
+
+            <div class="profile-placeholder">
+
+                <div class="profile-avatar">
+                    👤
+                </div>
+
+                <strong>
+                    Create your profile
+                </strong>
+
+                <p>
+                    Introduce yourself to the community.
+                </p>
+
+                <button
+                    class="small-primary-button"
+                    id="sidebarProfileButton"
+                    type="button">
+                    Create Profile
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- COMMUNITY MENU -->
+
+    <div class="community-card">
+
+        <div class="card-heading">
+            COMMUNITY
+        </div>
+
+
+        <div class="community-menu">
+
+            <button data-scroll="feed">
+                📰 Community Feed
+            </button>
+
+            <button data-scroll="people">
+                👥 People
+            </button>
+
+            <button data-scroll="projects">
+                🚀 Projects
+            </button>
+
+            <button data-scroll="countries">
+                🌎 Countries
+            </button>
+
+            <button data-scroll="events">
+                📅 Events
+            </button>
+
+            <button data-scroll="groups">
+                💬 Groups
+            </button>
+
+            <button data-scroll="marketplace">
+                🛍️ Marketplace
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- FUTURE COMMUNITY -->
+
+    <div class="community-card future-card">
+
+        <div class="card-heading">
+            COMING SOON
+        </div>
+
+        <div class="future-item">
+            💬 Country Chats
+        </div>
+
+        <div class="future-item">
+            🌐 Global Chat
+        </div>
+
+        <div class="future-item">
+            🤝 Private Messaging
+        </div>
+
+        <div class="future-item">
+            🏆 Community Reputation
+        </div>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================
+     MAIN COMMUNITY CONTENT
+     ========================================= -->
+
+<div class="community-main">
+
+
+<!-- =========================================
+     FEED
+     ========================================= -->
+
+<section
+    id="feed"
+    class="community-section">
+
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+                COMMUNITY FEED
+            </span>
+
+            <h2>
+                What's happening?
+            </h2>
+
+        </div>
+
+
+        <button
+            class="outline-button"
+            id="newPostButton"
+            type="button">
+            + New Post
+        </button>
+
+    </div>
+
+
+
+    <!-- POST CREATOR -->
+
+    <div
+        id="postCreator"
+        class="community-card post-creator hidden">
+
+        <div class="creator-row">
+
+            <div class="mini-avatar">
+                👤
+            </div>
+
+            <textarea
+                id="postText"
+                placeholder="Share something with the community..."></textarea>
+
+        </div>
+
+
+        <div class="creator-bottom">
+
+            <div class="creator-tools">
+
+                <button type="button">
+                    🌍
+                </button>
+
+                <button type="button">
+                    📷
+                </button>
+
+                <button type="button">
+                    🔗
+                </button>
+
+                <button type="button">
+                    📍
+                </button>
+
+            </div>
+
+
+            <button
+                id="publishPost"
+                class="small-primary-button"
+                type="button">
+                Publish
+            </button>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- POSTS -->
+
+    <div id="communityFeed">
+
+
+        <article class="community-post">
+
+            <div class="post-header">
+
+                <div class="post-avatar">
+                    🌍
+                </div>
+
+                <div>
+
+                    <strong>
+                        EarthPayment Community
+                    </strong>
+
+                    <span>
+                        Global · 12 min ago
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="post-content">
+
+                <p>
+                    Welcome to the EarthPayment Community.
+                    This is the place where people from around
+                    the world can connect, share ideas and build
+                    projects together.
+                </p>
+
+            </div>
+
+
+            <div class="post-tags">
+
+                <span>#EarthPayment</span>
+                <span>#Community</span>
+                <span>#Global</span>
+
+            </div>
+
+
+            <div class="post-actions">
+
+                <button type="button">
+                    ❤️ <span>128</span>
+                </button>
+
+                <button type="button">
+                    💬 <span>24</span>
+                </button>
+
+                <button type="button">
+                    🔗 Share
+                </button>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="community-post">
+
+            <div class="post-header">
+
+                <div class="post-avatar">
+                    🚀
+                </div>
+
+                <div>
+
+                    <strong>
+                        Community Builder
+                    </strong>
+
+                    <span>
+                        Czech Republic · 34 min ago
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="post-content">
+
+                <p>
+                    Looking for people interested in building
+                    useful tools for the EarthPayment Hub.
+                </p>
+
+            </div>
+
+
+            <div class="post-tags">
+
+                <span>#Builders</span>
+                <span>#Tools</span>
+                <span>#EarthPaymentHub</span>
+
+            </div>
+
+
+            <div class="post-actions">
+
+                <button type="button">
+                    ❤️ <span>47</span>
+                </button>
+
+                <button type="button">
+                    💬 <span>8</span>
+                </button>
+
+                <button type="button">
+                    🔗 Share
+                </button>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     PEOPLE
+     ========================================= -->
+
+<section
+    id="people"
+    class="community-section">
+
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+                PEOPLE
+            </span>
+
+            <h2>
+                Discover people
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="people-grid">
+
+
+        <article class="person-card">
+
+            <div class="person-avatar">
+                🧑‍💻
+            </div>
+
+            <h3>
+                Alex
+            </h3>
+
+            <span>
+                🇩🇪 Germany
+            </span>
+
+            <p>
+                Web · Crypto · Projects
+            </p>
+
+            <button class="profile-button">
+                View Profile
+            </button>
+
+        </article>
+
+
+
+        <article class="person-card">
+
+            <div class="person-avatar">
+                👩‍🎨
+            </div>
+
+            <h3>
+                Maya
+            </h3>
+
+            <span>
+                🇫🇷 France
+            </span>
+
+            <p>
+                Design · Community
+            </p>
+
+            <button class="profile-button">
+                View Profile
+            </button>
+
+        </article>
+
+
+
+        <article class="person-card">
+
+            <div class="person-avatar">
+                👨‍💻
+            </div>
+
+            <h3>
+                Daniel
+            </h3>
+
+            <span>
+                🇨🇿 Czech Republic
+            </span>
+
+            <p>
+                Development · Web3
+            </p>
+
+            <button class="profile-button">
+                View Profile
+            </button>
+
+        </article>
+
+
+
+        <article class="person-card">
+
+            <div class="person-avatar">
+                👩‍🚀
+            </div>
+
+            <h3>
+                Sofia
+            </h3>
+
+            <span>
+                🇪🇸 Spain
+            </span>
+
+            <p>
+                Travel · Technology
+            </p>
+
+            <button class="profile-button">
+                View Profile
+            </button>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     PROJECTS
+     ========================================= -->
+
+<section
+    id="projects"
+    class="community-section">
+
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+                PROJECTS
+            </span>
+
+            <h2>
+                Community projects
+            </h2>
+
+        </div>
+
+
+        <button
+            class="outline-button"
+            type="button">
+            + Create Project
+        </button>
+
+    </div>
+
+
+    <div class="project-grid">
+
+
+        <article class="project-card">
+
+            <div class="project-icon">
+                🌱
+            </div>
+
+            <div class="project-info">
+
+                <span class="project-status">
+                    ACTIVE
+                </span>
+
+                <h3>
+                    Green Earth
+                </h3>
+
+                <p>
+                    Community project focused on environmental
+                    initiatives and local action.
+                </p>
+
+                <div class="project-meta">
+                    👥 34 members · 🌍 Global
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="project-card">
+
+            <div class="project-icon">
+                🛠️
+            </div>
+
+            <div class="project-info">
+
+                <span class="project-status">
+                    BUILDING
+                </span>
+
+                <h3>
+                    Hub Builders
+                </h3>
+
+                <p>
+                    Developers and creators working on tools
+                    for the EarthPayment ecosystem.
+                </p>
+
+                <div class="project-meta">
+                    👥 18 members · 💻 Technology
+                </div>
+
+            </div>
+
+        </article>
+
+
+
+        <article class="project-card">
+
+            <div class="project-icon">
+                🌐
+            </div>
+
+            <div class="project-info">
+
+                <span class="project-status">
+                    NEW
+                </span>
+
+                <h3>
+                    Global Connect
+                </h3>
+
+                <p>
+                    Connecting people from different countries
+                    and cultures.
+                </p>
+
+                <div class="project-meta">
+                    👥 12 members · 🌎 Community
+                </div>
+
+            </div>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     COUNTRIES
+     ========================================= -->
+
+<section
+    id="countries"
+    class="community-section">
+
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+                WORLD COMMUNITY
+            </span>
+
+            <h2>
+                Connect by country
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="country-grid">
+
+
+        <button class="country-card">
+            <span>🇨🇿</span>
+            <strong>Czech Republic</strong>
+            <small>128 members</small>
+        </button>
+
+
+        <button class="country-card">
+            <span>🇩🇪</span>
+            <strong>Germany</strong>
+            <small>216 members</small>
+        </button>
+
+
+        <button class="country-card">
+            <span>🇫🇷</span>
+            <strong>France</strong>
+            <small>143 members</small>
+        </button>
+
+
+        <button class="country-card">
+            <span>🇬🇧</span>
+            <strong>United Kingdom</strong>
+            <small>197 members</small>
+        </button>
+
+
+        <button class="country-card">
+            <span>🇺🇸</span>
+            <strong>United States</strong>
+            <small>301 members</small>
+        </button>
+
+
+        <button class="country-card">
+            <span>🇪🇸</span>
+            <strong>Spain</strong>
+            <small>92 members</small>
+        </button>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     EVENTS
+     ========================================= -->
+
+<section
+    id="events"
+    class="community-section">
+
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+                COMMUNITY EVENTS
+            </span>
+
+            <h2>
+                What's happening?
+            </h2>
+
+        </div>
+
+
+        <button
+            class="outline-button"
+            type="button">
+            + Create Event
+        </button>
+
+    </div>
+
+
+    <div class="event-list">
+
+
+        <article class="event-card">
+
+            <div class="event-date">
+
+                <strong>
+                    28
+                </strong>
+
+                <span>
+                    AUG
+                </span>
+
+            </div>
+
+
+            <div class="event-info">
+
+                <span>
+                    🌐 ONLINE
+                </span>
+
+                <h3>
+                    EarthPayment Community Meetup
+                </h3>
+
+                <p>
+                    Community introduction and open discussion.
+                </p>
+
+                <small>
+                    👥 42 interested
+                </small>
+
+            </div>
+
+
+            <button class="event-button">
+                View
+            </button>
+
+        </article>
+
+
+
+        <article class="event-card">
+
+            <div class="event-date">
+
+                <strong>
+                    05
+                </strong>
+
+                <span>
+                    SEP
+                </span>
+
+            </div>
+
+
+            <div class="event-info">
+
+                <span>
+                    💻 BUILDING
+                </span>
+
+                <h3>
+                    Hub Builders Session
+                </h3>
+
+                <p>
+                    Developers and creators discussion.
+                </p>
+
+                <small>
+                    👥 18 interested
+                </small>
+
+            </div>
+
+
+            <button class="event-button">
+                View
+            </button>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     GROUPS / CHAT
+     ========================================= -->
+
+<section
+    id="groups"
+    class="community-section">
+
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+                GROUPS & CHAT
+            </span>
+
+            <h2>
+                Talk with the community
+            </h2>
+
+        </div>
+
+    </div>
+
+
+    <div class="chat-preview-grid">
+
+
+        <div class="chat-card">
+
+            <div class="chat-icon">
+                🌍
+            </div>
+
+            <h3>
+                Global Chat
+            </h3>
+
+            <p>
+                One room for the entire EarthPayment community.
+            </p>
+
+            <span>
+                Coming soon
+            </span>
+
+        </div>
+
+
+        <div class="chat-card">
+
+            <div class="chat-icon">
+                🇨🇿
+            </div>
+
+            <h3>
+                Country Chats
+            </h3>
+
+            <p>
+                Dedicated rooms for individual countries.
+            </p>
+
+            <span>
+                Coming soon
+            </span>
+
+        </div>
+
+
+        <div class="chat-card">
+
+            <div class="chat-icon">
+                🤝
+            </div>
+
+            <h3>
+                Interest Groups
+            </h3>
+
+            <p>
+                Technology, travel, business, crypto, design
+                and more.
+            </p>
+
+            <span>
+                Coming soon
+            </span>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     MARKETPLACE
+     ========================================= -->
+
+<section
+    id="marketplace"
+    class="community-section">
+
+
+    <div class="section-header">
+
+        <div>
+
+            <span class="section-label">
+                COMMUNITY MARKETPLACE
+            </span>
+
+            <h2>
+                Services & opportunities
+            </h2>
+
+        </div>
+
+        <button
+            class="outline-button"
+            type="button">
+            + Create Listing
+        </button>
+
+    </div>
+
+
+    <div class="marketplace-grid">
+
+
+        <article class="market-card">
+
+            <div>
+                💻
+            </div>
+
+            <h3>
+                Web Developer
+            </h3>
+
+            <p>
+                Community member offering web development.
+            </p>
+
+            <span>
+                🇨🇿 Czech Republic
+            </span>
+
+        </article>
+
+
+        <article class="market-card">
+
+            <div>
+                🎨
+            </div>
+
+            <h3>
+                Graphic Design
+            </h3>
+
+            <p>
+                Logos, branding and digital design.
+            </p>
+
+            <span>
+                🇫🇷 France
+            </span>
+
+        </article>
+
+
+        <article class="market-card">
+
+            <div>
+                🌎
+            </div>
+
+            <h3>
+                Travel Help
+            </h3>
+
+            <p>
+                Local recommendations and travel assistance.
+            </p>
+
+            <span>
+                🇪🇸 Spain
+            </span>
+
+        </article>
+
+
+    </div>
+
+</section>
+
+
+
+</div>
+
+
+<!-- =========================================
+     RIGHT SIDEBAR
+     ========================================= -->
+
+<aside class="community-right-sidebar">
+
+
+    <!-- TRENDING -->
+
+    <div class="community-card">
+
+        <div class="card-heading">
+            TRENDING
+        </div>
+
+
+        <div class="trend-item">
+
+            <span>
+                #EarthPayment
+            </span>
+
+            <strong>
+                1.8K
+            </strong>
+
+        </div>
+
+
+        <div class="trend-item">
+
+            <span>
+                #Community
+            </span>
+
+            <strong>
+                934
+            </strong>
+
+        </div>
+
+
+        <div class="trend-item">
+
+            <span>
+                #Web3
+            </span>
+
+            <strong>
+                721
+            </strong>
+
+        </div>
+
+
+        <div class="trend-item">
+
+            <span>
+                #Builders
+            </span>
+
+            <strong>
+                408
+            </strong>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- COUNTRIES -->
+
+    <div class="community-card">
+
+        <div class="card-heading">
+            TOP COUNTRIES
+        </div>
+
+
+        <div class="country-mini">
+
+            <span>🇺🇸</span>
+
+            <div>
+                <strong>United States</strong>
+                <small>301 members</small>
+            </div>
+
+        </div>
+
+
+        <div class="country-mini">
+
+            <span>🇩🇪</span>
+
+            <div>
+                <strong>Germany</strong>
+                <small>216 members</small>
+            </div>
+
+        </div>
+
+
+        <div class="country-mini">
+
+            <span>🇬🇧</span>
+
+            <div>
+                <strong>United Kingdom</strong>
+                <small>197 members</small>
+            </div>
+
+        </div>
+
+
+        <div class="country-mini">
+
+            <span>🇨🇿</span>
+
+            <div>
+                <strong>Czech Republic</strong>
+                <small>128 members</small>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- WALLET SEPARATION -->
+
+    <div class="community-card privacy-card">
+
+        <div class="privacy-icon">
+            🔐
+        </div>
+
+        <h3>
+            Your privacy
+        </h3>
+
+        <p>
+            Your Community profile is separate from your
+            wallet identity.
+        </p>
+
+        <p>
+            Wallet addresses are not publicly displayed
+            on Community profiles.
+        </p>
+
+        <span>
+            Wallet verification remains anonymous.
+        </span>
+
+    </div>
+
+
+</aside>
+
+
+</section>
+
+
+</main>
+
+
+
+<!-- =========================================
+     PROFILE MODAL
+     ========================================= -->
+
+<div
+    id="profileModal"
+    class="modal-overlay hidden">
+
+
+    <div class="profile-modal">
+
+        <button
+            id="closeProfileModal"
+            class="modal-close"
+            type="button">
+            ×
+        </button>
+
+
+        <div class="modal-header">
+
+            <span class="section-label">
+                COMMUNITY PROFILE
+            </span>
+
+            <h2>
+                Your identity in the community
+            </h2>
+
+            <p>
+                This profile is separate from your wallet.
+            </p>
+
+        </div>
+
+
+        <form id="profileForm">
+
+
+            <label>
+                Display name
+
+                <input
+                    type="text"
+                    id="profileName"
+                    maxlength="40"
+                    placeholder="Your community name"
+                    required>
+
+            </label>
+
+
+            <label>
+                Country
+
+                <select id="profileCountry">
+
+                    <option value="">
+                        Select country
+                    </option>
+
+                    <option value="CZ">
+                        🇨🇿 Czech Republic
+                    </option>
+
+                    <option value="DE">
+                        🇩🇪 Germany
+                    </option>
+
+                    <option value="FR">
+                        🇫🇷 France
+                    </option>
+
+                    <option value="GB">
+                        🇬🇧 United Kingdom
+                    </option>
+
+                    <option value="US">
+                        🇺🇸 United States
+                    </option>
+
+                    <option value="ES">
+                        🇪🇸 Spain
+                    </option>
+
+                    <option value="OTHER">
+                        🌎 Other
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <label>
+                About you
+
+                <textarea
+                    id="profileBio"
+                    maxlength="300"
+                    placeholder="Tell the community something about yourself..."></textarea>
+
+            </label>
+
+
+            <label>
+                Interests
+
+                <input
+                    type="text"
+                    id="profileInterests"
+                    maxlength="150"
+                    placeholder="Technology, travel, design...">
+
+            </label>
+
+
+            <div class="profile-privacy-note">
+
+                🔐
+                Your wallet address is not part of this
+                public profile.
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="primary-button profile-save-button">
+                Save Profile
+            </button>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     WALLET MODAL
+     ========================================= -->
+
+<div
+    id="walletModal"
+    class="modal-overlay hidden">
+
+
+    <div class="wallet-modal">
+
+        <button
+            id="closeWalletModal"
+            class="modal-close"
+            type="button">
+            ×
+        </button>
+
+
+        <div class="modal-header">
+
+            <span class="section-label">
+                WALLET
+            </span>
+
+            <h2>
+                Connect anonymously
+            </h2>
+
+            <p>
+                Your wallet is used separately from your
+                Community profile.
+            </p>
+
+        </div>
+
+
+        <div class="wallet-options">
+
+            <button
+                class="wallet-option"
+                id="phantomWalletButton"
+                type="button">
+
+                <span>👻</span>
+
+                <div>
+                    <strong>Phantom</strong>
+                    <small>Solana wallet</small>
+                </div>
+
+            </button>
+
+
+            <button
+                class="wallet-option"
+                id="demoWalletButton"
+                type="button">
+
+                <span>🔗</span>
+
+                <div>
+                    <strong>Demo Connection</strong>
+                    <small>For testing</small>
+                </div>
+
+            </button>
+
+        </div>
+
+
+        <div class="wallet-note">
+
+            🔐 Wallet addresses are never displayed as
+            Community profile names.
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script src="../js/community.js"></script>
+
+</body>
+
+  </html> 
