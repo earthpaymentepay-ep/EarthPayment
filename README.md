@@ -33,9 +33,7 @@ Whitepaper: Published
 
 ## Community
 
-Website: Coming soon  
-Telegram: Coming soon  
-X: https://x.com/EarthPaymentEPT
+  
 
 ---
 
