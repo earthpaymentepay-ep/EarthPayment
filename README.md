@@ -1,13 +1,5 @@
 # EarthPayment (EPT)
 
-## Connecting the Future of Digital Payments
-
-EarthPayment (EPT) is a blockchain-based digital payment ecosystem designed to create fast, transparent and accessible digital transactions.
-
-## Vision
-
-Our vision is to build a practical bridge between blockchain technology and everyday payments.
-
 ## Token Information
 
 **Name:** EarthPayment  
